@@ -1,1 +1,1 @@
-# web_projekat
+# Projekat iz predmeta WebProgramiranje
