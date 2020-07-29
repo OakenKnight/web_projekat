@@ -11,12 +11,7 @@ public class Address {
 	public Address() {}
 	
 	public Address(String address) {
-		if(validateAddress(address))
-			this.address = address;
-		else {
-			System.out.println("Address is incorrect");
-			this.address = "Abc 0, Abc Abc 00000";
-		}
+		this.address = address;
 	}
 	
 	public String getAddress() {
@@ -24,10 +19,7 @@ public class Address {
 	}
 
 	public void setAddress(String address) {
-		if(validateAddress(address))
-			this.address = address;
-		else
-			System.out.println("Address is incorrect");
+		this.address = address;
 	}
 	
 	private boolean validateAddress(String addr){
