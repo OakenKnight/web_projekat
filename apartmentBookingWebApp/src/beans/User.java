@@ -1,5 +1,7 @@
 package beans;
 
+
+
 public class User {
 	private String id;
 	private String username;
@@ -7,6 +9,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private Gender gender;
+
 	
 	public User() {}
 	
@@ -18,8 +21,6 @@ public class User {
 		this.gender = gender;
 	}
 
-	
-	
 	public String getId() {
 		return id;
 	}
@@ -66,6 +67,13 @@ public class User {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+	
+	public void setGender(String gender) {
+		if(gender == "MALE")
+			this.gender = Gender.MALE;
+		else
+			this.gender = Gender.FEMALE;
 	}
 	
 	
