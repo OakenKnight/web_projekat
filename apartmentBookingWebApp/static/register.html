@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login Template</title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/register.css">
+</head>
+<body>
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 login-section-wrapper">
+          <div class="brand-wrapper">
+            <img src="assets/images/logo.png" alt="logo" class="logo">
+          </div>
+          <div class="login-wrapper my-auto">
+            <h1 class="login-title">Register</h1>
+            <form action="#!">
+              <div class="form-group">
+                <label for="name">Enter Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="enter your name">
+              </div>
+              <div class="form-group">
+                <label for="lastname">Enter Lastname</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" placeholder="enter your lastname">
+              </div>
+              <div class="form-group">
+                <label for="gender">Select Gender</label>
+                <select name="gender" id="gender" class="form-control">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other...</option>
+                </select>                
+              </div>
+              <div class="form-group">
+                <label for="username">Enter Usename</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username">
+              </div>
+              <div class="form-group mb-4">
+                <label for="password">Enter Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword">
+              </div>
+              <div class="form-group mb-4">
+                <label for="password">Enter Password Again</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword again">
+              </div>
+              <input name="register" id="register" class="btn btn-block register-btn" type="button" value="Register">
+            </form>
+
+          </div>
+        </div>
+        <div class="col-sm-6 px-0 d-none d-sm-block">
+          <img src="assets/images/Vacation-Rental-750x498.jpg" alt="login image" class="login-img">
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
