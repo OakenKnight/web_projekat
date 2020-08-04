@@ -1,14 +1,13 @@
 package repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface RepositoryMethods<T> {
-	public void saveAll();
-	public ArrayList<T> getAll();
-	public T getObj();
-	public void create(T obj);
-	public void update(T obj);
-	public void remove(String id);
-	public void save(T obj);
+	public boolean saveAll(List<T> objs);
+	public List<T> getAll();
+	public T getObj(String id);
+	public boolean create(T obj);
+	public boolean update(T obj);
+	public boolean remove(String id);
 	
 }

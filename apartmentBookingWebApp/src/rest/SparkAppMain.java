@@ -1,25 +1,15 @@
 package rest;
 import static spark.Spark.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import java.util.ArrayList;
 import java.util.List;
-
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
-import beans.Amenity;
 import beans.Gender;
 import beans.User;
-
-
 
 public class SparkAppMain {
 
@@ -52,8 +42,7 @@ public class SparkAppMain {
 		  try {
 			 
 			List<User> readUsers = mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<User>>() {});
-			System.out.println(readUsers);
-			
+			System.out.println( readUsers.stream().filter(guest -> guest.getId().equals("dfgthn")).findFirst().orElse(null));
 			for(User u : readUsers) {
 				 System.out.println(u.getId());
 				 System.out.println(u.getFirstName());
