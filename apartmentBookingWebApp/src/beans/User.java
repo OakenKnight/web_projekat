@@ -3,7 +3,6 @@ package beans;
 
 
 public class User {
-	private String id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -19,14 +18,6 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -69,12 +60,7 @@ public class User {
 		this.gender = gender;
 	}
 	
-	public void setGender(String gender) {
-		if(gender == "MALE")
-			this.gender = Gender.MALE;
-		else
-			this.gender = Gender.FEMALE;
-	}
+
 	
 	
 	

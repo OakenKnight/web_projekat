@@ -1,0 +1,30 @@
+[ {
+  "apartmentType" : "ROOM",
+  "roomNumber" : 3,
+  "guestNumber" : 4,
+  "location" : {
+    "latitude" : 123.0,
+    "longitude" : 123.0,
+    "address" : {
+      "address" : "asdasdas"
+    }
+  },
+  "freeDates" : [ 61568550000000 ],
+  "housekeeper" : {
+    "username" : null,
+    "password" : null,
+    "firstName" : null,
+    "lastName" : null,
+    "gender" : null,
+    "apartmentsId" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 12.3,
+  "arrivalTime" : "02:02:02",
+  "exitTime" : "02:02:02",
+  "apartmentStatus" : "ACTIVE",
+  "amenities" : [ ],
+  "reservationsId" : [ ],
+  "id" : "id"
+} ]

@@ -2,12 +2,13 @@ package repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import beans.Guest;
 import beans.Housekeeper;
 
 public class HousekeeperRepository implements HousekeeperRepositoryInterface{
@@ -18,12 +19,21 @@ public class HousekeeperRepository implements HousekeeperRepositoryInterface{
 	public HousekeeperRepository(){
 		mapper = new ObjectMapper();
 		file = new File("data/housekeeper.json");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				saveAll(new ArrayList<Housekeeper>());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public boolean create(Housekeeper obj) {
 		List<Housekeeper> housekeepers = getAll();
-		if(housekeepers != null && housekeepers.contains(obj)) {
+		if(housekeepers != null && getObj(obj.getUsername()) == null) {
 			housekeepers.add(obj);
 			return saveAll(housekeepers);
 		}
@@ -33,9 +43,13 @@ public class HousekeeperRepository implements HousekeeperRepositoryInterface{
 	@Override
 	public boolean update(Housekeeper obj) {
 		List<Housekeeper> housekeepers = getAll();
-		if(housekeepers != null && !housekeepers.contains(obj)) {
-			housekeepers.set(housekeepers.indexOf(getObj(obj.getId())), obj);
-			return saveAll(housekeepers);
+		if(housekeepers != null && getObj(obj.getUsername()) != null) {
+			for(int i = 0; i < housekeepers.size(); i++) {
+				if(housekeepers.get(i).getUsername().equals(obj.getUsername())) {
+					housekeepers.set(i, obj);
+					return saveAll(housekeepers);
+				}
+			}
 		}
 		return false;
 	}
@@ -44,7 +58,7 @@ public class HousekeeperRepository implements HousekeeperRepositoryInterface{
 	public boolean remove(String id) {
 		List<Housekeeper> housekeepers = getAll();
 		if(housekeepers != null && getObj(id) != null) {
-			housekeepers.removeIf(housekeeper -> housekeeper.getId().equals(id));
+			housekeepers.removeIf(housekeeper -> housekeeper.getUsername().equals(id));
 			return saveAll(housekeepers);
 		}
 		return false;
@@ -64,7 +78,7 @@ public class HousekeeperRepository implements HousekeeperRepositoryInterface{
 
 	@Override
 	public Housekeeper getObj(String id) {
-		return getAll().stream().filter(housekeeper -> housekeeper.getId().equals(id)).findFirst().orElse(null);
+		return getAll().stream().filter(housekeeper -> housekeeper.getUsername().equals(id)).findFirst().orElse(null);
 	}
 
 	@Override

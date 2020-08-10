@@ -2,6 +2,7 @@ package repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,12 +19,21 @@ public class AdminRepository implements AdminRepositoryInterface{
 	public AdminRepository(){
 		mapper = new ObjectMapper();
 		file = new File("data/admin.json");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				saveAll(new ArrayList<Admin>());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public boolean create(Admin obj) {
 		List<Admin> admins = getAll();
-		if(admins != null && admins.contains(obj)) {
+		if(admins != null && getObj(obj.getUsername()) == null) {
 			admins.add(obj);
 			return saveAll(admins);
 		}
@@ -33,9 +43,13 @@ public class AdminRepository implements AdminRepositoryInterface{
 	@Override
 	public boolean update(Admin obj) {
 		List<Admin> admins = getAll();
-		if(admins != null && !admins.contains(obj)) {
-			admins.set(admins.indexOf(getObj(obj.getId())), obj);
-			return saveAll(admins);
+		if(admins != null && getObj(obj.getUsername()) != null) {
+			for(int i = 0; i < admins.size(); i++) {
+				if(admins.get(i).getUsername().equals(obj.getUsername())) {
+					admins.set(i, obj);
+					return saveAll(admins);
+				}
+			}
 		}
 		return false;
 	}
@@ -44,7 +58,7 @@ public class AdminRepository implements AdminRepositoryInterface{
 	public boolean remove(String id) {
 		List<Admin> admins = getAll();
 		if(admins != null && getObj(id) != null) {
-			admins.removeIf(admin -> admin.getId().equals(id));
+			admins.removeIf(admin -> admin.getUsername().equals(id));
 			return saveAll(admins);
 		}
 		return false;
@@ -64,7 +78,7 @@ public class AdminRepository implements AdminRepositoryInterface{
 
 	@Override
 	public Admin getObj(String id) {
-		return getAll().stream().filter(admin -> admin.getId().equals(id)).findFirst().orElse(null);
+		return getAll().stream().filter(admin -> admin.getUsername().equals(id)).findFirst().orElse(null);
 	}
 
 	@Override

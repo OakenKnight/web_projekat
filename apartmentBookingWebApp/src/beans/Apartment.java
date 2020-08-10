@@ -88,36 +88,12 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public ArrayList<Date> getFreeDates() {
-		return freeDates;
-	}
-
-	public void setFreeDates(ArrayList<Date> freeDates) {
-		this.freeDates = new ArrayList<Date>(freeDates);
-	}
-
 	public Housekeeper getHousekeeper() {
 		return housekeeper;
 	}
 
 	public void setHousekeeper(Housekeeper housekeeper) {
 		this.housekeeper = housekeeper;
-	}
-
-	public ArrayList<ApartmentComment> getComments() {
-		return comments;
-	}
-
-	public void setComments(ArrayList<ApartmentComment> comments) {
-		this.comments = new ArrayList<ApartmentComment>(comments);
-	}
-
-	public ArrayList<String> getPictures() {
-		return pictures;
-	}
-
-	public void setPictures(ArrayList<String> pictures) {
-		this.pictures = new ArrayList<String>(pictures);
 	}
 
 	public double getPriceForNight() {
@@ -152,12 +128,36 @@ public class Apartment {
 		this.apartmentStatus = apartmentStatus;
 	}
 
+	public ArrayList<Date> getFreeDates() {
+		return freeDates;
+	}
+
+	public void setFreeDates(ArrayList<Date> freeDates) {
+		this.freeDates = freeDates;
+	}
+
+	public ArrayList<ApartmentComment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<ApartmentComment> comments) {
+		this.comments = comments;
+	}
+
+	public ArrayList<String> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(ArrayList<String> pictures) {
+		this.pictures = pictures;
+	}
+
 	public ArrayList<Amenity> getAmenities() {
 		return amenities;
 	}
 
 	public void setAmenities(ArrayList<Amenity> amenities) {
-		this.amenities = new ArrayList<Amenity>(amenities);
+		this.amenities = amenities;
 	}
 
 	public ArrayList<String> getReservationsId() {
@@ -165,8 +165,10 @@ public class Apartment {
 	}
 
 	public void setReservationsId(ArrayList<String> reservationsId) {
-		this.reservationsId = new ArrayList<String>(reservationsId);
+		this.reservationsId = reservationsId;
 	}
+
+	
 	
 	
 	

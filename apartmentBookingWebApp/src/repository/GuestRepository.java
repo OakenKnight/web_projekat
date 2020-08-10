@@ -2,10 +2,13 @@ package repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import beans.Admin;
 import beans.Guest;
 import beans.User;
 
@@ -17,12 +20,21 @@ public class GuestRepository implements GuestRepositoryInterface{
 	public GuestRepository(){
 		mapper = new ObjectMapper();
 		file = new File("data/guest.json");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				saveAll(new ArrayList<Guest>());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public boolean create(Guest obj) {
 		List<Guest> guests = getAll();
-		if(guests != null && guests.contains(obj)) {
+		if(guests != null && getObj(obj.getUsername()) == null) {
 			guests.add(obj);
 			return saveAll(guests);
 		}
@@ -32,9 +44,13 @@ public class GuestRepository implements GuestRepositoryInterface{
 	@Override
 	public boolean update(Guest obj) {
 		List<Guest> guests = getAll();
-		if(guests != null && !guests.contains(obj)) {
-			guests.set(guests.indexOf(getObj(obj.getId())), obj);
-			return saveAll(guests);
+		if(guests != null && getObj(obj.getUsername()) != null) {
+			for(int i = 0; i < guests.size(); i++) {
+				if(guests.get(i).getUsername().equals(obj.getUsername())) {
+					guests.set(i, obj);
+					return saveAll(guests);
+				}
+			}
 		}
 		return false;
 	}
@@ -43,7 +59,7 @@ public class GuestRepository implements GuestRepositoryInterface{
 	public boolean remove(String id) {
 		List<Guest> guests = getAll();
 		if(guests != null && getObj(id) != null) {
-			guests.removeIf(guest -> guest.getId().equals(id));
+			guests.removeIf(guest -> guest.getUsername().equals(id));
 			return saveAll(guests);
 		}
 		return false;
@@ -63,7 +79,7 @@ public class GuestRepository implements GuestRepositoryInterface{
 
 	@Override
 	public Guest getObj(String id) {
-		return getAll().stream().filter(guest -> guest.getId().equals(id)).findFirst().orElse(null);
+		return getAll().stream().filter(guest -> guest.getUsername().equals(id)).findFirst().orElse(null);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class Guest extends User{
 	}
 
 	public void setApartmentsId(ArrayList<String> apartmentsId) {
-		this.apartmentsId = new ArrayList<String>(apartmentsId);
+		this.apartmentsId = apartmentsId;
 	}
 
 	public ArrayList<String> getReservationId() {
@@ -29,8 +29,10 @@ public class Guest extends User{
 	}
 
 	public void setReservationId(ArrayList<String> reservationId) {
-		this.reservationId = new ArrayList<String>(reservationId);
+		this.reservationId = reservationId;
 	}
+
+	
 	
 	
 	

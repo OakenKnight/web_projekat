@@ -2,11 +2,13 @@ package repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Housekeeper;
 import beans.Reservation;
 
 public class ReservationRepository implements ReservationRepositoryInterface{
@@ -18,12 +20,21 @@ public class ReservationRepository implements ReservationRepositoryInterface{
 	public ReservationRepository(){
 		mapper = new ObjectMapper();
 		file = new File("data/reservation.json");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				saveAll(new ArrayList<Reservation>());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public boolean create(Reservation obj) {
 		List<Reservation> reservations = getAll();
-		if(reservations != null && reservations.contains(obj)) {
+		if(reservations != null && getObj(obj.getId()) == null) {
 			reservations.add(obj);
 			return saveAll(reservations);
 		}
@@ -33,9 +44,13 @@ public class ReservationRepository implements ReservationRepositoryInterface{
 	@Override
 	public boolean update(Reservation obj) {
 		List<Reservation> reservations = getAll();
-		if(reservations != null && !reservations.contains(obj)) {
-			reservations.set(reservations.indexOf(getObj(obj.getId())), obj);
-			return saveAll(reservations);
+		if(reservations != null && getObj(obj.getId()) != null) {
+			for(int i = 0; i < reservations.size(); i++) {
+				if(reservations.get(i).getId().equals(obj.getId())) {
+					reservations.set(i, obj);
+					return saveAll(reservations);
+				}
+			}
 		}
 		return false;
 	}

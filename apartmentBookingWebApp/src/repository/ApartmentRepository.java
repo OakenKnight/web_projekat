@@ -2,11 +2,13 @@ package repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Admin;
 import beans.Apartment;
 
 public class ApartmentRepository implements ApartmentRepositoryInterface{
@@ -17,12 +19,21 @@ public class ApartmentRepository implements ApartmentRepositoryInterface{
 	public ApartmentRepository(){
 		mapper = new ObjectMapper();
 		file = new File("data/apartment.json");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				saveAll(new ArrayList<Apartment>());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public boolean create(Apartment obj) {
 		List<Apartment> apartments = getAll();
-		if(apartments != null && apartments.contains(obj)) {
+		if(apartments != null && getObj(obj.getId()) == null) {
 			apartments.add(obj);
 			return saveAll(apartments);
 		}
@@ -32,9 +43,13 @@ public class ApartmentRepository implements ApartmentRepositoryInterface{
 	@Override
 	public boolean update(Apartment obj) {
 		List<Apartment> apartments = getAll();
-		if(apartments != null && !apartments.contains(obj)) {
-			apartments.set(apartments.indexOf(getObj(obj.getId())), obj);
-			return saveAll(apartments);
+		if(apartments != null && getObj(obj.getId()) != null) {
+			for(int i = 0; i < apartments.size(); i++) {
+				if(apartments.get(i).getId().equals(obj.getId())) {
+					apartments.set(i, obj);
+					return saveAll(apartments);
+				}
+			}
 		}
 		return false;
 	}
