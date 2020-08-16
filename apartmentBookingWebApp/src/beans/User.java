@@ -8,16 +8,35 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private Gender gender;
+	private UserType userType;
+	private String JWTToken;
 
 	
 	public User() {}
 	
-	public User(String username, String password, String firstName, String lastName, Gender gender) {
+	public User(String username, String password, String firstName, String lastName, Gender gender, UserType type) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
+		this.userType = type;
+	}
+	
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+
+	public String getJWTToken() {
+		return JWTToken;
+	}
+
+	public void setJWTToken(String jWTToken) {
+		JWTToken = jWTToken;
 	}
 
 	public String getUsername() {
@@ -59,10 +78,5 @@ public class User {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
-
-	
-	
-	
 	
 }

@@ -11,7 +11,12 @@ public class Guest extends User{
 	}
 	
 	public Guest(String username, String password, String firstName, String lastName, Gender gender, ArrayList<String> apartmentsId, ArrayList<String> reservationId) {
-		super(username, password, firstName, lastName, gender);
+		super(username, password, firstName, lastName, gender, UserType.GUEST);
+		this.apartmentsId = new ArrayList<String>(apartmentsId);
+		this.reservationId = new ArrayList<String>(reservationId);
+	}
+	public Guest(User user, ArrayList<String> apartmentsId, ArrayList<String> reservationId) {
+		super(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getGender(), UserType.GUEST);
 		this.apartmentsId = new ArrayList<String>(apartmentsId);
 		this.reservationId = new ArrayList<String>(reservationId);
 	}

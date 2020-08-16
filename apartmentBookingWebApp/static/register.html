@@ -18,38 +18,38 @@
           <div class="brand-wrapper">
             <img src="assets/images/logo.png" alt="logo" class="logo">
           </div>
-          <div class="login-wrapper my-auto">
+          <div id="registrationFormDiv" class="login-wrapper my-auto">
             <h1 class="login-title">Register</h1>
             <form action="#!">
               <div class="form-group">
                 <label for="name">Enter Name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="enter your name">
+                <input type="text" name="name" id="name" class="form-control" placeholder="enter your name" v-model="user.firstName">
               </div>
               <div class="form-group">
                 <label for="lastname">Enter Lastname</label>
-                <input type="text" name="lastname" id="lastname" class="form-control" placeholder="enter your lastname">
+                <input type="text" name="lastname" id="lastname" class="form-control" placeholder="enter your lastname" v-model="user.lastName">
               </div>
               <div class="form-group">
                 <label for="gender">Select Gender</label>
-                <select name="gender" id="gender" class="form-control">
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other...</option>
+                <select name="gender" id="gender" class="form-control" v-model="user.gender" >
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other...</option>
                 </select>                
               </div>
               <div class="form-group">
                 <label for="username">Enter Usename</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username">
+                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="user.username">
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword">
+                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="user.password">
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password Again</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword again">
+                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword again" v-model="confirmPassword">
               </div>
-              <input name="register" id="register" class="btn btn-block register-btn" type="button" value="Register">
+              <input name="register" id="register" class="btn btn-block register-btn" type="button" value="Register" v-on:click="tryRegister(user)">
             </form>
 
           </div>
@@ -61,5 +61,10 @@
     </div>
   </main>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="/assets/js/vue.js"></script>
+  <script src="/assets/js/axios.js"></script>
+  <script src="/assets/js/moment.min.js"></script>
+  <script src="/assets/js/toast.js"></script>
+  <script src="/app/app.js"></script>
 </body>
 </html>

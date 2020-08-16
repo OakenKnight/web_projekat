@@ -31,5 +31,8 @@
 	<classpathentry kind="lib" path="lib/jackson-core-2.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/super-csv-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jjwt-gson-0.11.1.jar"/>
+	<classpathentry kind="lib" path="lib/jjwt-api-0.11.1.jar"/>
+	<classpathentry kind="lib" path="lib/jjwt-impl-0.11.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

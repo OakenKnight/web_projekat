@@ -1,0 +1,21 @@
+[ {
+  "username" : "ral",
+  "password" : "radovan12",
+  "firstName" : "Radovan",
+  "lastName" : "Zupunski",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
+}, {
+  "username" : "mikica",
+  "password" : "mika",
+  "firstName" : "Mika",
+  "lastName" : "Mikic",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
+} ]

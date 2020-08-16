@@ -10,7 +10,7 @@ public class Housekeeper extends User{
 	}
 	
 	public Housekeeper(String username, String password, String firstName, String lastName, Gender gender, ArrayList<String> apartmentsId) {
-		super(username, password, firstName, lastName, gender);
+		super(username, password, firstName, lastName, gender, UserType.HOUSEKEEPER);
 		this.apartmentsId = apartmentsId;
 	}
 

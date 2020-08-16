@@ -18,21 +18,21 @@
           <div class="brand-wrapper">
             <img src="assets/images/logo.png" alt="logo" class="logo">
           </div>
-          <div class="login-wrapper my-auto">
+          <div id="log" class="login-wrapper my-auto">
             <h1 class="login-title">Log in</h1>
-            <form action="#!">
+            <form action="/rest/login">
               <div class="form-group">
                 <label for="username">Usename</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username">
+                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
               </div>
               <div class="form-group mb-4">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword">
+                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="password">
               </div>
-              <input name="login" id="login" class="btn btn-block login-btn" type="button" value="Login">
+              <input name="login" id="login" class="btn btn-block login-btn" type="button" value="Login" v-on:click="tryLog(username,password)" >
             </form>
-            <a href="/home/hal9000/web materijali/webProjekat/web_projekat/apartmentBookingWebApp/static/reset_password.html" class="forgot-password-link">Forgot password?</a>
-            <p class="login-wrapper-footer-text">Don't have an account? <a href="/home/hal9000/web materijali/webProjekat/web_projekat/apartmentBookingWebApp/static/register.html" class="text-reset">Register here</a></p>
+            <a href="/reset_password.html" class="forgot-password-link">Forgot password?</a>
+            <p class="login-wrapper-footer-text">Don't have an account? <a href="/register.html" class="text-reset">Register here</a></p>
           </div>
         </div>
         <div class="col-sm-6 px-0 d-none d-sm-block">
@@ -42,5 +42,10 @@
     </div>
   </main>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="/assets/js/vue.js"></script>
+  <script src="/assets/js/axios.js"></script>
+  <script src="/assets/js/moment.min.js"></script>
+  <script src="/assets/js/toast.js"></script>
+  <script src="/app/app.js"></script>
 </body>
 </html>

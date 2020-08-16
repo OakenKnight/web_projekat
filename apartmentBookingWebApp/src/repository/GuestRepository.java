@@ -68,7 +68,7 @@ public class GuestRepository implements GuestRepositoryInterface{
 	@Override
 	public List<Guest> getAll() {
 		try {
-			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<User>>() {});
+			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Guest>>() {});
 		} catch (IllegalArgumentException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
