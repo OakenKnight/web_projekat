@@ -18,4 +18,24 @@
   "apartmentsId" : [ ],
   "reservationId" : [ ],
   "jwttoken" : null
+}, {
+  "username" : "Rasa",
+  "password" : "123456788",
+  "firstName" : "Radovan",
+  "lastName" : "Zupunski",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
+}, {
+  "username" : "ababab",
+  "password" : "123456789",
+  "firstName" : "aaaa",
+  "lastName" : "aaaa",
+  "gender" : "FEMALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
 } ]

@@ -1,95 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/test.css">
+	<meta charset = "UTF-8">
 </head>
-<body >
-    <div id="start">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="sign-in-up col-md-12">
-                    <button type="button" class="btn btn-primary" onclick="location.href='/register.html'" >Create account</button>
-                    <button type="button" class="btn btn-primary"  onclick="location.href='/login.html'" >Sign in</button>
-                </div>
-            </div>
-            <div class="bk-img row justify-content-center">
-                <div class="search-form col-md-4">
-                    <h1 id="header">Where do you want to go? <br> 
-                        Find perfect place with us. </h1>
-                        <form class="search" action="!#">
-                            <input class="search-destination" type="text" name="place" placeholder="Search destination">
-                            <div>
-                                <div class="datepicker">
-                                    <vuejs-datepicker :disabled-dates="disabledArriveDates" format="dd.MM.yyyy" placeholder="Arrive" v-model="arriveDate" ></vuejs-datepicker>
-                                </div>
-                                <div class="datepicker">
-                                    <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" v-model="departDate"></vuejs-datepicker>
-                                </div>
-                                <select required>
-                                    <option value="" disabled selected>Guests</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                                <input type="text" placeholder="Min price" name="minP" class="price" v-model="minPrice">
-                                <input type="text" placeholder="Max price" name="maxP" class="price" v-model="maxPrice">
-                                
-                            </div>
-                            <input name="search-btn" id="search-btn" class="btn btn-block" type="button" value="Search">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="info">
-                <div class="row"> 
-                    <div class="info-content col-md-4">
-                        <img class="icons" src="assets/images/hotel.png" alt="hotel icon">
-                        <p><strong> A place for everyone </strong><br>
-                            We stand for diversity, inclusion and families everywhere.</p>
-                    </div>
-                    <div class="info-content col-md-4">
-                        <img  class="icons" src="assets/images/money.png" alt="money icon">
-                        <p><strong> More for less </strong><br>
-                            More space, more privacy, more amenities — more value </p>
-                    </div>
-                    <div class="info-content col-md-4">
-                        <img class="icons" src="assets/images/planet.png" alt="planet icon">
-                        <p><strong> Worldwide Coverage </strong><br>
-                            Over 1,400,000 hotels in more than 200 countries</p>
-                    </div>
-                </div>
-                <h1 id="recomended">Recomended Apartment</h1>
-                <div class="row">
-                        <div class="apartment col-md-6" v-for="a in apartments">
-                            <div class="apartment-border">
-                                <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
-                                <div class="apartment-info">
-                                    <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
-                                    <p><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
-                                    <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
-                                    <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
-                                    <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
-                                    <div class="price-for-night">
-                                        <p style="color: white;">{{a.priceForNight}}€ </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <footer class="footer">
-            </footer>
-    </div>
-            <script src="/assets/js/vue.js"></script>
-            <script src="/assets/js/axios.js"></script>
-            <script src="https://unpkg.com/vuejs-datepicker"></script>
-            <script src="/assets/js/moment.min.js"></script>
-            <script src="/assets/js/toast.js"></script>
-            <script src="/app/a.js"></script>
-        </body>
-        </html>
+
+<body>
+	<h1>Test</h1>
+	<a href="/rest/test">Test</a>
+	<a href="/rest/dalje">Test</a>
+</br>
+
+<a href="/login.html">Login to real project page</a>
+	-->
+	<!--  
+		<a href="/home/hal9000/web materijali/webProjekat/web_projekat/apartmentBookingWebApp/static/login.html">Login to real project page</a>
+	-->
+</body>
+</html>
+
