@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  min-height: 100vh; 
+}
 .bk-img{
     background-image: url("a.jpeg");
     background-size: cover;
@@ -21,9 +27,7 @@
     border: hidden;
     box-sizing: border-box;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);}
-#header{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    }
+
 .price{
     height: 50px;
     width: 115px;
@@ -94,7 +98,7 @@ select option[value=""]{
 .search{
     border: 1px solid #ddddde;
     border-radius: 8px;
-    width: 650px;
+    width: 700px;
     height: 200px;
     max-width: 1000px;
     padding: 20px;

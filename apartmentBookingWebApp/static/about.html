@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/reset_password.css">
+  <link rel="stylesheet" href="assets/css/about.css">
 </head>
 <body>
   <main>
-    <main>
+    <div class="navigationbar"> 
       <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #3268a8;">
         <a class="navbar-brand"><img src="assets/images/logo.png" style="width:70px;height:70px;"></a>
         <span class="navbar-text" style="color: white;">BnBBooking</span>
@@ -38,37 +38,27 @@
                   <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='/login.html'" >Sign in</button>
               </div>
           </li>
-
   
         </ul>
     </nav>
+    </div>
+    
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-6 login-section-wrapper">
-          <div class="brand-wrapper">
-            <img src="assets/images/logo.png" alt="logo" class="logo">
-          </div>
-          <div id="resetPasswordFormDiv" class="login-wrapper my-auto">
-            <h1 class="login-title">Reset password</h1>
-            <form action="#!">
-              <div class="form-group">
-                <label for="username">Usename</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
-              </div>
-              <div class="form-group mb-4">
-                <label for="password">New Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword" v-model="password">
-              </div>
-              <div class="form-group mb-4">
-                <label for="password">New Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword again" v-model="confirmPassword">
-              </div>
-              <input name="login" id="login" class="btn btn-block reset-btn" type="button" value="Reset" v-on:click="resetPassword(username, password)">
-            </form>
+        <div class="col-6 login-section-wrapper">
+          <div id="log" class="login-wrapper my-auto">
+            <h1 class="login-title">About BnBBooking</h1>
+
+            <p>Founded in 2020 by two brilliant programmers Radovan Zupunski and Aleksandar Ignjatijevic, amid the Coronavirus outbreak in Novi Sad, BnBBooking company has grown from a small Serbian start-up to one of the world’s leading digital travel companies. Part of BnBBooking Holdings Inc. (NASDAQ: BKNG), BnBBooking.com’s mission is to make it easier for everyone to experience the world.
+
+              By investing in technology that takes the friction out of travel, BnBBooking.com seamlessly connects millions of travelers to memorable experiences, a variety of transportation options, and incredible places to stay – from homes to hotels, and much more. As one of the world’s largest travel marketplaces for both established brands and entrepreneurs of all sizes, BnBBooking.com enables properties around the world to reach a global audience and grow their businesses.
+              
+              BnBBooking.com offers more than 28 million reported accommodation listings, including over 6.2 million homes, apartments, and other unique places to stay. Wherever you want to go and whatever you want to do, BnBBooking.com makes it easy and supports you with 24/7 customer support.</p>
             
+           
           </div>
         </div>
-        <div class="col-sm-6 px-0 d-none d-sm-block">
+        <div class="col-6 px-0 d-none d-sm-block">
           <img src="assets/images/Vacation-Rental-750x498.jpg" alt="login image" class="login-img">
         </div>
       </div>
@@ -79,6 +69,6 @@
   <script src="/assets/js/axios.js"></script>
   <script src="/assets/js/moment.min.js"></script>
   <script src="/assets/js/toast.js"></script>
-  <script src="/app/resetPassword.js"></script>
+  <script src="/app/login.js"></script>
 </body>
 </html>

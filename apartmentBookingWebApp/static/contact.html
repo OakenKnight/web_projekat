@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/reset_password.css">
+  <link rel="stylesheet" href="assets/css/contact.css">
 </head>
 <body>
   <main>
-    <main>
+    <div class="navigationbar"> 
       <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #3268a8;">
         <a class="navbar-brand"><img src="assets/images/logo.png" style="width:70px;height:70px;"></a>
         <span class="navbar-text" style="color: white;">BnBBooking</span>
@@ -38,34 +38,32 @@
                   <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='/login.html'" >Sign in</button>
               </div>
           </li>
-
   
         </ul>
     </nav>
+    </div>
+    
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6 login-section-wrapper">
-          <div class="brand-wrapper">
-            <img src="assets/images/logo.png" alt="logo" class="logo">
-          </div>
-          <div id="resetPasswordFormDiv" class="login-wrapper my-auto">
-            <h1 class="login-title">Reset password</h1>
-            <form action="#!">
-              <div class="form-group">
-                <label for="username">Usename</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
+          <div id="log" class="login-wrapper my-auto">
+            <h1 class="login-title">Contact us</h1>
+              <div class="asf">
+                <label for="address">Address</label>
+                <p> Big Shopping centar (Sentandrejski put 11), Novi Sad <br> 021-2701-702 <br> 011-7155-807</p>
               </div>
               <div class="form-group mb-4">
-                <label for="password">New Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword" v-model="password">
+                <label for="shifts">Working hours</label>
+                <p> Mon: 09:00 - 20:00<br>
+                    Tue: 09:00 - 20:00<br>
+                    Wed: 09:00 - 20:00<br>
+                    Thu: 09:00 - 20:00<br>
+                    Fri: 09:00 - 20:00<br>
+                    Sat: 10:00 - 18:00<br>
+                    Sun: Closed</p>
               </div>
-              <div class="form-group mb-4">
-                <label for="password">New Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword again" v-model="confirmPassword">
-              </div>
-              <input name="login" id="login" class="btn btn-block reset-btn" type="button" value="Reset" v-on:click="resetPassword(username, password)">
-            </form>
             
+           
           </div>
         </div>
         <div class="col-sm-6 px-0 d-none d-sm-block">
@@ -79,6 +77,6 @@
   <script src="/assets/js/axios.js"></script>
   <script src="/assets/js/moment.min.js"></script>
   <script src="/assets/js/toast.js"></script>
-  <script src="/app/resetPassword.js"></script>
+  <script src="/app/login.js"></script>
 </body>
 </html>
