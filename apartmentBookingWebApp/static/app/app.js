@@ -13,14 +13,11 @@ const router = new VueRouter({
 	    { path: '/register', component: Register },
 	    { path: '/contact', component: Contact },
 	    { path: '/about', component: About },
-	    { path: '/welcome', component: Welcome }
+	    { path: '/', component: Welcome }
 	  ]
 });
 
 var app = new Vue({
 	router,
 	el: '#app',
-	mounted(){
-		window.location.href = "#/welcome";
-	}
 });
