@@ -12,10 +12,10 @@ Vue.component("login",{
       <span class="navbar-text" style="color: white;">BnBBooking</span>
       <ul class="navbar-nav">
 	  <li class="nav-item">
-	  <a class="nav-link" href="#/welcome">Home</a>
+	  <a class="nav-link" href="#/">Home</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Reserve</a>
+				<a class="nav-link" href="#/reserve">Reserve</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="">Recomend</a>

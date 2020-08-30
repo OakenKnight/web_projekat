@@ -6,9 +6,11 @@ Vue.component("about",{
         <a class="navbar-brand"><img src="assets/images/logo.png" style="width:70px;height:70px;"></a>
         <span class="navbar-text" style="color: white;">BnBBooking</span>
         <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Reserve</a>
+                <a class="nav-link" href="#/reserve">Reserve</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="">Recomend</a>

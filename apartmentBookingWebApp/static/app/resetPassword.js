@@ -13,20 +13,22 @@ Vue.component("resetPassword",{
 	  <a class="navbar-brand"><img src="assets/images/logo.png" style="width:70px;height:70px;"></a>
 	  <span class="navbar-text" style="color: white;">BnBBooking</span>
 	  <ul class="navbar-nav">
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Reserve</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="">Recomend</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#/about">About us</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#/contact">Contact us</a>
-			</li>
-			<li>
+	  	<li class="nav-item">
+			<a class="nav-link" href="#/">Home</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Reserve</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="">Recomend</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#/about">About us</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#/contact">Contact us</a>
+		</li>
+		<li>
 			<div class="sign-in-up" style="right:0">
 				<button type="button" class="btn my-2 my-lg-0" onclick="location.href='/register.html'" >Create account</button>
 				<button type="button" class="btn my-2 my-lg-0"  onclick="location.href='/login.html'" >Sign in</button>

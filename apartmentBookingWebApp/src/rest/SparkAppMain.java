@@ -1,4 +1,5 @@
 package rest;
+
 import static spark.Spark.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,12 +17,14 @@ import beans.Address;
 import beans.Amenity;
 import beans.Apartment;
 import beans.ApartmentComment;
+import beans.ApartmentDTO;
 import beans.ApartmentStatus;
 import beans.ApartmentType;
 import beans.Gender;
 import beans.Guest;
 import beans.Housekeeper;
 import beans.Location;
+import beans.SearchedApartment;
 import beans.User;
 import beans.UserType;
 import io.jsonwebtoken.Jwts;
@@ -93,6 +96,52 @@ public class SparkAppMain {
 			return g.toJson(apartments); 
 		});
 		
+		post("/rest/search", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+
+			System.out.println(payload);
+			SearchedApartment searchedApartment = g.fromJson(payload, SearchedApartment.class);
+			if(searchedApartment!=null){
+				System.out.println("1");
+			}else{
+				System.out.println("2");
+			}
+			System.out.println(searchedApartment.getNumberOfGuests() + "A;KJSFBASHKOBFBOIASHFGVASOJYHVF");
+			
+			long arriveDate = Long.parseLong(searchedApartment.getArriveDate());
+			System.out.println(searchedApartment.getArriveDate());
+			long departDate = Long.parseLong(searchedApartment.getLeavingDate());
+			System.out.println(searchedApartment.getLeavingDate());
+
+			int numberOfGuests = Integer.parseInt(searchedApartment.getNumberOfGuests());
+			System.out.println(searchedApartment.getNumberOfGuests());
+
+			int minimumPrice = Integer.parseInt(searchedApartment.getMinimumPrice());
+			System.out.println(searchedApartment.getMinimumPrice());
+
+			int maximumPrice = Integer.parseInt(searchedApartment.getMaximumPrice());			
+			System.out.println(searchedApartment.getMaximumPrice());
+
+
+			ApartmentDTO aptDTO = new ApartmentDTO(searchedApartment.getDestination(), new java.sql.Date(arriveDate), new java.sql.Date(departDate), 0, minimumPrice, maximumPrice);
+			
+			//System.out.println(aptDTO.getArriveDate());
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			ArrayList<Apartment> apartments = (ArrayList<Apartment>)apartmentRepository.getAll();
+			ArrayList<Apartment> newOnes = new ArrayList<Apartment>();
+			int i=0;
+			//ovde je samo pravljeno da se vidi da li radi ista kod vracanja responsa
+			for(Apartment a : apartments){
+				if(i<2){
+					newOnes.add(a);
+				}
+				i++;
+			}
+
+			return g.toJson(newOnes); 
+			
+		});
 	}
 
 }
