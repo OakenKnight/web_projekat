@@ -1,41 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login Template</title>
-  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/about.css">
-</head>
-<body>
-  <main>
+Vue.component("about",{ 
+    template:`
+    <main>
     <div class="navigationbar"> 
       <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #3268a8;">
         <a class="navbar-brand"><img src="assets/images/logo.png" style="width:70px;height:70px;"></a>
         <span class="navbar-text" style="color: white;">BnBBooking</span>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="#">Reserve</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Recomend</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about.html">About us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contact.html">Contact us</a>
-            </li>
-            <li>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Recomend</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#/about">About us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#/contact">Contact us</a>
+              </li>
+              <li>
               <div class="sign-in-up" style="right:0">
-                  <button type="button" class="btn my-2 my-lg-0" onclick="location.href='/register.html'" >Create account</button>
-                  <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='/login.html'" >Sign in</button>
+              <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" >Create account</button>
+              <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" >Sign in</button>
               </div>
           </li>
   
@@ -64,11 +51,7 @@
       </div>
     </div>
   </main>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script src="/assets/js/vue.js"></script>
-  <script src="/assets/js/axios.js"></script>
-  <script src="/assets/js/moment.min.js"></script>
-  <script src="/assets/js/toast.js"></script>
-  <script src="/app/login.js"></script>
-</body>
-</html>
+    `
+});
+
+
