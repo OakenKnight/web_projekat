@@ -38,4 +38,14 @@
   "apartmentsId" : [ ],
   "reservationId" : [ ],
   "jwttoken" : null
+}, {
+  "username" : "coaPera",
+  "password" : "123456789",
+  "firstName" : "Aleksandar ",
+  "lastName" : "Peric",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
 } ]

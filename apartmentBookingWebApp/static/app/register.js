@@ -88,11 +88,12 @@ Vue.component("register",{
 	,
     methods: {
     	tryRegister : function(user) {
+        console.log(user.password);
 			if(this.password > 8 && this.password === this.confirmPassword){
 				axios
 				.post("/rest/register", user)
 				.then(function(response) {
-					window.location.href = '/login.html';
+					window.location.href = '/#/login';
 				})
 				.catch(function(error){alert("Username already exists!!!")})
 			}else{

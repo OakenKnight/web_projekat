@@ -67,7 +67,11 @@ public class SearchedApartment {
         this.maxPrice=maximumPrice;
     }
     
+    @Override
 
+    public String toString(){
+        return "[" +destination +","+ arriveDate+","+departDate+","+numberOfGuests+","+minPrice+","+maxPrice+"]";
+    }
 
 
 }
