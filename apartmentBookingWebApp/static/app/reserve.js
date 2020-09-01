@@ -1,10 +1,13 @@
 Vue.component("reserve",{ 
 	data: function(){
 		return{
+            myModal:false,
             apartments: [],
             searchedApartment:{},
+            selectedApartment:{},
             arriveDate: null,
             departDate: null,
+            modal:false,
             minPrice: "",
             maxPrice:"",
             disabledArriveDates: {
@@ -101,8 +104,9 @@ Vue.component("reserve",{
                                 Over 1,400,000 hotels in more than 200 countries</p>
                         </div>
                     </div>
-                    <div class="row">
-                            <div class="apartment col-md-6" v-for="a in apartments">
+                    <ul>
+                        <li> 
+                            <div class="apartment col-md-6" v-for="a in apartments" v-on:click="showMore(a)">
                                 <div class="apartment-border">
                                     <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                                     <div class="apartment-info">
@@ -112,12 +116,41 @@ Vue.component("reserve",{
                                         <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
                                         <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
                                         <div class="price-for-night">
-                                            <p style="color: white;">{{a.priceForNight}}€ </p>
+                                            <p>{{a.priceForNight}}€ </p>
+                                        </div>
+                                                                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div v-if="myModal">
+                        <transition name="modal">
+                            <div class="modal-mask">
+                                <div class="modal-wrapper">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">More info about apartment</h4>
+                                                <button type="button" class="close absolute pin-t pin-r" v-on:click="myModal = false">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="details">
+                                                    <label>Ime hotela</label>
+                                                    <p>{{selectedApartment.name}}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </transition>
+                        <h2>HAHAHAH!</h2>
                     </div>
+                    
                 </div>
                 <footer class="footer">
                 </footer>
@@ -141,7 +174,13 @@ Vue.component("reserve",{
 			axios
 			.post('rest/search',searchedApartment)
 			.then(response => {this.apartments = response.data})
-		}
+        },
+        showMore: function(a){
+            console.log(a);
+            this.selectedApartment = a;
+            console.log(this.selectedApartment.name);
+            this.myModal = true;
+        },
 	},
 	watch:{
 		arriveDate: function(newDate, oldDate){
@@ -180,3 +219,4 @@ Vue.component("reserve",{
 		vuejsDatepicker
 	}
 });
+

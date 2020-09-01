@@ -54,7 +54,7 @@ public class Address {
 	}
 
 
-
+	
 	private boolean validateAddress(String addr){
 		Pattern pattern  = Pattern.compile("[a-zA-Z ]+[ ][0-9]+[ ]*(\\,)[a-zA-Z ]+[ ][0-9]{5}");
 		Matcher matcher = pattern.matcher(addr);
