@@ -106,119 +106,33 @@ Vue.component("housekeeper",{
                           </select>
                       </div>
                       <hr>
-                      <div class="reservation row">
+                      <div class="reservation row" v-for="r in reservations">
                           <div class="column left">
                               <div style="text-align: center;">
-                                  <h3 style="display: inline-block;">Reservation accepted</h3>
+                                  <h3 style="display: inline-block;">Reservation {{r.reservationStatus}}</h3>
                               </div>
                               <div class="row">
                                   <div class="reservation-apartment-info column">
                                       <h4>Apartment info</h4>
-                                      <p>Apartment name: Hotel neki</p>
-                                      <p>Arrival date: 22.10.2020.</p>
-                                      <p>Depart date: 26.10.2020.</p>
-                                      <p>Number of guests: 2</p>
-                                      <p>Total price: 130€</p>
+                                      <p>Apartment name: {{findApartmentName(r.apartmentId)}}</p>
+                                      <p>Arrival date: {{r.arrivalDate | dateFormat('DD.MM.YYYY')}}</p>
+                                      <p>Number of nights: {{r.numberOfNights}}</p>
+                                      <p>Total price: {{r.totalPrice}}€</p>
                                   </div>
                                   <div class="reservation-guest-info column">
                                       <h4>Guest info</h4>
-                                      <p>Guest name: Radovan Zupunski</p>
-                                      <p>Guest username: rale</p>
-                                      <p>Message:<br>Dolazim oko pola 4</p>
+                                      <p v-for="g in guests" v-if="g.username == r.guestId">Guest name: {{g.firstName}} {{g.lastName}}</p>
+                                      <p>Guest username: {{r.guestId}}</p>
+                                      <p>Message:<br>{{r.message}} 4</p>
                                   </div>
                               </div>
                           </div>
                           <div class="column right">
-                              <button type="button" class="btn btn-primary" disabled>Accept</button>
-                              <button type="button" class="btn btn-primary" >Reject</button>
-                              <button type="button" class="btn btn-primary" >Finish</button>
+                              <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'CREATED'">Accept</button>
+                              <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED' && r.reservationStatus != 'CREATED'">Reject</button>
+                              <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED'">Finish</button>
                           </div>
                       </div>
-                      <div class="reservation row">
-                          <div class="column left">
-                              <div style="text-align: center;">
-                                  <h3 style="display: inline-block;">Reservation rejected</h3>
-                              </div>
-                              <div class="row">
-                                  <div class="reservation-apartment-info column">
-                                      <h4>Apartment info</h4>
-                                      <p>Apartment name: Hotel neki</p>
-                                      <p>Arrival date: 22.10.2020.</p>
-                                      <p>Depart date: 26.10.2020.</p>
-                                      <p>Number of guests: 2</p>
-                                      <p>Total price: 130€</p>
-                                  </div>
-                                  <div class="reservation-guest-info column">
-                                      <h4>Guest info</h4>
-                                      <p>Guest name: Radovan Zupunski</p>
-                                      <p>Guest username: rale</p>
-                                      <p>Message:<br>Dolazim oko pola 4</p>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="column right">
-                              <button type="button" class="btn btn-primary" disabled>Accept</button>
-                              <button type="button" class="btn btn-primary" disabled>Reject</button>
-                              <button type="button" class="btn btn-primary" disabled>Finish</button>
-                          </div>
-                      </div>
-                      <div class="reservation row">
-                          <div class="column left">
-                              <div style="text-align: center;">
-                                  <h3 style="display: inline-block;">Reservation created</h3>
-                              </div>
-                              <div class="row">
-                                  <div class="reservation-apartment-info column">
-                                      <h4>Apartment info</h4>
-                                      <p>Apartment name: Hotel neki</p>
-                                      <p>Arrival date: 22.10.2020.</p>
-                                      <p>Depart date: 26.10.2020.</p>
-                                      <p>Number of guests: 2</p>
-                                      <p>Total price: 130€</p>
-                                  </div>
-                                  <div class="reservation-guest-info column">
-                                      <h4>Guest info</h4>
-                                      <p>Guest name: Radovan Zupunski</p>
-                                      <p>Guest username: rale</p>
-                                      <p>Message:<br>Dolazim oko pola 4</p>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="column right">
-                              <button type="button" class="btn btn-primary" >Accept</button>
-                              <button type="button" class="btn btn-primary" >Reject</button>
-                              <button type="button" class="btn btn-primary" disabled>Finish</button>
-                          </div>
-                      </div>
-                      <div class="reservation row">
-                          <div class="column left">
-                                  <div style="text-align: center;">
-                                      <h3 style="display: inline-block;">Reservation finished</h3>
-                                  </div>
-                                  <div class="row">
-                                      <div class="reservation-apartment-info column">
-                                          <h4>Apartment info</h4>
-                                          <p>Apartment name: Hotel neki</p>
-                                          <p>Arrival date: 22.10.2020.</p>
-                                          <p>Depart date: 26.10.2020.</p>
-                                          <p>Number of guests: 2</p>
-                                          <p>Total price: 130€</p>
-                                      </div>
-                                      <div class="reservation-guest-info column">
-                                          <h4>Guest info</h4>
-                                          <p>Guest name: Radovan Zupunski</p>
-                                          <p>Guest username: rale</p>
-                                          <p>Message:<br>Dolazim oko pola 4</p>
-                                      </div>
-                                  </div>
-                          </div>
-                          <div class="column right">
-                              <button type="button" class="btn btn-primary" disabled>Accept</button>
-                              <button type="button" class="btn btn-primary" disabled>Reject</button>
-                              <button type="button" class="btn btn-primary" disabled>Finish</button>
-                          </div>
-                      </div>
-
                   </section>
               </div>
           </div>
@@ -271,7 +185,7 @@ Vue.component("housekeeper",{
             this.reservations.forEach(element => {
 				if(element.Id === lr){
                     var d = Date.parse(element.arrivalDate);
-                    info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +")";
+                    info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +"), "+ element.reservationStatus.charAt(0).toUpperCase() + element.reservationStatus.slice(1).toLowerCase();
                 }
             });
             
@@ -282,7 +196,7 @@ Vue.component("housekeeper",{
             this.reservations.forEach(element => {
 				if(element.Id === res){
                     var d = Date.parse(element.arrivalDate);
-                    info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +")";
+                    info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +"), " +element.reservationStatus.charAt(0).toUpperCase() + element.reservationStatus.slice(1).toLowerCase();
                 }
             });
             
@@ -290,5 +204,11 @@ Vue.component("housekeeper",{
         }
 
     },
+    filters: {
+    	dateFormat: function (value, format) {
+    		var parsed = moment(value);
+    		return parsed.format(format);
+    	}
+   	}
 
 });

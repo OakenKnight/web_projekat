@@ -107,9 +107,12 @@ public class SparkAppMain {
 			}
 			ArrayList<Guest> guests = new ArrayList<Guest>();
 			for (Apartment a : apartments) {
-				for (String reserv : a.getReservationsId()) {
-					if(!guests.contains(guestRepository.getObj(reservationRepository.getObj(reserv).getGuestId())))
+				for (String reserv : a.getReservationsId()) {	
+					if(guests.stream().filter(guest -> guest.getUsername()
+							.equals(reservationRepository.getObj(reserv).getGuestId()))
+							.findFirst().orElse(null) == null) {
 						guests.add(guestRepository.getObj(reservationRepository.getObj(reserv).getGuestId()));
+					}
 				}
 			}
 			return g.toJson(guests); 
