@@ -91,7 +91,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32", "app42" ],
+    "apartmentsId" : [ "app12", "app22", "app32"],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -136,7 +136,7 @@
     "id" : null,
     "name" : "Dorucak"
   } ],
-  "reservationsId" : [ "b" ],
+  "reservationsId" : [ "mitarMitar1", "milica1" ],
   "id" : "app12"
 }, {
   "name" : "Hotel BlaBla",
@@ -161,7 +161,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32", "app42" ],
+    "apartmentsId" : [ "app12", "app22", "app32"],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -206,7 +206,7 @@
     "id" : null,
     "name" : "Dorucak"
   } ],
-  "reservationsId" : [ "b" ],
+  "reservationsId" : [ "milica2", "nikola1" ],
   "id" : "app22"
 }, {
   "name" : "Tiski cvet",
@@ -231,7 +231,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32", "app42" ],
+    "apartmentsId" : [ "app12", "app22", "app32"],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -276,6 +276,6 @@
     "id" : null,
     "name" : "Dorucak"
   } ],
-  "reservationsId" : [ "b" ],
+  "reservationsId" : [ "nikola2", "kristina931" ],
   "id" : "app32"
 } ]

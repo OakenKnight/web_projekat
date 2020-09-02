@@ -24,6 +24,8 @@ import beans.Gender;
 import beans.Guest;
 import beans.Housekeeper;
 import beans.Location;
+import beans.Reservation;
+import beans.ReservationStatus;
 import beans.SearchedApartment;
 import beans.User;
 import beans.UserType;
@@ -31,6 +33,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import repository.ApartmentRepository;
+import repository.GuestRepository;
+import repository.HousekeeperRepository;
+import repository.ReservationRepository;
 import service.SearchService;
 import service.UserService;
 
@@ -42,7 +47,7 @@ public class SparkAppMain {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	public static void main(String[] args) throws FileNotFoundException {
-		
+				
 		port(5000);
 		try {
 			staticFiles.externalLocation(new File("./static").getCanonicalPath());
@@ -75,6 +80,59 @@ public class SparkAppMain {
 			Guest guest = service.registerNewGuest(user);
 			if(guest == null) res.status(500);
 			return g.toJson(user); 
+		});
+		
+		get("/rest/housekeepersApartment", (req,res)->{
+			String housekeeperId = req.queryParams("housekeeper");
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			ArrayList<Apartment> allApartment = (ArrayList<Apartment>)apartmentRepository.getAll();
+			ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+			for (Apartment a : allApartment) {
+				if(a.getHousekeeper().getUsername().equals(housekeeperId))
+					apartments.add(a);
+			}
+			return g.toJson(apartments); 
+		});
+		
+		get("/rest/housekeepersGuests", (req,res)->{
+			String housekeeperId = req.queryParams("housekeeper");
+			GuestRepository guestRepository = new GuestRepository();
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			ReservationRepository reservationRepository = new ReservationRepository();
+			ArrayList<Apartment> allApartment = (ArrayList<Apartment>)apartmentRepository.getAll();
+			ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+			for (Apartment a : allApartment) {
+				if(a.getHousekeeper().getUsername().equals(housekeeperId))
+					apartments.add(a);
+			}
+			ArrayList<Guest> guests = new ArrayList<Guest>();
+			for (Apartment a : apartments) {
+				for (String reserv : a.getReservationsId()) {
+					if(!guests.contains(guestRepository.getObj(reservationRepository.getObj(reserv).getGuestId())))
+						guests.add(guestRepository.getObj(reservationRepository.getObj(reserv).getGuestId()));
+				}
+			}
+			return g.toJson(guests); 
+		});
+
+		
+		get("/rest/housekeepersReservation", (req,res)->{
+			String housekeeperId = req.queryParams("housekeeper");
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			ReservationRepository reservationRepository = new ReservationRepository();
+			ArrayList<Apartment> allApartment = (ArrayList<Apartment>)apartmentRepository.getAll();
+			ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+			for (Apartment a : allApartment) {
+				if(a.getHousekeeper().getUsername().equals(housekeeperId))
+					apartments.add(a);
+			}
+			ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+			for (Apartment a : apartments) {
+				for (String reserv : a.getReservationsId()) {
+					reservations.add(reservationRepository.getObj(reserv));
+				}
+			}
+			return g.toJson(reservations); 
 		});
 		
 		post("/rest/reset", (req, res) ->{
@@ -113,7 +171,30 @@ public class SparkAppMain {
 	}
 
 }
+
+//DODAVANJE REZERVACIJA
+//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//Date arrivalDate = null;
+//try {
+//	arrivalDate = sdf.parse("12/10/2020");
+//} catch (ParseException e1) {
+//	// TODO Auto-generated catch block
+//	e1.printStackTrace();
+//}
+//String message = "...";
+//String guestId = "kristina93";
 //
+//Reservation reservation = new Reservation("app32", arrivalDate, 3, 100, message, guestId, ReservationStatus.ACCEPTED);
+//reservation.setId(guestId+"1");
+//ReservationRepository reservationRepository = new ReservationRepository();
+//reservationRepository.create(reservation);
+
+
+
+
+
+
+//DODAVANJE APARTMANA
 //Address address = new Address("Strazilovska","15","Novi Sad","21000");
 //Location location = new Location(78.93, 15.65, address);
 //ArrayList<Date> freeDates = new ArrayList<Date>();

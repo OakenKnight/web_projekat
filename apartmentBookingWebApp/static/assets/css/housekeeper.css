@@ -1,0 +1,286 @@
+.options{
+    min-height: 100%;
+    min-width: 15%;
+    background-color: #3268a8;
+}
+.column{
+  float: left;
+}
+.row{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.options ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #3268a8;
+    position: sticky;
+    top: 0;
+    right: 0;
+  }
+.gender{
+  width: 35%;
+  margin: auto;
+}
+.gender input,label, img{
+  display: inline-block;
+}
+.gender-sign-all{
+  width: 40px;
+  height: 40px;
+}       
+.gender-sign{
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.option a {
+    display: block;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 20px;
+  }
+.option a:hover {
+    background-color: grey;
+    color: white;
+  }
+
+.sections{
+    width: 85%;
+    background-color: #fff;
+  }
+.no-margin{
+  margin: 0;
+  padding: 0;
+}
+.users{
+  width: 50%;
+  border: 1px solid grey;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);
+  }
+.user-info{
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon{
+  display: inline-block;
+}
+.users:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+}
+.users:hover .all-apartments{
+  display: block;
+}
+
+.all-apartments{
+  display: none;
+  margin-left: 3px;
+}
+.search{
+  width: 50%;
+  margin: auto;
+}
+.search input{
+  width: 100%;
+  height: 50px;
+  background-color:white;
+  border-radius: 4px;
+  border-color: #dddfe2;
+  border: hidden;
+  font-size: 25px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);}
+
+.search input:hover , .search input:focus {
+  border-bottom:4px solid #3268a8;
+  border-radius: 4px;
+  transition: 0.1s;
+}
+
+#reservations .row{
+  height: auto;
+
+}
+.reservation{
+  width: 70%;
+  border: 1px solid grey;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
+}
+
+.reservation:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+}
+
+.action-div{
+  float: right;
+  padding: 3;
+  text-align: center;
+  border-radius: 8px;
+  margin: 10px;
+  border: 1px solid grey;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
+}
+
+.action-div:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.3);
+}
+
+.action-div img{
+  width: 60px;
+  height: 60px;
+}
+
+.left{
+    width: 70%;
+}
+
+.right{
+    width: 30%;
+    border-left: 1px solid grey;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-align: center;
+}
+
+.btn{
+  width: 200px;
+  margin: 10px;
+  margin-top: 30px;
+  border: 0px;
+  background-color:#3268a8;
+  color: #fff;
+  border-radius: 0;}
+
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+.btn:disabled:hover{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.btn:hover {
+  border: 1px solid #3268a8;
+  background-color: #fff;
+  color: #3268a8; }
+
+.reservation-guest-info{
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+.reservation-apartment-info{
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+.apartment{
+  text-align: center;
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+.apartment-pic{
+  width: 300px;
+  height: 250px;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 8px 0 0 8px;
+}
+
+.apartment-info{
+  width: 300px;
+  height: 200px;
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+  
+}
+.apartment-border{
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;
+  display: inline-block;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.apartment-border:hover{
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 8px 3px;
+}
+
+.apartment-info-icons{
+  height: 30px;
+  width: 30px;
+}
+
+.price-for-night{
+  width: 50px;
+  height: 30px;
+  background-color: #3268a8;
+  margin-left: 90%;
+  border-radius: 4px;
+  text-align: center;
+  padding: 1px;
+}
+
+.info-mark{
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.icons{
+  height: 70px;
+  width: 70px;
+}
+.apartment-type{
+  width: 60%;
+  margin: auto;
+}
+
+.select-apartment-type{
+  text-align: right;
+  margin-right: 45px;
+}
+
+select{
+  height: 50px;
+  display: inline-block;
+  background-color:white;
+  border-radius: 4px;
+  margin: 4px;
+  border-color: #dddfe2;
+  border: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  color: black;
+}
+
+select:hover {
+  border-bottom:4px solid #3268a8;
+  border-radius: 4px;
+  transition: 0.1s;
+}
+

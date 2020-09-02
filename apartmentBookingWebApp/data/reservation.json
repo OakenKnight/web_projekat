@@ -1,1 +1,55 @@
-[ ]
+[ {
+  "apartmentId" : "app12",
+  "arrivalDate" : 1600725600000,
+  "numberOfNights" : 5,
+  "totalPrice" : 100.0,
+  "message" : "Dolazim oko pola cetiri",
+  "guestId" : "mitarMitar",
+  "reservationStatus" : "CREATED",
+  "id" : "mitarMitar1"
+}, {
+  "apartmentId" : "app12",
+  "arrivalDate" : 1598911200000,
+  "numberOfNights" : 10,
+  "totalPrice" : 350.0,
+  "message" : "aaaaaaaaaaaaaaaa",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "milica1"
+}, {
+  "apartmentId" : "app22",
+  "arrivalDate" : 1590962400000,
+  "numberOfNights" : 2,
+  "totalPrice" : 50.0,
+  "message" : "bbbbbbbbbbbbb",
+  "guestId" : "milica",
+  "reservationStatus" : "FINISHED",
+  "id" : "milica2"
+}, {
+  "apartmentId" : "app22",
+  "arrivalDate" : 1585951200000,
+  "numberOfNights" : 4,
+  "totalPrice" : 120.0,
+  "message" : "Bice mi potreban parking",
+  "guestId" : "nikola",
+  "reservationStatus" : "REJECTED",
+  "id" : "nikola1"
+}, {
+  "apartmentId" : "app32",
+  "arrivalDate" : 1601935200000,
+  "numberOfNights" : 4,
+  "totalPrice" : 120.0,
+  "message" : "Bice mi potreban parking",
+  "guestId" : "nikola",
+  "reservationStatus" : "ACCEPTED",
+  "id" : "nikola2"
+}, {
+  "apartmentId" : "app32",
+  "arrivalDate" : 1602453600000,
+  "numberOfNights" : 3,
+  "totalPrice" : 100.0,
+  "message" : "...",
+  "guestId" : "kristina93",
+  "reservationStatus" : "ACCEPTED",
+  "id" : "kristina931"
+} ]

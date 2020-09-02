@@ -9,36 +9,6 @@
   "reservationId" : [ ],
   "jwttoken" : null
 }, {
-  "username" : "mikica",
-  "password" : "mika",
-  "firstName" : "Mika",
-  "lastName" : "Mikic",
-  "gender" : "MALE",
-  "userType" : "GUEST",
-  "apartmentsId" : [ ],
-  "reservationId" : [ ],
-  "jwttoken" : null
-}, {
-  "username" : "Rasa",
-  "password" : "123456788",
-  "firstName" : "Radovan",
-  "lastName" : "Zupunski",
-  "gender" : "MALE",
-  "userType" : "GUEST",
-  "apartmentsId" : [ ],
-  "reservationId" : [ ],
-  "jwttoken" : null
-}, {
-  "username" : "ababab",
-  "password" : "123456789",
-  "firstName" : "aaaa",
-  "lastName" : "aaaa",
-  "gender" : "FEMALE",
-  "userType" : "GUEST",
-  "apartmentsId" : [ ],
-  "reservationId" : [ ],
-  "jwttoken" : null
-}, {
   "username" : "coaPera",
   "password" : "123456789",
   "firstName" : "Aleksandar ",
@@ -47,5 +17,45 @@
   "userType" : "GUEST",
   "apartmentsId" : [ ],
   "reservationId" : [ ],
+  "jwttoken" : null
+}, {
+  "username" : "mitarMitar",
+  "password" : "mitaar",
+  "firstName" : "Mitar Mitra",
+  "lastName" : "Mitra Mitar",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ "app12" ],
+  "reservationId" : [ "mitarMitar1" ],
+  "jwttoken" : null
+}, {
+  "username" : "milica",
+  "password" : "micamica",
+  "firstName" : "Milica",
+  "lastName" : "Milicic",
+  "gender" : "FEMALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ "app12", "app22" ],
+  "reservationId" : [ "milica1", "milica2" ],
+  "jwttoken" : null
+}, {
+  "username" : "nikola",
+  "password" : "nikolanisamtijamajka",
+  "firstName" : "Nikola",
+  "lastName" : "Nikolic",
+  "gender" : "MALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ "app22", "app32" ],
+  "reservationId" : [ "nikola1", "nikola2" ],
+  "jwttoken" : null
+}, {
+  "username" : "kristina93",
+  "password" : "kriskris",
+  "firstName" : "Kristina",
+  "lastName" : "Kris",
+  "gender" : "FEMALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ "app32" ],
+  "reservationId" : [ "kristina931" ],
   "jwttoken" : null
 } ]

@@ -1,1 +1,10 @@
-[ ]
+[ {
+  "username" : "joca",
+  "password" : "joca",
+  "firstName" : "Jovan",
+  "lastName" : "Jovic",
+  "gender" : "MALE",
+  "userType" : "HOUSEKEEPER",
+  "apartmentsId" : [ "app12", "app22", "app32" ],
+  "jwttoken" : null
+} ]
