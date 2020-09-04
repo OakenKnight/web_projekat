@@ -1,6 +1,7 @@
 Vue.component("login",{ 
     data: function(){
 		return{
+      user: null,
 			username: "",
 			password: ""
 		}
@@ -72,7 +73,12 @@ Vue.component("login",{
     		axios
     		.post("/rest/login", {username: this.username, password: this.password})
     		.then(function(response) {
-				window.location.href = '/test.html';
+          this.user = response.data;
+          if(this.user.userType === 'HOUSEKEEPER'){
+            window.location.href = '#/housekeeper';
+          }else{
+            window.location.href = '/test.html';
+          }
 			})
 			.catch(function(error){alert("Wrong username or password")})
 			

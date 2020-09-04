@@ -67,7 +67,6 @@ public class SparkAppMain {
 			user = service.login(user.getUsername().trim(), user.getPassword());
 			String jws = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(new Date().getTime() + 1000*10L)).setIssuedAt(new Date()).signWith(key).compact();
 			user.setJWTToken(jws);
-			user.setUserType(UserType.ADMIN);
 			return g.toJson(user); 
 		});
 		

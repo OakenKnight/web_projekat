@@ -2,8 +2,16 @@ Vue.component("housekeeper",{
     data: function(){
 		return{
             apartments: [],
+            apartmentsBackUp: [],
             guests: [],
-            reservations: []
+            guestsBackUp: [],
+            reservations: [],
+            reservationsBackUp: [],
+            guestForSearch: "",
+            apartmentForSearch: "",
+            reservationForSearch: "",
+            gen: "all",
+            reservationTypeFilter: "1"
 		}
 	},
     template:`
@@ -44,7 +52,7 @@ Vue.component("housekeeper",{
               <div class="sections column">
                   <section id="apartments">
                       <h3>All your apartments</h3>
-                      <div class="search"><input type="text" name="guest" placeholder="Search apartment"></div>
+                      <div class="search"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
                       <hr>
                       <div class="apartment" v-for="a in apartments">
                         <div class="apartment-border">
@@ -65,17 +73,17 @@ Vue.component("housekeeper",{
                   <section id="guests">
                       <h1>-------------------------------------------------------------------------------------------------------------------------</h1>
                       <h3>All your guests</h3>
-                      <div class="search"><input type="text" name="guest" placeholder="Search guest"></div>
+                      <div class="search"><input @keyup.enter="searchGuest(guestForSearch)" type="text" name="guest" placeholder="Search guest" v-model="guestForSearch"></div>
                       <div class="gender">
                           <img class="gender-sign-all" src="assets/images/female-male-sign.png" alt="not found">
                           <label for="all">Show all</label>
-                          <input type="radio" id="all" name="gender" value="all" checked>
+                          <input type="radio" id="all" name="gender" value="all" v-model="gen" checked>
                           <img class="gender-sign" src="assets/images/female-sign.png" alt="not found">
                           <label for="ladies">Show only ladies</label>
-                          <input type="radio" id="ladies" name="gender" value="ladies">
+                          <input type="radio" id="ladies" name="gender" value="ladies"  v-model="gen">
                           <img class="gender-sign" src="assets/images/male-sign.png" alt="not found">
                           <label for="gentlemens">Show only gentlemens</label>
-                          <input type="radio" id="gentlemens" name="gender" value="algentlemens">
+                          <input type="radio" id="gentlemens" name="gender" value="gentlemens"  v-model="gen">
                       </div>
                       <hr>
                       <div class="users" v-for="g in guests">
@@ -95,9 +103,9 @@ Vue.component("housekeeper",{
                   <section id="reservations">
                       <h1>-------------------------------------------------------------------------------------------------------------------------</h1>
                       <h3>All your reservations</h3>
-                      <div class="search"><input type="text" name="reservation" placeholder="Search reservation by guest username"></div>
+                      <div class="search"><input type="text" name="reservation" placeholder="Search reservation by guest username" @keyup.enter="searchReservation(reservationForSearch)"  v-model="reservationForSearch"></div>
                       <div class="select-apartment-type">
-                          <select required>
+                          <select required v-model="reservationTypeFilter">
                               <option value="1" selected>Show all</option>
                               <option value="2">Show only accepted</option>
                               <option value="3">Show only rejected</option>
@@ -145,19 +153,21 @@ Vue.component("housekeeper",{
         .get('rest/housekeepersApartment', {params: {
             housekeeper: "joca"
         }})
-        .then(response => (this.apartments = response.data));
+        .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
 
         axios
         .get('rest/housekeepersReservation', {params: {
             housekeeper: "joca" 
         }})
-        .then(response => (this.reservations = response.data));
+        .then(response =>(this.reservations = response.data ,this.reservationsBackUp = [...this.reservations]));
 
         axios
         .get('rest/housekeepersGuests', {params: {
             housekeeper: "joca"
         }})
-        .then(response => (this.guests = response.data));
+        .then(response => (this.guests = response.data, this.guestsBackUp = [...this.guests]));
+
+
 	},
     methods: {
         calculateMark: function(apartment){
@@ -169,7 +179,7 @@ Vue.component("housekeeper",{
         },
         findApartmentName: function(apId){
             var n;
-            this.apartments.forEach(element =>{
+            this.apartmentsBackUp.forEach(element =>{
                 if(element.Id === apId)
                     n =  element.name;
             });
@@ -182,7 +192,7 @@ Vue.component("housekeeper",{
         lastReservation: function(guest){
             var lr = guest.reservationId[guest.reservationId.length -1];
             var info;
-            this.reservations.forEach(element => {
+            this.reservationsBackUp.forEach(element => {
 				if(element.Id === lr){
                     var d = Date.parse(element.arrivalDate);
                     info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +"), "+ element.reservationStatus.charAt(0).toUpperCase() + element.reservationStatus.slice(1).toLowerCase();
@@ -193,7 +203,7 @@ Vue.component("housekeeper",{
         },
         allGuestReservation: function(res){
             var info;
-            this.reservations.forEach(element => {
+            this.reservationsBackUp.forEach(element => {
 				if(element.Id === res){
                     var d = Date.parse(element.arrivalDate);
                     info = this.findApartmentName(element.apartmentId) + " (" + this.dateF(d,'DD.MM.YYYY') +"-" + this.dateF(d + 86400000*element.numberOfNights,'DD.MM.YYYY') +"), " +element.reservationStatus.charAt(0).toUpperCase() + element.reservationStatus.slice(1).toLowerCase();
@@ -201,6 +211,52 @@ Vue.component("housekeeper",{
             });
             
             return info;
+        },
+        searchGuest: function(keyWord){
+            if(keyWord === ""){
+                this.guests.splice(0,this.guests.length);
+                this.guests = [...this.guestsBackUp];  
+            }else{
+                this.guests.splice(0,this.guests.length);
+                this.guests = [...this.guestsBackUp];  
+                var i = this.guests.length;
+                while(i--){
+                    if(this.guests[i].username.toLowerCase() !== keyWord.toLowerCase()){
+                        this.guests.splice(i,1);
+                    }
+                }
+            }
+        },
+        searchApartment: function(keyWord){
+            if(keyWord === ""){
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+            }else{
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+                var i = this.apartments.length;
+                while(i--){
+                    if(this.apartments[i].name.toLowerCase() !== keyWord.toLowerCase() && this.apartments[i].location.address.city.toLowerCase() !== keyWord.toLowerCase()){
+                        this.apartments.splice(i,1);
+                    }
+                }
+            }
+        },
+        searchReservation: function(keyWord){
+            if(keyWord === ""){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp]; 
+                this.reservationTypeFilter = 1;
+            }else{
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].guestId.toLowerCase() !== keyWord.toLowerCase()){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }
         }
 
     },
@@ -209,6 +265,75 @@ Vue.component("housekeeper",{
     		var parsed = moment(value);
     		return parsed.format(format);
     	}
-   	}
+    },
+    watch:{
+        gen: function(newGender, oldGender){
+           if(newGender === "ladies"){
+            this.guests.splice(0,this.guests.length);
+            this.guests = [...this.guestsBackUp];  
+            var i = this.guests.length;
+            while(i--){
+                if(this.guests[i].gender !== "FEMALE"){
+                    this.guests.splice(i,1);
+                }
+            }
+           }else if(newGender === "gentlemens"){
+                this.guests.splice(0,this.guests.length);
+                this.guests = [...this.guestsBackUp];  
+                var i = this.guests.length;
+                while(i--){
+                    if(this.guests[i].gender !== "MALE"){
+                        this.guests.splice(i,1);
+                    }
+                }
+           }else{
+            this.guests.splice(0,this.guests.length);
+            this.guests = [...this.guestsBackUp];
+           }
+        },
+        reservationTypeFilter: function(newType, oldType){
+            console.log(newType);
+            if(newType == 2){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].reservationStatus !== "ACCEPTED"){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }else if(newType == 3){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].reservationStatus !== "REJECTED"){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }else if(newType == 4){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].reservationStatus !== "CREATED"){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }else if(newType == 5){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].reservationStatus !== "FINISHED"){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }else{
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+            }
+        }
+    }
 
 });
