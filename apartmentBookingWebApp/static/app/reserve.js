@@ -2,6 +2,7 @@ Vue.component("reserve",{
 	data: function(){
 		return{
             myModal:false,
+            error:false,
             apartments: [],
             searchedApartment:{},
             selectedApartment:{},
@@ -10,6 +11,7 @@ Vue.component("reserve",{
             modal:false,
             minPrice: "",
             maxPrice:"",
+            numberOfGuests:"",
             disabledArriveDates: {
                 to: new Date()
             },
@@ -71,16 +73,18 @@ Vue.component("reserve",{
                                     <div class="datepicker">
                                         <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" name="departDate" v-model="departDate"></vuejs-datepicker>
                                     </div>
-                                    <select required v-model="searchedApartment.numberOfGuests">
-                                        <option value="" disabled selected>Guests</option>
+                                    <select required v-model="numberOfGuests">
+                                        <option value="" disabled selected hidden>Guests</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
                                     </select>
+
                                     <input type="text" placeholder="Min price" name="minP" class="price" v-model="minPrice">
                                     <input type="text" placeholder="Max price" name="maxP" class="price" v-model="maxPrice">  
                                 </div>
+                                <p class="depart-date-error" v-if="error">Please select the depart date too.</p>
                                 <input name="search-btn" id="search-btn" class="btn btn-block" type="button" value="Search" v-on:click="searchApartments(searchedApartment)">
                             </form>
                         </div>
@@ -104,7 +108,7 @@ Vue.component("reserve",{
                                 Over 1,400,000 hotels in more than 200 countries</p>
                         </div>
                     </div>
-                    <ul>
+                    <ul style="list-style-type: none;">
                         <li> 
                             <div class="apartment col-md-6" v-for="a in apartments" v-on:click="showMore(a)">
                                 <div class="apartment-border">
@@ -148,12 +152,12 @@ Vue.component("reserve",{
                                 </div>
                             </div>
                         </transition>
-                        <h2>HAHAHAH!</h2>
                     </div>
-                    
+                    <h2 v-if="error"> ERROR</h2>
                 </div>
-                <footer class="footer">
-                </footer>
+                    <footer class="footer">
+                    </footer>
+
         </div>
 	</div>
 	`
@@ -162,6 +166,29 @@ Vue.component("reserve",{
         
 	},
 	methods:{
+        verifyArriveDate: function(){
+            if(this.arriveDate){
+                return false;
+            }else{
+                return true;
+            }
+        },
+        verifyDepartDate: function(){
+            if(this.departDate){
+                return false;
+            }else{
+                return true;
+            }
+        },
+        verifyDates: function(){
+            if(this.verifyArriveDate()){
+                if(this.verifyDepartDate()){
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        },
 		calculateMark: function(apartment){
 			var sum = 0;
 			apartment.comments.forEach(element => {
@@ -170,17 +197,34 @@ Vue.component("reserve",{
 			return  (sum / apartment.comments.length);
         },
         searchApartments: function(searchedApartment){
-            console.log(searchedApartment.arriveDate);
-			axios
+            //console.log(searchedApartment.arriveDate);
+            /*
+            var aptDTO = null;
+            //
+            if(this.arriveDate){
+                aptDTO = {destination:searchedApartment.destination, arriveDate:searchedApartment.arriveDate.getTime(),
+                        departDate:searchedApartment.departDate.getTime(), numberOfGuests:searchedApartment.numberOfGuests,
+                        minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};
+            }
+            */
+           if(this.verifyDates()){
+               console.log(searchedApartment.numberOfGuests);
+            axios
 			.post('rest/search',searchedApartment)
 			.then(response => {this.apartments = response.data})
+           }else{
+               this.error = true;
+               console.log(error);
+           }
+			
         },
         showMore: function(a){
             console.log(a);
             this.selectedApartment = a;
-            console.log(this.selectedApartment.name);
+            //console.log(this.selectedApartment.name);
             this.myModal = true;
         },
+
 	},
 	watch:{
 		arriveDate: function(newDate, oldDate){
@@ -212,7 +256,15 @@ Vue.component("reserve",{
 			if(isNaN(newPrice)){
 				this.maxPrice = newPrice.substring(0,newPrice.length -1);
 			}
+        },
+        numberOfGuests: function(newNumber, oldNumber){
+            this.searchedApartment.numberOfGuests = this.numberOfGuests;
+
+			if(isNaN(this.numberOfGuests)){
+				this.numberOfGuests = "Guests   ";
+			}
 		},
+
 
 	},
     components:{

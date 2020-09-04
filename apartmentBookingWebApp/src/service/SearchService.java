@@ -45,14 +45,22 @@ public class SearchService {
         /*
         if(!isNullOrEmpty(searchedApartment.getArriveDate()))
             apartments = filterByArriveDate(apartments, searchedApartment.getArriveDate());
+        */
 
-        if(!isNullOrEmpty(searchedApartment.getLevingDate()))
+        if(!isNullOrEmpty(searchedApartment.getArriveDate()) && !isNullOrEmpty(searchedApartment.getLeavingDate())){
+            apartments = filterByPeriod(apartments, searchedApartment.getArriveDate(), searchedApartment.getLeavingDate());
+        }
+         
+        /*
+        if(!isNullOrEmpty(searchedApartment.getLeavingDate()))
             apartments = filterByDepartDate(apartments, searchedApartment.getLeavingDate());
-        */      
+        */
 
 
         return apartments;
     }
+
+
     public static boolean isNullOrEmpty(String str) {
         if(str != null && !str.isEmpty())
             return false;
@@ -110,19 +118,95 @@ public class SearchService {
     }
 
     */
+    public ArrayList<Apartment> filterByPeriod(ArrayList<Apartment> apartments, String arriveDate, String departDate){
+
+        ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+
+        DateParser dateParser = new DateParser();
+        Date depart_date = dateParser.formatDate(dateParser.parseDate(departDate));
+        Date arrive_date = dateParser.formatDate(dateParser.parseDate(arriveDate));
+
+        System.out.println(dateParser.getDaysBetween(arrive_date, depart_date));
+        
+        for(Apartment a : apartments){
+            if(checkApartmentAvailability(a,arrive_date, depart_date)){
+                filteredApartments.add(a);
+            }
+        }
+        
+        return filteredApartments;
+    }
+    
+    public Boolean checkApartmentAvailability(Apartment a, Date arrive_date, Date depart_date) {
+        DateParser dateParser = new DateParser();
+
+        int days_between = dateParser.getDaysBetween(arrive_date,depart_date);
+
+        ArrayList<Long> dates = new ArrayList<Long>();
+
+        for(int i=0 ; i<=days_between; i++){
+            dates.add(i*86400000 + arrive_date.getTime());
+        }
+
+        for(Long date : dates){
+            if(!a.getFreeDates().contains(new Date(date))){
+                return false;
+            }
+        }
+        return true;
+    }
 
     public ArrayList<Apartment> filterByArriveDate(ArrayList<Apartment> apartments, String arriveDate) {
         //TODO : FILTER PO DATUMU
+        ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 
-        return apartments;
+        DateParser dateParser = new DateParser();
+        Date arrive_date = dateParser.parseDate(arriveDate);
+
+
+
+        for(Apartment a : apartments){
+            for(Date free_date : a.getFreeDates()){
+                if(dateExist(free_date, arrive_date)){
+                    filteredApartments.add(a);
+                }
+            }
+        }
+        
+
+        return filteredApartments;
     }
 
     public ArrayList<Apartment> filterByDepartDate(ArrayList<Apartment> apartments, String departDate) {
         //TODO : FILTER PO DATUMU
+        ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 
-        return apartments;
+        DateParser dateParser = new DateParser();
+        Date depart_date = dateParser.parseDate(departDate);
+
+        long miliseconds = depart_date.getTime();
+        System.out.println(miliseconds);
+
+        Date formateddate = dateParser.formatDate(depart_date);
+        System.out.println(formateddate);
+
+
+        for(Apartment a : apartments){
+            for(Date free_date : a.getFreeDates()){
+                if(dateExist(free_date, depart_date)){
+                    filteredApartments.add(a);
+                }
+                if(free_date.toString().equals(formateddate.toString())){
+                    System.out.println("USPEO SAM DA ISPROGRAMIRAM DATUME JEBENE");
+                }
+            }
+        }
+        
+        return filteredApartments;
     }
-
+    public Boolean dateExist(Date date, Date checkDate){
+        return date.getTime() <= checkDate.getTime() && checkDate.getTime() <= date.getTime()+86400000-1;
+    }
     public ArrayList<Apartment> filterByGuests(ArrayList<Apartment> apartments, String numberOfGuests) {
         int num = Integer.parseInt(numberOfGuests);
 

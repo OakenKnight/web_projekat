@@ -51,6 +51,7 @@ public class SparkAppMain {
 		port(5000);
 		try {
 			staticFiles.externalLocation(new File("./static").getCanonicalPath());
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -154,6 +155,15 @@ public class SparkAppMain {
 		get("/rest/recappart", (req, res) -> {
 			ApartmentRepository  apartmentRepository = new ApartmentRepository();
 			ArrayList<Apartment> apartments = (ArrayList<Apartment>)apartmentRepository.getAll();
+			Apartment a = apartments.get(0);
+			ArrayList<Date> dates = a.getFreeDates();
+			for(Date date : a.getFreeDates()){
+				System.out.println(date.toString());
+			}
+
+
+
+			
 			return g.toJson(apartments); 
 		});
 		
@@ -167,12 +177,87 @@ public class SparkAppMain {
 
 			ArrayList<Apartment> filtered = searchService.searchApartments(searchedApartment);
 
+
 			return g.toJson(filtered); 
 			
 		});
 	}
 
 }
+
+/* OVO JE ZA PRINT DATUMA U MILIS FORMATU NA SKRINU DA MOZES DA IH UZMES ZA JSON
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date d;
+			try {
+				d = sdf.parse("13/09/2020");
+				long milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+				d = sdf.parse("14/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("15/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("16/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("20/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("22/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("23/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("24/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("25/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("26/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+				d = sdf.parse("27/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+				
+				d = sdf.parse("28/09/2020");
+				milis = d.getTime();
+				System.out.println(milis);
+				dates.add(d);
+
+
+				a.setFreeDates(dates);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+			*/
+
 
 //DODAVANJE REZERVACIJA
 //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
