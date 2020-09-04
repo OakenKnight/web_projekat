@@ -8,7 +8,6 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.Housekeeper;
 import beans.Reservation;
 
 public class ReservationRepository implements ReservationRepositoryInterface{
@@ -25,7 +24,6 @@ public class ReservationRepository implements ReservationRepositoryInterface{
 				file.createNewFile();
 				saveAll(new ArrayList<Reservation>());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -70,7 +68,6 @@ public class ReservationRepository implements ReservationRepositoryInterface{
 		try {
 			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Reservation>>() {});
 		} catch (IllegalArgumentException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -88,7 +85,6 @@ public class ReservationRepository implements ReservationRepositoryInterface{
 			mapper.writerWithDefaultPrettyPrinter().writeValue(file, objs);
 			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

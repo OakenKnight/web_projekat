@@ -4,6 +4,11 @@ Vue.component("reserve",{
             myModal:false,
             error:false,
             apartments: [],
+            amenities:[],
+            basicAmenities:[],
+            familyAmenities:[],
+            facilityAmenities:[],
+            diningAmenities:[],
             searchedApartment:{},
             selectedApartment:{},
             arriveDate: null,
@@ -91,38 +96,23 @@ Vue.component("reserve",{
                     </div>
                 </div>
                 <div class="info">
-                    <div class="row"> 
-                        <div class="info-content col-md-4">
-                            <img class="icons" src="assets/images/hotel.png" alt="hotel icon">
-                            <p><strong> A place for everyone </strong><br>
-                                We stand for diversity, inclusion and families everywhere.</p>
-                        </div>
-                        <div class="info-content col-md-4">
-                            <img  class="icons" src="assets/images/money.png" alt="money icon">
-                            <p><strong> More for less </strong><br>
-                                More space, more privacy, more amenities — more value </p>
-                        </div>
-                        <div class="info-content col-md-4">
-                            <img class="icons" src="assets/images/planet.png" alt="planet icon">
-                            <p><strong> Worldwide Coverage </strong><br>
-                                Over 1,400,000 hotels in more than 200 countries</p>
-                        </div>
-                    </div>
+                    <div class="row"></div>
                     <ul style="list-style-type: none;">
                         <li> 
-                            <div class="apartment col-md-6" v-for="a in apartments" v-on:click="showMore(a)">
+                            <div class="apartment col-md-6" v-for="a in apartments">
                                 <div class="apartment-border">
                                     <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                                     <div class="apartment-info">
                                         <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
+                                        <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
                                         <p><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
                                         <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
                                         <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
-                                        <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
-                                        <div class="price-for-night">
-                                            <p>{{a.priceForNight}}€ </p>
+                                        <p><img class="apartment-info-icons" src="/assets/images/money.png" alt="not found"> {{a.priceForNight}} €</p>
+                                        <div class="row">
+                                            <button class="reserve-more-info-button" type="button" v-on:click="showMore(a)" >More info...</button>
+                                            <button class="reserve-book-button" type="button">Book now!</button>
                                         </div>
-                                                                                    
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +122,7 @@ Vue.component("reserve",{
                         <transition name="modal">
                             <div class="modal-mask">
                                 <div class="modal-wrapper">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">More info about apartment</h4>
@@ -143,8 +133,42 @@ Vue.component("reserve",{
                                             </div>
                                             <div class="modal-body">
                                                 <div class="details">
-                                                    <label>Ime hotela</label>
-                                                    <p>{{selectedApartment.name}}</p>
+                                                
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel.png" alt="not found"><strong>Hotel name</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.name}}</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.location.address.street}} {{selectedApartment.location.address.number}}, {{selectedApartment.location.address.city}}</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.guestNumber}}</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"><strong>Rooms</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.roomNumber}}</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/money.png" alt="not found"><strong>Price</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.priceForNight}}</p>
+                                                        </div>
+                                                    </div
+                                                    <div class="row">
+                                                        <div class="amenity col-md-6" v-for="a in amenities">
+                                                            <div class="apartment-border">
+                                                                <div class="apartment-info">
+                                                                    <p><strong> {{a.type}} </strong></p>
+                                                                    <p><strong> {{a.name}} </strong></p>
+                                                                    <p><strong> {{a.description}} </strong></p>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -153,7 +177,6 @@ Vue.component("reserve",{
                             </div>
                         </transition>
                     </div>
-                    <h2 v-if="error"> ERROR</h2>
                 </div>
                     <footer class="footer">
                     </footer>
@@ -221,9 +244,26 @@ Vue.component("reserve",{
         showMore: function(a){
             console.log(a);
             this.selectedApartment = a;
+            /*
+            if(this.verifyDates()){
+                window.location.href = "#/apartmentDetails?id=" + this.selectedApartment.id+"&arriveDate="+this.arriveDate+"&departDate="+this.departDate;
+            }else{
+                window.location.href = "#/apartmentDetails?id=" + this.selectedApartment.id;
+            }
+            //window.location.href = '#/apartmentDetails'+'?';
             //console.log(this.selectedApartment.name);
+
+            */
+           this.amenities = a.amenities;
             this.myModal = true;
         },
+
+        getBasicAmenities:function(){
+            this.basicAmenities = this.amenities.filter(function(amenity){
+                return amenity.type === 'BASIC';
+            });
+            console.log(this.basicAmenities)
+        }
 
 	},
 	watch:{

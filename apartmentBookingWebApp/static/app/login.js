@@ -76,6 +76,8 @@ Vue.component("login",{
           this.user = response.data;
           if(this.user.userType === 'HOUSEKEEPER'){
             window.location.href = '#/housekeeper';
+          }else if(this.user.userType === 'GUEST'){
+            window.location.href = '#/';
           }else{
             window.location.href = '/test.html';
           }

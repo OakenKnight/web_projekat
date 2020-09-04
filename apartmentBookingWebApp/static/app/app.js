@@ -6,6 +6,7 @@ const Contact = {template: '<contact></contact>'}
 const About = {template: '<about></about>'}
 const Welcome = {template: '<welcome></welcome>'}
 const Housekeeper = {template: '<housekeeper></housekeeper>'}
+const ApartmentDetails = {template: '<apartmentDetails></apartmentDetails>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -17,7 +18,9 @@ const router = new VueRouter({
 		{ path: '/about', component: About },
 		{ path: '/reserve', component: Reserve },
 		{ path: '/', component: Welcome },
-		{ path: '/housekeeper', component: Housekeeper}
+		{ path: '/housekeeper', component: Housekeeper},
+		{ path: '/apartmentDetails', component: ApartmentDetails}
+
 	  ]
 });
 

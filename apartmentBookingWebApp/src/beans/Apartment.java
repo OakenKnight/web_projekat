@@ -8,7 +8,7 @@ import java.sql.Time;
 
 
 public class Apartment {
-	private String Id;
+	private String id;
 	private String name;
 	private ApartmentType apartmentType;
 	private int roomNumber;
@@ -28,11 +28,12 @@ public class Apartment {
 	
 	public Apartment() {}
 	
-	public Apartment(String name ,ApartmentType apartmentType, int roomNumber, int guestNumber, Location location,
+	public Apartment(String id, String name ,ApartmentType apartmentType, int roomNumber, int guestNumber, Location location,
 			ArrayList<Date> freeDates, Housekeeper housekeeper, ArrayList<ApartmentComment> comments,
 			ArrayList<String> pictures, double priceForNight, Time arrivalTime, Time exitTime,
 			ApartmentStatus apartmentStatus, ArrayList<Amenity> amenities, ArrayList<String> reservationsId) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.apartmentType = apartmentType;
 		this.roomNumber = roomNumber;
@@ -60,11 +61,11 @@ public class Apartment {
 	}
 
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public ApartmentType getApartmentType() {

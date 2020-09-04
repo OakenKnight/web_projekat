@@ -5,19 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Key;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
 
-import beans.Address;
 import beans.Amenity;
+import beans.AmenityType;
 import beans.Apartment;
 import beans.ApartmentComment;
-import beans.ApartmentDTO;
 import beans.ApartmentStatus;
 import beans.ApartmentType;
 import beans.Gender;
@@ -32,6 +28,7 @@ import beans.UserType;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import repository.AmenityRepository;
 import repository.ApartmentRepository;
 import repository.GuestRepository;
 import repository.HousekeeperRepository;
@@ -155,15 +152,67 @@ public class SparkAppMain {
 		get("/rest/recappart", (req, res) -> {
 			ApartmentRepository  apartmentRepository = new ApartmentRepository();
 			ArrayList<Apartment> apartments = (ArrayList<Apartment>)apartmentRepository.getAll();
-			Apartment a = apartments.get(0);
-			ArrayList<Date> dates = a.getFreeDates();
-			for(Date date : a.getFreeDates()){
-				System.out.println(date.toString());
-			}
 
+			/*
+			Amenity a1 = new Amenity((new Date().getTime())+"", "Wifi","Continous access in the listing", AmenityType.BASIC);
+			Amenity a2 = new Amenity((new Date().getTime())+"", "Laptop friendly workspace","A table with space for a laptop and a chair thats comfortable to work in", AmenityType.BASIC);
+			Amenity a3 = new Amenity((new Date().getTime())+"", "Cable TV","", AmenityType.BASIC);
+			Amenity a4 = new Amenity((new Date().getTime())+"", "Washer","In the building, free or for a fee", AmenityType.BASIC);
+			Amenity a5 = new Amenity((new Date().getTime())+"", "Air conditioning","", AmenityType.BASIC);
+			Amenity a6 = new Amenity((new Date().getTime())+"", "Heating","Central heating or a heater in the listing", AmenityType.BASIC);
+			Amenity a7 = new Amenity((new Date().getTime())+"", "Ethernet connection","", AmenityType.BASIC);
+			Amenity a8 = new Amenity((new Date().getTime())+"", "Essentials","Towels, bed sheets, soap and toilet paper", AmenityType.BASIC);
+			Amenity a9 = new Amenity((new Date().getTime())+"", "Hot water","", AmenityType.BASIC);
+			Amenity a10 = new Amenity((new Date().getTime())+"", "Iron","", AmenityType.BASIC);
 
+			Amenity a11 = new Amenity((new Date().getTime())+"", "Crib","", AmenityType.FAMILY_FEATURES);
+			Amenity a12 = new Amenity((new Date().getTime())+"", "High chair","", AmenityType.FAMILY_FEATURES);
+			Amenity a13 = new Amenity((new Date().getTime())+"", "Pack'n Play/ travel crib","", AmenityType.FAMILY_FEATURES);
+			Amenity a14 = new Amenity((new Date().getTime())+"", "Room-darkening shades","", AmenityType.FAMILY_FEATURES);
+			Amenity a15 = new Amenity((new Date().getTime())+"", "Window guards","", AmenityType.FAMILY_FEATURES);
 
+			Amenity a16 = new Amenity((new Date().getTime())+"", "Elevator","", AmenityType.FACILITIES);
+			Amenity a17 = new Amenity((new Date().getTime())+"", "Single level home","No stairs in home", AmenityType.FACILITIES);
+			Amenity a18 = new Amenity((new Date().getTime())+"", "Free street parking","", AmenityType.FACILITIES);
+
+			Amenity a19 = new Amenity((new Date().getTime())+"", "Kitchen","Space where guests can cook their own meals", AmenityType.DINING);
+			Amenity a20 = new Amenity((new Date().getTime())+"", "Coffee maker","", AmenityType.DINING);
+			Amenity a21 = new Amenity((new Date().getTime())+"", "Cooking basics","Pots and pans, oil salt and pepper", AmenityType.DINING);
+			Amenity a22 = new Amenity((new Date().getTime())+"", "Dishes and silverware","", AmenityType.DINING);
+			Amenity a23 = new Amenity((new Date().getTime())+"", "Microwave","", AmenityType.DINING);
+			Amenity a24 = new Amenity((new Date().getTime())+"", "Refrigerator","", AmenityType.DINING);
+
+			AmenityRepository amenityRepository = new AmenityRepository();
 			
+			ArrayList<Amenity> amenities = new ArrayList<Amenity>();
+			amenities.add(a1);
+			amenities.add(a2);
+			amenities.add(a3);
+			amenities.add(a4);
+			amenities.add(a5);
+			amenities.add(a6);
+			amenities.add(a7);
+			amenities.add(a8);
+			amenities.add(a9);
+			amenities.add(a10);
+			amenities.add(a11);
+			amenities.add(a12);
+			amenities.add(a13);
+			amenities.add(a14);
+			amenities.add(a15);
+			amenities.add(a16);
+			amenities.add(a17);
+			amenities.add(a18);
+			amenities.add(a19);
+			amenities.add(a20);
+			amenities.add(a21);
+			amenities.add(a22);
+			amenities.add(a23);
+			amenities.add(a24);
+
+			amenityRepository.saveAll(amenities);
+			*/
+
 			return g.toJson(apartments); 
 		});
 		
@@ -180,6 +229,19 @@ public class SparkAppMain {
 
 			return g.toJson(filtered); 
 			
+		});
+
+
+		get("/rest/apartments/:id",(req,res)->{
+			res.type("application/json");
+			String id = req.params("id");
+			
+			System.out.println(id);
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			
+			Apartment a = apartmentRepository.getObj(id);
+
+			return g.toJson(a);
 		});
 	}
 
@@ -251,7 +313,6 @@ public class SparkAppMain {
 
 				a.setFreeDates(dates);
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -265,7 +326,6 @@ public class SparkAppMain {
 //try {
 //	arrivalDate = sdf.parse("12/10/2020");
 //} catch (ParseException e1) {
-//	// TODO Auto-generated catch block
 //	e1.printStackTrace();
 //}
 //String message = "...";
@@ -301,7 +361,6 @@ public class SparkAppMain {
 //	d = sdf.parse("27/08/2020");
 //	freeDates.add(d);
 //} catch (ParseException e1) {
-//	// TODO Auto-generated catch block
 //	e1.printStackTrace();
 //}
 //ArrayList<String> apartmentsId = new ArrayList<String>();
