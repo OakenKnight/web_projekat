@@ -43,38 +43,35 @@ Vue.component("housekeeper",{
             </nav>
             <div class="main">
             <div class="row">
-                <div class="options column">
+                <div class="options-housekeeper column">
                     <ul>
-                        <li class="option" v-on:click="setMode('apartments')"><p>Apartments</p></li>
-                        <li class="option" v-on:click="setMode('guests')"><p>Guests</p></li>
-                        <li class="option" v-on:click="setMode('reservations')"><p>Reservations</p></li>
+                        <li class="option-housekeeper" v-on:click="setMode('apartments')"><p>Apartments</p></li>
+                        <li class="option-housekeeper" v-on:click="setMode('guests')"><p>Guests</p></li>
+                        <li class="option-housekeeper" v-on:click="setMode('reservations')"><p>Reservations</p></li>
                     </ul>
                 </div>
-                <div class="sections column">
+                <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
                         <h3>All your apartments</h3>
-                        <div class="search"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
+                        <div class="search-housekeeper"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
                         <hr>
-                        <div class="apartment" v-for="a in apartments">
-                            <div class="apartment-border">
-                                <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
-                                <div class="apartment-info">
+                        <div class="apartment-housekeeper" v-for="a in apartments">
+                            <div class="apartment-border-housekeeper">
+                                <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
+                                <div class="apartment-info-housekeeper">
                                     <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
-                                    <p><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
-                                    <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
-                                    <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
-                                    <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
-                                    <div class="price-for-night">
-                                        <p style="color: white;">{{a.priceForNight}}€ </p>
-                                    </div>
+                                    <p><img class="apartment-info-icons-housekeeper" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
+                                    <p><img class="apartment-info-icons-housekeeper" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
+                                    <p><img class="apartment-info-icons-housekeeper" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
+                                    <h5><img class="apartment-info-icons-housekeeper" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <section id="guests" v-if="mode === 'guests'">
                         <h3>All your guests</h3>
-                        <div class="search"><input @keyup.enter="searchGuest(guestForSearch)" type="text" name="guest" placeholder="Search guest" v-model="guestForSearch"></div>
-                        <div class="gender">
+                        <div class="search-housekeeper"><input @keyup.enter="searchGuest(guestForSearch)" type="text" name="guest" placeholder="Search guest" v-model="guestForSearch"></div>
+                        <div class="gender-housekeeper">
                             <img class="gender-sign-all" src="assets/images/female-male-sign.png" alt="not found">
                             <label for="all">Show all</label>
                             <input type="radio" id="all" name="gender" value="all" v-model="gen" checked>
@@ -86,15 +83,15 @@ Vue.component("housekeeper",{
                             <input type="radio" id="gentlemens" name="gender" value="gentlemens"  v-model="gen">
                         </div>
                         <hr>
-                        <div class="users" v-for="g in guests">
-                            <img class="icon" v-if="g.gender == 'MALE'" src="assets/images/male-icon.png">
-                            <img class="icon" v-else src="assets/images/female-icon.png">
-                            <div class="user-info">
+                        <div class="users-housekeeper" v-for="g in guests">
+                            <img class="icon-housekeeper" v-if="g.gender == 'MALE'" src="assets/images/male-icon.png">
+                            <img class="icon-housekeeper" v-else src="assets/images/female-icon.png">
+                            <div class="user-info-housekeeper">
                                 <h3 class="no-margin">{{g.firstName}} {{g.lastName}}</h3>
                                 <p class="no-margin">Username: {{g.username}}</p>
                                 <p>Last reservation: {{lastReservation(g)}}</p>
                             </div>
-                            <div class="all-apartments">
+                            <div class="all-apartments-housekeeper">
                                 <h4 class="no-margin"> All guest's reservation:</h4>
                                 <p class="no-margin" v-for="r in g.reservationId">{{allGuestReservation(r)}}</p>
                             </div>
@@ -102,7 +99,7 @@ Vue.component("housekeeper",{
                     </section>
                     <section id="reservations" v-if="mode === 'reservations'">
                         <h3>All your reservations</h3>
-                        <div class="search"><input type="text" name="reservation" placeholder="Search reservation by guest username" @keyup.enter="searchReservation(reservationForSearch)"  v-model="reservationForSearch"></div>
+                        <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Search reservation by guest username" @keyup.enter="searchReservation(reservationForSearch)"  v-model="reservationForSearch"></div>
                         <div class="select-apartment-type">
                             <select required v-model="reservationTypeFilter">
                                 <option value="1" selected>Show all</option>
@@ -113,21 +110,21 @@ Vue.component("housekeeper",{
                             </select>
                         </div>
                         <hr>
-                        <div class="reservation" v-for="r in reservations">
+                        <div class="reservation-housekeeper" v-for="r in reservations">
                             <div class="row" >
-                                <div class="column left">
+                                <div class="column left-housekeeper">
                                     <div style="text-align: center;">
                                         <h3 style="display: inline-block;">Reservation {{r.reservationStatus}}</h3>
                                     </div>
                                     <div class="row">
-                                        <div class="reservation-apartment-info column">
+                                        <div class="reservation-apartment-info-housekeeper column">
                                             <h4>Apartment info</h4>
                                             <p>Apartment name: {{findApartmentName(r.apartmentId)}}</p>
                                             <p>Arrival date: {{r.arrivalDate | dateFormat('DD.MM.YYYY')}}</p>
                                             <p>Number of nights: {{r.numberOfNights}}</p>
                                             <p>Total price: {{r.totalPrice}}€</p>
                                         </div>
-                                        <div class="reservation-guest-info column">
+                                        <div class="reservation-guest-info-housekeeper column">
                                             <h4>Guest info</h4>
                                             <p v-for="g in guests" v-if="g.username == r.guestId">Guest name: {{g.firstName}} {{g.lastName}}</p>
                                             <p>Guest username: {{r.guestId}}</p>
@@ -135,10 +132,12 @@ Vue.component("housekeeper",{
                                         </div>
                                     </div>
                                 </div>
-                                <div class="column right">
-                                    <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'CREATED'">Accept</button>
-                                    <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED' && r.reservationStatus != 'CREATED'">Reject</button>
-                                    <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED'">Finish</button>
+                                <div class="column right-housekeeper">
+                                    <div class="buttons-housekeeper">
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'CREATED'">Accept</button>
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED' && r.reservationStatus != 'CREATED'">Reject</button>
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED'">Finish</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -187,8 +186,9 @@ Vue.component("housekeeper",{
         findApartmentName: function(apId){
             var n;
             this.apartmentsBackUp.forEach(element =>{
-                if(element.Id === apId)
+                if(element.id === apId){
                     n =  element.name;
+                }
             });
             return n;
         },

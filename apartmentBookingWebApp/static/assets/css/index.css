@@ -38,7 +38,7 @@ body {
     border: hidden;
     box-sizing: border-box;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);}
-select{
+.search select{
     height: 50px;
     width: 104px;
     display: inline-block;
@@ -53,8 +53,8 @@ select{
     -webkit-appearance: none;
     color: black;
 }
-select:invalid,
-select option[value=""]{
+.search select:invalid,
+.search select option[value=""]{
     color: grey;
 }
 .datepicker{

@@ -67,22 +67,7 @@ public class SparkAppMain {
 			user = service.login(user.getUsername().trim(), user.getPassword());
 			String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
 			user.setJWTToken(jwt);
-//			if(user.getUserType() == UserType.ADMIN) {
-//				AdminRepository adminRepository = new AdminRepository();
-//				Admin admin = adminRepository.getObj(user.getUsername());
-//				admin.setJWTToken(jwt);
-//				adminRepository.update(admin);
-//			}else if(user.getUserType() == UserType.HOUSEKEEPER) {
-//				HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
-//				Housekeeper housekeeper =  housekeeperRepository.getObj(user.getUsername());
-//				housekeeper.setJWTToken(jwt);
-//				housekeeperRepository.update(housekeeper);
-//			}else{
-//				GuestRepository guestRepository = new GuestRepository();
-//				Guest guest =  guestRepository .getObj(user.getUsername());
-//				guest.setJWTToken(jwt);
-//				guestRepository .update(guest);
-//			}
+
 			return g.toJson(user); 
 		});
 		

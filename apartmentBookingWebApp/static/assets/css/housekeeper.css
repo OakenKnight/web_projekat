@@ -1,4 +1,4 @@
-.options{
+.options-housekeeper{
     min-height: 100%;
     min-width: 15%;
     bottom: 0;
@@ -16,14 +16,14 @@
   position: absolute;
 }
 
-.reservation .row{
+.reservation-housekeeper .row{
   display: flex;
   width: 100%;
   padding: 0;
   margin: 0;
   position: relative;
 }
-.options ul {
+.options-housekeeper ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -33,11 +33,11 @@
     top: 0;
     right: 0;
   }
-.gender{
-  width: 35%;
+.gender-housekeeper{
+  text-align: center;
   margin: auto;
 }
-.gender input,label, img{
+.gender-housekeeper input,label, img{
   display: inline-block;
 }
 .gender-sign-all{
@@ -50,19 +50,19 @@
   margin-left: 20px;
 }
 
-.option p {
+.option-housekeeper p {
     display: block;
     color: #fff;
     padding: 8px 16px;
     text-decoration: none;
     font-size: 20px;
   }
-.option p:hover {
+.option-housekeeper p:hover {
     background-color: grey;
     color: white;
   }
 
-.sections{
+.sections-housekeeper{
     width: 85%;
     background-color: #fff;
   }
@@ -70,7 +70,7 @@
   margin: 0;
   padding: 0;
 }
-.users{
+.users-housekeeper{
   width: 50%;
   border: 1px solid grey;
   margin: auto;
@@ -79,29 +79,29 @@
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);
   }
-.user-info{
+.user-info-housekeeper{
   display: inline-block;
   vertical-align: middle;
 }
-.icon{
+.icon-housekeeper{
   display: inline-block;
 }
-.users:hover{
+.users-housekeeper:hover{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
 }
-.users:hover .all-apartments{
+.users-housekeeper:hover .all-apartments-housekeeper{
   display: block;
 }
 
-.all-apartments{
+.all-apartments-housekeeper{
   display: none;
   margin-left: 3px;
 }
-.search{
+.search-housekeeper{
   width: 50%;
   margin: auto;
 }
-.search input{
+.search-housekeeper input{
   width: 100%;
   height: 50px;
   background-color:white;
@@ -112,13 +112,13 @@
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);}
 
-.search input:hover , .search input:focus {
+.search-housekeeper input:hover , .search-housekeeper input:focus {
   border-bottom:4px solid #3268a8;
   border-radius: 4px;
   transition: 0.1s;
 }
 
-.reservation{
+.reservation-housekeeper{
   width: 70%;
   border: 1px solid grey;
   margin: auto;
@@ -129,11 +129,11 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
 }
 
-.reservation:hover{
+.reservation-housekeeper:hover{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
 }
 
-.action-div{
+.action-div-housekeeper{
   float: right;
   padding: 3;
   text-align: center;
@@ -144,71 +144,71 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
 }
 
-.action-div:hover{
+.action-div-housekeeper:hover{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.3);
 }
 
-.action-div img{
+.action-div-housekeeper img{
   width: 60px;
   height: 60px;
 }
 
-.left{
+.left-housekeeper{
     width: 70%;
 }
 
-.right{
+.right-housekeeper{
     width: 30%;
     border-left: 1px solid grey;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    text-align: center;
 }
 
-.btn{
+.right-housekeeper .btn{
   width: 200px;
-  margin: 10px;
+  margin-right: 20%;
   margin-top: 30px;
+  text-align: center;
   border: 0px;
   background-color:#3268a8;
   color: #fff;
   border-radius: 0;}
 
-.btn:disabled,
-.btn[disabled]{
+  .right-housekeeper .btn:disabled,
+  .right-housekeeper .btn[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
-.btn:disabled:hover{
+.right-housekeeper .btn:disabled:hover{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
 
-.btn:hover {
+.right-housekeeper .btn:hover {
   border: 1px solid #3268a8;
   background-color: #fff;
   color: #3268a8; }
 
-.reservation-guest-info{
+.reservation-guest-info-housekeeper{
   width: 50%;
   display: inline-block;
   text-align: center;
 }
 
-.reservation-apartment-info{
+.reservation-apartment-info-housekeeper{
   width: 50%;
   display: inline-block;
   text-align: center;
 }
 
-.apartment{
+.apartment-housekeeper{
   text-align: center;
   margin-top: 40px;
   box-sizing: border-box;
 }
-.apartment-pic{
+.apartment-pic-housekeeper{
   width: 300px;
   height: 250px;
   display: inline-block;
@@ -216,7 +216,7 @@
   border-radius: 8px 0 0 8px;
 }
 
-.apartment-info{
+.apartment-info-housekeeper{
   width: 300px;
   height: 200px;
   display: inline-block;
@@ -224,42 +224,32 @@
   box-sizing: border-box;
   
 }
-.apartment-border{
+.apartment-border-housekeeper{
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;
   display: inline-block;
   border-radius: 8px;
   margin-bottom: 40px;
 }
 
-.apartment-border:hover{
+.apartment-border-housekeeper:hover{
   box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 8px 3px;
 }
 
-.apartment-info-icons{
+.apartment-info-icons-housekeeper{
   height: 30px;
   width: 30px;
 }
 
-.price-for-night{
-  width: 50px;
-  height: 30px;
-  background-color: #3268a8;
-  margin-left: 90%;
-  border-radius: 4px;
-  text-align: center;
-  padding: 1px;
-}
-
-.info-mark{
+.info-mark-housekeeper{
   display: inline-block;
   margin-top: 5px;
 }
 
-.icons{
+.icons-housekeeper{
   height: 70px;
   width: 70px;
 }
-.apartment-type{
+.apartment-type-housekeeper{
   width: 60%;
   margin: auto;
 }
@@ -269,8 +259,9 @@
   margin-right: 45px;
 }
 
-select{
+.select-apartment-type select{
   height: 50px;
+  width: 200px;
   display: inline-block;
   background-color:white;
   border-radius: 4px;
@@ -284,7 +275,7 @@ select{
   color: black;
 }
 
-select:hover {
+.select-apartment-type select:hover {
   border-bottom:4px solid #3268a8;
   border-radius: 4px;
   transition: 0.1s;
