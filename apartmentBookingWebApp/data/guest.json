@@ -5,7 +5,7 @@
   "lastName" : "Zupunski",
   "gender" : "MALE",
   "userType" : "GUEST",
-  "apartmentsId" : [ ],
+  "apartmentsId" : [ "app12"],
   "reservationId" : [ ],
   "jwttoken" : null
 }, {
@@ -15,7 +15,7 @@
   "lastName" : "Peric",
   "gender" : "MALE",
   "userType" : "GUEST",
-  "apartmentsId" : [ ],
+  "apartmentsId" : [ "app12"],
   "reservationId" : [ ],
   "jwttoken" : null
 }, {

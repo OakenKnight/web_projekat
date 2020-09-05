@@ -24,27 +24,7 @@
     "apartmentsId" : [ "app1", "app2", "app3", "app4" ],
     "jwttoken" : null
   },
-  "comments" : [ {
-    "id" : null,
-    "guestId" : "guest1",
-    "text" : "Sta znam nako",
-    "reviewsMark" : 8
-  }, {
-    "id" : null,
-    "guestId" : "guest2",
-    "text" : "Dobar pravo",
-    "reviewsMark" : 10
-  }, {
-    "id" : null,
-    "guestId" : "guest3",
-    "text" : "dobar",
-    "reviewsMark" : 7
-  }, {
-    "id" : null,
-    "guestId" : "guest4",
-    "text" : "Nije ni za svinje",
-    "reviewsMark" : 2
-  } ],
+  "comments" : [ ],
   "pictures" : [ "1.jpg", "2.jpg" ],
   "priceForNight" : 100.0,
   "arrivalTime" : "12:30:00",
@@ -166,23 +146,23 @@
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : null,
-    "guestId" : "guest1",
+    "id" : 123010,
+    "guestId" : "mitarMitar",
     "text" : "Sta znam nako",
     "reviewsMark" : 7
   }, {
-    "id" : null,
-    "guestId" : "guest2",
+    "id" : 123011,
+    "guestId" : "milica",
     "text" : "Dobar pravo",
     "reviewsMark" : 9
   }, {
-    "id" : null,
-    "guestId" : "guest3",
+    "id" : 123012,
+    "guestId" : "ral",
     "text" : "dobar",
     "reviewsMark" : 5
   }, {
-    "id" : null,
-    "guestId" : "guest4",
+    "id" : 123013,
+    "guestId" : "coaPera",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3
   } ],
@@ -282,26 +262,16 @@
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : null,
-    "guestId" : "guest1",
+    "id" : 123014,
+    "guestId" : "milica",
     "text" : "Sta znam nako",
     "reviewsMark" : 8
   }, {
-    "id" : null,
-    "guestId" : "guest2",
-    "text" : "Dobar pravo",
+    "id" : 123015,
+    "guestId" : "nikola",
+    "text" : "Dobar skroz, gazda je sef",
     "reviewsMark" : 10
-  }, {
-    "id" : null,
-    "guestId" : "guest3",
-    "text" : "dobar",
-    "reviewsMark" : 7
-  }, {
-    "id" : null,
-    "guestId" : "guest4",
-    "text" : "Nije ni za svinje",
-    "reviewsMark" : 3
-  } ],
+  }],
   "pictures" : [ "6.jpg", "5.jpg" ],
   "priceForNight" : 500.0,
   "arrivalTime" : "12:30:00",
@@ -383,23 +353,13 @@
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : null,
-    "guestId" : "guest1",
-    "text" : "Sta znam nako",
-    "reviewsMark" : 8
-  }, {
-    "id" : null,
-    "guestId" : "guest2",
-    "text" : "Dobar pravo",
-    "reviewsMark" : 10
-  }, {
-    "id" : null,
-    "guestId" : "guest3",
+    "id" : 123018,
+    "guestId" : "nikola",
     "text" : "dobar",
     "reviewsMark" : 7
   }, {
-    "id" : null,
-    "guestId" : "guest4",
+    "id" : 123019,
+    "guestId" : "kristina93",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3
   } ],
