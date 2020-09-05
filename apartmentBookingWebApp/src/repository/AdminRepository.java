@@ -24,7 +24,6 @@ public class AdminRepository implements AdminRepositoryInterface{
 				file.createNewFile();
 				saveAll(new ArrayList<Admin>());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -69,7 +68,6 @@ public class AdminRepository implements AdminRepositoryInterface{
 		try {
 			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Admin>>() {});
 		} catch (IllegalArgumentException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -87,7 +85,6 @@ public class AdminRepository implements AdminRepositoryInterface{
 			mapper.writerWithDefaultPrettyPrinter().writeValue(file, objs);
 			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

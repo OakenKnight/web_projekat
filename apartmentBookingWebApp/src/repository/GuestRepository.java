@@ -8,9 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.Admin;
 import beans.Guest;
-import beans.User;
 
 public class GuestRepository implements GuestRepositoryInterface{
 
@@ -25,7 +23,6 @@ public class GuestRepository implements GuestRepositoryInterface{
 				file.createNewFile();
 				saveAll(new ArrayList<Guest>());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -70,7 +67,6 @@ public class GuestRepository implements GuestRepositoryInterface{
 		try {
 			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Guest>>() {});
 		} catch (IllegalArgumentException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -88,7 +84,6 @@ public class GuestRepository implements GuestRepositoryInterface{
 			mapper.writerWithDefaultPrettyPrinter().writeValue(file, objs);
 			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

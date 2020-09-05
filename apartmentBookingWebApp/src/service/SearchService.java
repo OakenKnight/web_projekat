@@ -83,7 +83,6 @@ public class SearchService {
             try {
                 arriveDate = dateFormat.parse(searchedApartment.getArriveDate());
             } catch (ParseException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 
@@ -97,7 +96,6 @@ public class SearchService {
             try {
                 departDate = dateFormat.parse(searchedApartment.getLeavingDate());
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -156,8 +154,8 @@ public class SearchService {
         return true;
     }
 
+    /*
     public ArrayList<Apartment> filterByArriveDate(ArrayList<Apartment> apartments, String arriveDate) {
-        //TODO : FILTER PO DATUMU
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 
         DateParser dateParser = new DateParser();
@@ -178,7 +176,6 @@ public class SearchService {
     }
 
     public ArrayList<Apartment> filterByDepartDate(ArrayList<Apartment> apartments, String departDate) {
-        //TODO : FILTER PO DATUMU
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 
         DateParser dateParser = new DateParser();
@@ -204,6 +201,8 @@ public class SearchService {
         
         return filteredApartments;
     }
+
+    */
     public Boolean dateExist(Date date, Date checkDate){
         return date.getTime() <= checkDate.getTime() && checkDate.getTime() <= date.getTime()+86400000-1;
     }

@@ -3,11 +3,19 @@ package beans;
 public class Amenity {
 	private String id;
 	private String name;
-	
+	private String description;
+	private AmenityType type;
 	public Amenity() {}
 	
 	public Amenity(String name) {
 		this.name = name;
+	}
+
+	public Amenity(String id, String name,String description, AmenityType type) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.type = type;
 	}
 
 	public String getId() {
@@ -26,6 +34,19 @@ public class Amenity {
 		this.name = name;
 	}
 	
+	public String getDescription(){
+		return description;
+	}
+
+	public void setDescription(String description){
+		this.description = description;
+	}
 	
-	
+	public AmenityType getAmenityType(){
+		return type;
+	}
+
+	public void setAmenityType(AmenityType type){
+		this.type = type;
+	}
 }
