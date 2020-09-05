@@ -14,6 +14,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import beans.Address;
+import beans.Admin;
 import beans.Amenity;
 import beans.Apartment;
 import beans.ApartmentComment;
@@ -29,9 +30,12 @@ import beans.ReservationStatus;
 import beans.SearchedApartment;
 import beans.User;
 import beans.UserType;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import repository.AdminRepository;
 import repository.ApartmentRepository;
 import repository.GuestRepository;
 import repository.HousekeeperRepository;
@@ -66,8 +70,24 @@ public class SparkAppMain {
 			User user = g.fromJson(payload, User.class);
 			UserService service = new UserService();
 			user = service.login(user.getUsername().trim(), user.getPassword());
-			String jws = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(new Date().getTime() + 1000*10L)).setIssuedAt(new Date()).signWith(key).compact();
-			user.setJWTToken(jws);
+			String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
+			user.setJWTToken(jwt);
+//			if(user.getUserType() == UserType.ADMIN) {
+//				AdminRepository adminRepository = new AdminRepository();
+//				Admin admin = adminRepository.getObj(user.getUsername());
+//				admin.setJWTToken(jwt);
+//				adminRepository.update(admin);
+//			}else if(user.getUserType() == UserType.HOUSEKEEPER) {
+//				HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+//				Housekeeper housekeeper =  housekeeperRepository.getObj(user.getUsername());
+//				housekeeper.setJWTToken(jwt);
+//				housekeeperRepository.update(housekeeper);
+//			}else{
+//				GuestRepository guestRepository = new GuestRepository();
+//				Guest guest =  guestRepository .getObj(user.getUsername());
+//				guest.setJWTToken(jwt);
+//				guestRepository .update(guest);
+//			}
 			return g.toJson(user); 
 		});
 		
@@ -83,7 +103,7 @@ public class SparkAppMain {
 		});
 		
 		get("/rest/housekeepersApartment", (req,res)->{
-			String housekeeperId = req.queryParams("housekeeper");
+			String housekeeperId = getUser(req.queryParams("Authorization"));
 			ApartmentRepository  apartmentRepository = new ApartmentRepository();
 			ArrayList<Apartment> allApartment = (ArrayList<Apartment>)apartmentRepository.getAll();
 			ArrayList<Apartment> apartments = new ArrayList<Apartment>();
@@ -95,7 +115,7 @@ public class SparkAppMain {
 		});
 		
 		get("/rest/housekeepersGuests", (req,res)->{
-			String housekeeperId = req.queryParams("housekeeper");
+			String housekeeperId = getUser(req.queryParams("Authorization"));
 			GuestRepository guestRepository = new GuestRepository();
 			ApartmentRepository  apartmentRepository = new ApartmentRepository();
 			ReservationRepository reservationRepository = new ReservationRepository();
@@ -120,7 +140,7 @@ public class SparkAppMain {
 
 		
 		get("/rest/housekeepersReservation", (req,res)->{
-			String housekeeperId = req.queryParams("housekeeper");
+			String housekeeperId = getUser(req.queryParams("Authorization"));
 			ApartmentRepository  apartmentRepository = new ApartmentRepository();
 			ReservationRepository reservationRepository = new ReservationRepository();
 			ArrayList<Apartment> allApartment = (ArrayList<Apartment>)apartmentRepository.getAll();
@@ -182,6 +202,22 @@ public class SparkAppMain {
 			
 		});
 	}
+	
+	public static String getUser(String auth) {
+		if ((auth != null) && (auth.contains("Bearer "))) {
+			String jwt = auth.substring(auth.indexOf("Bearer ") + 7);
+			try {
+			    Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt);
+			    return claims.getBody().getSubject();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "";
+	}
+	
+	
+	
 
 }
 

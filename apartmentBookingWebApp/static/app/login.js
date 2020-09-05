@@ -74,6 +74,7 @@ Vue.component("login",{
     		.post("/rest/login", {username: this.username, password: this.password})
     		.then(function(response) {
           this.user = response.data;
+          window.localStorage.setItem('jwt', user.JWTToken);
           if(this.user.userType === 'HOUSEKEEPER'){
             window.location.href = '#/housekeeper';
           }else{
