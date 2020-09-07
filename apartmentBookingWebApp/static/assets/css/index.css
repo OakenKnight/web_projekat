@@ -78,7 +78,8 @@ body {
     border: 0px;
     background-color:#3268a8;
     color: #fff;
-    border-radius: 0;}
+    border-radius: 0;
+}
 .btn:hover {
     border: 1px solid #3268a8;
     background-color: #fff;
@@ -189,4 +190,87 @@ body {
     height: 50px;
     width: 100%;
     background-color: #3268a8;
+}
+
+
+.main .row{
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    
+  }
+.guest-profile-options ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background-color: #3268a8;
+      position: sticky;
+      top: 0;
+      right: 0;
+}
+.guest-profile-options{
+        max-height: 100%;
+        min-width: 13%;
+        bottom: 0;
+        background-color: #3268a8;
+        
+}
+
+.option-guest p {
+    display: block;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+.option-guest p:hover {
+    background-color: white;
+    color: #3268a8;
+    
+  }
+.column{
+    float: left;
+  }
+.profile-info-label{
+    margin-left: 30px;
+    margin-top:10px;
+    font-weight: bold;
+}
+
+.profile-info-p{
+    margin-left: 40px;
+    margin-top:10px;
+    
+}
+.edit-icon{
+    font-size: 20px
+}
+.edit-info-button{
+    margin: 4px;
+    float: right;
+    border: 0px;
+    background-color:#3268a8;
+    color: #fff;
+    padding: 15px 32px;
+    border-radius: 0;
+    font-size: 20px
+}
+.edit-info-button:hover {
+    border: 1px solid #3268a8;
+    background-color: #fff;
+    color: #3268a8; }
+
+
+.reservation-info{
+        width: 300px;
+        height: 400px;
+        display: inline-block;
+        text-align: left;
+        box-sizing: border-box;
+        
 }

@@ -36,12 +36,6 @@ public class Guest extends User{
 	public void setReservationId(ArrayList<String> reservationId) {
 		this.reservationId = reservationId;
 	}
-
 	
-	
-	
-	
-	
-	
-	
+		
 }

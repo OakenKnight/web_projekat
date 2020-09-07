@@ -18,6 +18,8 @@ Vue.component("welcome",{
             minPrice: "",
             maxPrice:"",
             numberOfGuests:"",
+            loggedIn:null,
+            loggedInUser:{},
             disabledArriveDates: {
                 to: new Date()
             },
@@ -49,19 +51,15 @@ Vue.component("welcome",{
                 </li>
                 <li>
                     <div class="sign-in-up" style="right:0">
-                        <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" >Create account</button>
-                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" >Sign in</button>
-                    </div>
+                        <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
+                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
+                        <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
+                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
+
+                        </div>
                 </li>
 
-                <!--
-                <li>
-                    <button type="button" class="btn btn-primary my-2 my-lg-0" onclick="location.href='#/register'" >Create account</button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-primary my-2 my-lg-0"  onclick="location.href='#/login'" >Sign in</button>
-                </li>
-                -->
+
                 
             </ul>
         </nav>
@@ -253,9 +251,23 @@ Vue.component("welcome",{
 	`
 	,
 	mounted () {
-        
+        var jwt = window.localStorage.getItem('jwt');
+        if(!jwt){
+            this.loggedIn=false;
+        }else{
+            this.loggedIn=true;
+            axios
+            .get('rest/userLoggedIn',{params:{
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response=>(this.loggedInUser = response.data));
+        }
 	},
 	methods:{
+        logout: function(){
+            window.localStorage.removeItem('jwt');
+            this.$router.push('/login');
+        },
         verifyArriveDate: function(){
             //ako je undefined vrati false
             // ako postoji onda vrati true
@@ -297,24 +309,6 @@ Vue.component("welcome",{
             }
         },
         searchApartments: function(searchedApartment){
-            //console.log(searchedApartment.arriveDate);
-            /*
-            var aptDTO = null;
-            //
-            if(this.arriveDate){
-                aptDTO = {destination:searchedApartment.destination, arriveDate:searchedApartment.arriveDate.getTime(),
-                        departDate:searchedApartment.departDate.getTime(), numberOfGuests:searchedApartment.numberOfGuests,
-                        minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};
-            }
-            
-           if(this.verifyDates()){
-               console.log(searchedApartment.numberOfGuests);
-
-
-            */
-            
-            console.log(this.arriveDate);
-            console.log(this.departDate);
             
             if(this.verifyArriveDate()){
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:null,
@@ -352,7 +346,6 @@ Vue.component("welcome",{
 
             */
             this.amenities = a.amenities;
-            //this.basicAmenities = this.getBasicAmenities();
             this.getBasicAmenities();
             this.getDiningAmenities();
             this.getFacilityAmenities();
@@ -384,6 +377,10 @@ Vue.component("welcome",{
                 return amenity.type === 'FACILITIES';
             });
 
+        },
+        guestProfile:function(){
+            window.location.href = "#/guestProfile";
+            
         }
 
 	},
