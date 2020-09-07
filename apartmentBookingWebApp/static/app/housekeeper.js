@@ -287,26 +287,52 @@ Vue.component("housekeeper",{
 
                                                 <h4 class="details-hotel-name-label" v-if="comments.length>0">Comments</h4>
                                                     
-                                                <div class="comments" v-for="c in comments">
-                                                    <div class="comment-wrapper">
-                                                        <div class="row">
-                                                                <div class="col">
-                                                                    <p class="details-hotel-name-label"><strong>User: </strong</p>
-                                                                    <p class="details-hotel-name-label"><strong>Description:</strong></p>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
-                                                                    <p class="details-hotel-name-label">{{c.text}}</p>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <p class="details-hotel-name-label"><strong>Mark:</strong></p>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
-                                                                </div>
-                                                                <div class="col hide-checkbox" v-if="editApartmentMode === true">
-                                                                    <label><input type="checkbox" value=""> Hide this comment</label>
-                                                                </div>
+
+                                                <div v-for="c in selectedApartment.comments">
+                                                    <div class="comments" v-if="c.disabledForGuests">
+                                                        <div class="comment-wrapper">
+                                                            <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
+                                                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
+                                                                        <p class="details-hotel-name-label">{{c.text}}</p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
+                                                                    </div>
+                                                                    <div class="col hide-checkbox" v-if="editApartmentMode === true">
+                                                                        <label><input type="checkbox" v-on:click="changeCommentarVisibillity(c)" value=""> Hide this comment</label>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comments" v-else>
+                                                        <div class="comment-wrapper-disabled">
+                                                            <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
+                                                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
+                                                                        <p class="details-hotel-name-label">{{c.text}}</p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
+                                                                    </div>
+                                                                    <div class="col hide-checkbox" v-if="editApartmentMode === true">
+                                                                        <label><input type="checkbox" v-on:click="changeCommentarVisibillity(c)" :checked="true" value=""> Hide this comment</label>
+                                                                    </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -526,6 +552,15 @@ Vue.component("housekeeper",{
             }else{
                 this.selectedApartment.amenities.push(amenity);
             }
+        },
+        changeCommentarVisibillity: function(comment){
+            this.selectedApartment.comments.forEach(element =>{
+                if(element.id === comment.id){
+                    console.log("proso");
+                    element.disabledForGuests = !element.disabledForGuests;
+                    console.log();
+                }
+            });
         }
 
     },
