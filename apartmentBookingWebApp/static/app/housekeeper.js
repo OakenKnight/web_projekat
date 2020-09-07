@@ -20,7 +20,6 @@ Vue.component("housekeeper",{
             familyAmenities:[],
             facilityAmenities:[],
             diningAmenities:[],
-            comments:[],
             editApartmentMode: false,
             allAmenitiesEver: []
 
@@ -285,11 +284,11 @@ Vue.component("housekeeper",{
                                                         </div>
                                                     </div>
 
-                                                <h4 class="details-hotel-name-label" v-if="comments.length>0">Comments</h4>
+                                                <h4 class="details-hotel-name-label" v-if="selectedApartment.comments.length>0">Comments</h4>
                                                     
 
                                                 <div v-for="c in selectedApartment.comments">
-                                                    <div class="comments" v-if="c.disabledForGuests">
+                                                    <div class="comments" v-if="!c.disabledForGuests">
                                                         <div class="comment-wrapper">
                                                             <div class="row">
                                                                     <div class="col">
@@ -482,10 +481,6 @@ Vue.component("housekeeper",{
             this.getDiningAmenities();
             this.getFacilityAmenities();
             this.getFamilyAmenities();
-            this.getComments();
-        },
-        getComments:function(){
-            this.comments = this.selectedApartment.comments;
         },
         getBasicAmenities:function(){
             this.basicAmenities = this.selectedApartment.amenities.filter(function(amenity){
@@ -556,9 +551,7 @@ Vue.component("housekeeper",{
         changeCommentarVisibillity: function(comment){
             this.selectedApartment.comments.forEach(element =>{
                 if(element.id === comment.id){
-                    console.log("proso");
                     element.disabledForGuests = !element.disabledForGuests;
-                    console.log();
                 }
             });
         }

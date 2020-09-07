@@ -150,7 +150,7 @@
     "guestId" : "mitarMitar",
     "text" : "Sta znam nako",
     "reviewsMark" : 7,
-    "disabledForGuests" : false
+    "disabledForGuests" : true
   }, {
     "id" : "123011",
     "guestId" : "milica",
@@ -162,13 +162,13 @@
     "guestId" : "ral",
     "text" : "dobar",
     "reviewsMark" : 5,
-    "disabledForGuests" : true
+    "disabledForGuests" : false
   }, {
     "id" : "123013",
     "guestId" : "coaPera",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3,
-    "disabledForGuests" : true
+    "disabledForGuests" : false
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
   "priceForNight" : 150.0,
@@ -269,13 +269,13 @@
     "guestId" : "milica",
     "text" : "Sta znam nako",
     "reviewsMark" : 8,
-    "disabledForGuests" : false
+    "disabledForGuests" : true
   }, {
     "id" : "123015",
     "guestId" : "nikola",
     "text" : "Dobar skroz, gazda je sef",
     "reviewsMark" : 10,
-    "disabledForGuests" : true
+    "disabledForGuests" : false
   } ],
   "pictures" : [ "6.jpg", "5.jpg" ],
   "priceForNight" : 500.0,
@@ -361,13 +361,13 @@
     "guestId" : "nikola",
     "text" : "dobar",
     "reviewsMark" : 7,
-    "disabledForGuests" : true
+    "disabledForGuests" : false
   }, {
     "id" : "123019",
     "guestId" : "kristina93",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3,
-    "disabledForGuests" : true
+    "disabledForGuests" : false
   } ],
   "pictures" : [ "7.jpg", "8.jpg" ],
   "priceForNight" : 20.0,
