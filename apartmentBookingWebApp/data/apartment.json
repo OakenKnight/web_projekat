@@ -1,4 +1,5 @@
 [ {
+  "id" : "app1",
   "name" : "Hotel Aaaa",
   "apartmentType" : "ROOM",
   "roomNumber" : 1,
@@ -13,7 +14,7 @@
       "zipCode" : "21000"
     }
   },
-  "freeDates" : [ 1597960800000, 1598047200000, 1598133600000, 1598220000000, 1598306400000, 1598392800000, 1599948000000, 1600034400000, 1600120800000, 1600207200000, 1600552800000, 1600725600000, 1600812000000, 1600898400000, 1600984800000, 1601071200000, 1601157600000, 1601244000000],
+  "freeDates" : [ 1597960800000, 1598047200000, 1598133600000, 1598220000000, 1598306400000, 1598392800000, 1599948000000, 1600034400000, 1600120800000, 1600207200000, 1600552800000, 1600725600000, 1600812000000, 1600898400000, 1600984800000, 1601071200000, 1601157600000, 1601244000000 ],
   "housekeeper" : {
     "username" : "pera",
     "password" : "pera",
@@ -35,12 +36,12 @@
     "name" : "Wifi",
     "description" : "Continous access in the listing",
     "amenityType" : "BASIC"
-  },  {
+  }, {
     "id" : "1599220943151",
     "name" : "Cable TV",
     "description" : "",
     "amenityType" : "BASIC"
-  },  {
+  }, {
     "id" : "15992209431453",
     "name" : "Air conditioning",
     "description" : "",
@@ -65,7 +66,7 @@
     "name" : "Hot water",
     "description" : "",
     "amenityType" : "BASIC"
-  },{
+  }, {
     "id" : "15992209431462",
     "name" : "Room-darkening shades",
     "description" : "",
@@ -85,7 +86,7 @@
     "name" : "Paid parking off premise",
     "description" : "",
     "amenityType" : "FACILITIES"
-  },{
+  }, {
     "id" : "1599220943167",
     "name" : "Kitchen",
     "description" : "Space where guests can cook their own meals",
@@ -115,12 +116,11 @@
     "name" : "Refrigerator",
     "description" : "",
     "amenityType" : "DINING"
-  }
-   ],
-  "reservationsId" : [ "a" ],
-  "id" : "app1"
+  } ],
+  "reservationsId" : [ "a" ]
 }, {
-  "name" : "Joca's apartments",
+  "id" : "app12",
+  "name" : "Apartment abab",
   "apartmentType" : "APPARTMENT",
   "roomNumber" : 2,
   "guestNumber" : 5,
@@ -142,100 +142,103 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32"],
+    "apartmentsId" : [ "app12", "app22", "app32" ],
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : 123010,
+    "id" : "123010",
     "guestId" : "mitarMitar",
     "text" : "Sta znam nako",
-    "reviewsMark" : 7
+    "reviewsMark" : 7,
+    "disabledForGuests" : true
   }, {
-    "id" : 123011,
+    "id" : "123011",
     "guestId" : "milica",
     "text" : "Dobar pravo",
-    "reviewsMark" : 9
+    "reviewsMark" : 9,
+    "disabledForGuests" : false
   }, {
-    "id" : 123012,
+    "id" : "123012",
     "guestId" : "ral",
     "text" : "dobar",
-    "reviewsMark" : 5
+    "reviewsMark" : 5,
+    "disabledForGuests" : false
   }, {
-    "id" : 123013,
+    "id" : "123013",
     "guestId" : "coaPera",
     "text" : "Nije ni za svinje",
-    "reviewsMark" : 3
+    "reviewsMark" : 3,
+    "disabledForGuests" : false
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
   "priceForNight" : 150.0,
   "arrivalTime" : "12:30:00",
   "exitTime" : "09:30:00",
   "apartmentStatus" : "ACTIVE",
-  "amenities" : [ 
-    {
-      "id" : "1599220943149",
-      "name" : "Wifi",
-      "description" : "Continous access in the listing",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431453",
-      "name" : "Air conditioning",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "1599220943156",
-      "name" : "Essentials",
-      "description" : "Towels, bed sheets, soap and toilet paper",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431457",
-      "name" : "Hot water",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431462",
-      "name" : "Room-darkening shades",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "15992209431463",
-      "name" : "Window guards",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "15992209431464",
-      "name" : "Elevator",
-      "description" : "",
-      "amenityType" : "FACILITIES"
-    }, {
-      "id" : "1599220943166",
-      "name" : "Free street parking",
-      "description" : "",
-      "amenityType" : "FACILITIES"
-    }, {
-      "id" : "1599220943167",
-      "name" : "Kitchen",
-      "description" : "Space where guests can cook their own meals",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943169",
-      "name" : "Cooking basics",
-      "description" : "Pots and pans, oil salt and pepper",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943170",
-      "name" : "Dishes and silverware",
-      "description" : "",
-      "amenityType" : "DINING"
-    },{
-      "id" : "1599220943172",
-      "name" : "Refrigerator",
-      "description" : "",
-      "amenityType" : "DINING"
-    }],
-  "reservationsId" : [ "mitarMitar1", "milica1" ],
-  "id" : "app12"
+  "amenities" : [ {
+    "id" : "1599220943149",
+    "name" : "Wifi",
+    "description" : "Continous access in the listing",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431453",
+    "name" : "Air conditioning",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943156",
+    "name" : "Essentials",
+    "description" : "Towels, bed sheets, soap and toilet paper",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431457",
+    "name" : "Hot water",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431462",
+    "name" : "Room-darkening shades",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "15992209431463",
+    "name" : "Window guards",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "15992209431464",
+    "name" : "Elevator",
+    "description" : "",
+    "amenityType" : "FACILITIES"
+  }, {
+    "id" : "1599220943166",
+    "name" : "Free street parking",
+    "description" : "",
+    "amenityType" : "FACILITIES"
+  }, {
+    "id" : "1599220943167",
+    "name" : "Kitchen",
+    "description" : "Space where guests can cook their own meals",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943169",
+    "name" : "Cooking basics",
+    "description" : "Pots and pans, oil salt and pepper",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943170",
+    "name" : "Dishes and silverware",
+    "description" : "",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943172",
+    "name" : "Refrigerator",
+    "description" : "",
+    "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ "mitarMitar1", "milica1" ]
 }, {
+  "id" : "app22",
   "name" : "Hotel BlaBla",
   "apartmentType" : "APPARTMENT",
   "roomNumber" : 5,
@@ -258,75 +261,76 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32"],
+    "apartmentsId" : [ "app12", "app22", "app32" ],
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : 123014,
+    "id" : "123014",
     "guestId" : "milica",
     "text" : "Sta znam nako",
-    "reviewsMark" : 8
+    "reviewsMark" : 8,
+    "disabledForGuests" : true
   }, {
-    "id" : 123015,
+    "id" : "123015",
     "guestId" : "nikola",
     "text" : "Dobar skroz, gazda je sef",
-    "reviewsMark" : 10
-  }],
+    "reviewsMark" : 10,
+    "disabledForGuests" : false
+  } ],
   "pictures" : [ "6.jpg", "5.jpg" ],
   "priceForNight" : 500.0,
   "arrivalTime" : "12:30:00",
   "exitTime" : "09:30:00",
   "apartmentStatus" : "ACTIVE",
-  "amenities" : [ 
-    {
-      "id" : "1599220943149",
-      "name" : "Wifi",
-      "description" : "Continous access in the listing",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431453",
-      "name" : "Air conditioning",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "1599220943156",
-      "name" : "Essentials",
-      "description" : "Towels, bed sheets, soap and toilet paper",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431457",
-      "name" : "Hot water",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431462",
-      "name" : "Room-darkening shades",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "1599220943167",
-      "name" : "Kitchen",
-      "description" : "Space where guests can cook their own meals",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943169",
-      "name" : "Cooking basics",
-      "description" : "Pots and pans, oil salt and pepper",
-      "amenityType" : "DINING"
-    },{
-      "id" : "1599220943170",
-      "name" : "Dishes and silverware",
-      "description" : "",
-      "amenityType" : "DINING"
-    } ,{
-      "id" : "1599220943172",
-      "name" : "Refrigerator",
-      "description" : "",
-      "amenityType" : "DINING"
-    }],
-  "reservationsId" : [ "milica2", "nikola1" ],
-  "id" : "app22"
+  "amenities" : [ {
+    "id" : "1599220943149",
+    "name" : "Wifi",
+    "description" : "Continous access in the listing",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431453",
+    "name" : "Air conditioning",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943156",
+    "name" : "Essentials",
+    "description" : "Towels, bed sheets, soap and toilet paper",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431457",
+    "name" : "Hot water",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431462",
+    "name" : "Room-darkening shades",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "1599220943167",
+    "name" : "Kitchen",
+    "description" : "Space where guests can cook their own meals",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943169",
+    "name" : "Cooking basics",
+    "description" : "Pots and pans, oil salt and pepper",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943170",
+    "name" : "Dishes and silverware",
+    "description" : "",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943172",
+    "name" : "Refrigerator",
+    "description" : "",
+    "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ "milica2", "nikola1" ]
 }, {
+  "id" : "app32",
   "name" : "Tiski cvet",
   "apartmentType" : "APPARTMENT",
   "roomNumber" : 1,
@@ -349,97 +353,97 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32"],
+    "apartmentsId" : [ "app12", "app22", "app32" ],
     "jwttoken" : null
   },
   "comments" : [ {
-    "id" : 123018,
+    "id" : "123018",
     "guestId" : "nikola",
     "text" : "dobar",
-    "reviewsMark" : 7
+    "reviewsMark" : 7,
+    "disabledForGuests" : false
   }, {
-    "id" : 123019,
+    "id" : "123019",
     "guestId" : "kristina93",
     "text" : "Nije ni za svinje",
-    "reviewsMark" : 3
+    "reviewsMark" : 3,
+    "disabledForGuests" : false
   } ],
   "pictures" : [ "7.jpg", "8.jpg" ],
   "priceForNight" : 20.0,
   "arrivalTime" : "12:30:00",
   "exitTime" : "09:30:00",
   "apartmentStatus" : "ACTIVE",
-  "amenities" : [ 
-    {
-      "id" : "1599220943149",
-      "name" : "Wifi",
-      "description" : "Continous access in the listing",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431453",
-      "name" : "Air conditioning",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "1599220943156",
-      "name" : "Essentials",
-      "description" : "Towels, bed sheets, soap and toilet paper",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "15992209431457",
-      "name" : "Hot water",
-      "description" : "",
-      "amenityType" : "BASIC"
-    }, {
-      "id" : "1599220943159",
-      "name" : "Crib",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "1599220943160",
-      "name" : "High chair",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "15992209431462",
-      "name" : "Room-darkening shades",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "15992209431463",
-      "name" : "Window guards",
-      "description" : "",
-      "amenityType" : "FAMILY_FEATURES"
-    }, {
-      "id" : "1599220943165",
-      "name" : "Single level home",
-      "description" : "No stairs in home",
-      "amenityType" : "FACILITIES"
-    }, {
-      "id" : "1599220943166",
-      "name" : "Free street parking",
-      "description" : "",
-      "amenityType" : "FACILITIES"
-    }, {
-      "id" : "1599220943167",
-      "name" : "Kitchen",
-      "description" : "Space where guests can cook their own meals",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943169",
-      "name" : "Cooking basics",
-      "description" : "Pots and pans, oil salt and pepper",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943170",
-      "name" : "Dishes and silverware",
-      "description" : "",
-      "amenityType" : "DINING"
-    }, {
-      "id" : "1599220943172",
-      "name" : "Refrigerator",
-      "description" : "",
-      "amenityType" : "DINING"
-    }],
-  "reservationsId" : [ "nikola2", "kristina931" ],
-  "id" : "app32"
+  "amenities" : [ {
+    "id" : "1599220943149",
+    "name" : "Wifi",
+    "description" : "Continous access in the listing",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431453",
+    "name" : "Air conditioning",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943156",
+    "name" : "Essentials",
+    "description" : "Towels, bed sheets, soap and toilet paper",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431457",
+    "name" : "Hot water",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943159",
+    "name" : "Crib",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "1599220943160",
+    "name" : "High chair",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "15992209431462",
+    "name" : "Room-darkening shades",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "15992209431463",
+    "name" : "Window guards",
+    "description" : "",
+    "amenityType" : "FAMILY_FEATURES"
+  }, {
+    "id" : "1599220943165",
+    "name" : "Single level home",
+    "description" : "No stairs in home",
+    "amenityType" : "FACILITIES"
+  }, {
+    "id" : "1599220943166",
+    "name" : "Free street parking",
+    "description" : "",
+    "amenityType" : "FACILITIES"
+  }, {
+    "id" : "1599220943167",
+    "name" : "Kitchen",
+    "description" : "Space where guests can cook their own meals",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943169",
+    "name" : "Cooking basics",
+    "description" : "Pots and pans, oil salt and pepper",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943170",
+    "name" : "Dishes and silverware",
+    "description" : "",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943172",
+    "name" : "Refrigerator",
+    "description" : "",
+    "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ "nikola2", "kristina931" ]
 } ]

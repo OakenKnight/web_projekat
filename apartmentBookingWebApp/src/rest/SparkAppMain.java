@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import com.google.gson.Gson;
 import beans.Address;
 import beans.Admin;
@@ -31,6 +33,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import repository.AdminRepository;
+import repository.AmenityRepository;
 import repository.ApartmentRepository;
 import repository.ApartmentRepositoryInterface;
 import repository.GuestRepository;
@@ -83,6 +86,24 @@ public class SparkAppMain {
 			//if(guest == null) res.status(500);
 
 			return g.toJson(guest); 
+		});
+		
+		post("/rest/updateApartment", (req,res) ->{
+			res.type("application/json");
+			String payload = req.body();
+			Apartment apartment = g.fromJson(payload, Apartment.class);
+			ApartmentRepository apartmentRepository = new ApartmentRepository();
+			if(apartmentRepository.update(apartment)) {
+				return "Info update successfully";
+			}
+			return "Someting went wrong";
+		});
+		
+		get("/rest/getAllAmenities", (req,res)->{
+			AmenityRepository amenityRepository = new AmenityRepository();
+			List<Amenity> amenities = new ArrayList<Amenity>();
+			amenities = amenityRepository.getAll();
+			return g.toJson(amenities);
 		});
 		
 		get("/rest/housekeepersApartment", (req,res)->{

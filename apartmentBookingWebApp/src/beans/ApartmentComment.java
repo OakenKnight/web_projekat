@@ -13,14 +13,26 @@ public class ApartmentComment {
 	private String guestId;
 	private String text;
 	private int reviewsMark;
+	private boolean disabledForGuests;
 	
 	public ApartmentComment() {}
 	
-	public ApartmentComment(String guestId, String text, int reviewsMark) {
+	public ApartmentComment(String guestId, String text, int reviewsMark, boolean disabledForGuests) {
 		super();
 		this.guestId = guestId;
 		this.text = text;
 		this.reviewsMark = reviewsMark;
+		this.disabledForGuests = disabledForGuests;
+	}
+
+	
+	
+	public boolean isDisabledForGuests() {
+		return disabledForGuests;
+	}
+
+	public void setDisabledForGuests(boolean disabledForGuests) {
+		this.disabledForGuests = disabledForGuests;
 	}
 
 	public String getId() {

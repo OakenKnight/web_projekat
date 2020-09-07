@@ -177,7 +177,7 @@ Vue.component("welcome",{
                                                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
                                                             <p class="details-hotel-name-p">{{selectedApartment.priceForNight}}</p>
                                                         </div>
-                                                    </div
+                                                    </div>
 
                                                     <div class="row">
                                                         <div class="col">
