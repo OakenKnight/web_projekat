@@ -69,7 +69,7 @@ Vue.component("reserve",{
 
                 <div class="bk-img row justify-content-center">
                     <div class="search-form col-md-4">
-                            <form class="search" action="!#">
+                            <form class="search-reservation" action="!#">
                                 <input class="search-destination" type="text" name="destination" placeholder="Search destination" v-model="searchedApartment.destination">
                                 <div>
                                     <div class="datepicker">
