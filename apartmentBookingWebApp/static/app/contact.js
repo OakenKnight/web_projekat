@@ -1,4 +1,10 @@
 Vue.component("contact",{ 
+  data: function(){
+		return{
+            loggedIn:null,
+            loggedInUser:{}
+        }
+	  },
     template:`
     <main>
     <div class="navigationbar"> 
@@ -10,12 +16,6 @@ Vue.component("contact",{
                 <a class="nav-link" href="#/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#/reserve">Reserve</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="">Recomend</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="#/about">About us</a>
               </li>
               <li class="nav-item">
@@ -23,8 +23,10 @@ Vue.component("contact",{
               </li>
               <li>
               <div class="sign-in-up" style="right:0">
-              <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" >Create account</button>
-              <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" >Sign in</button>
+                <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
+                <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
+                <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
+                <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
               </div>
           </li>
   
@@ -61,7 +63,27 @@ Vue.component("contact",{
       </div>
     </div>
   </main>
-    `
+`,
+mounted () {
+      var jwt = window.localStorage.getItem('jwt');
+      if(!jwt){
+          this.loggedIn=false;
+      }else{
+          this.loggedIn=true;
+          axios
+          .get('rest/userLoggedIn',{params:{
+              Authorization: 'Bearer ' + jwt
+          }})
+          .then(response=>(this.loggedInUser = response.data));
+      }
+},
+methods:{
+      logout: function(){
+          window.localStorage.removeItem('jwt');
+          this.$router.push('/login');
+      },
+
+    }
 });
 
 

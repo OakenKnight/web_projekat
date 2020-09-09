@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.stream.events.Comment;
+
 import com.google.gson.Gson;
 import beans.Address;
 import beans.Admin;
@@ -248,7 +250,7 @@ public class SparkAppMain {
 			return g.toJson(apartments); 
 
 			});
-			post("/rest/cancelReservation", (req, res) -> {
+		post("/rest/cancelReservation", (req, res) -> {
 				res.type("application/json");
 				String payload = req.body();
 				System.out.println(payload);
@@ -267,8 +269,48 @@ public class SparkAppMain {
 				}
 				
 				return g.toJson(guestReservations); 				
-			});
-		
+		});
+
+
+			
+		post("/rest/update",(req,res)->{
+				res.type("application/json");
+				String payload = req.body();
+
+				System.out.println(payload);
+				
+				User guestUser = g.fromJson(payload, User.class);
+
+				UserService service = new UserService();
+
+				service.updateGuest(guestUser);
+
+				return g.toJson(guestUser);
+		});
+			
+		post("/rest/comment",(req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+
+			System.out.println(payload);
+			
+			ApartmentComment comment  = g.fromJson(payload, ApartmentComment.class);
+			ApartmentRepository apartmentRepository = new ApartmentRepository();
+			Apartment apartment = apartmentRepository.getObj(comment.getApartmentId());
+
+			ArrayList<ApartmentComment> apartmentComments = apartment.getComments();
+			apartmentComments.add(comment);
+			apartment.setComments(apartmentComments);
+
+
+			if(apartmentRepository.update(apartment)) 
+				return true;
+			else {
+				res.status(500);
+				return false;
+			}
+
+	});
 	}
 	
 	public static String getUser(String auth) {

@@ -41,9 +41,6 @@ Vue.component("welcome",{
                     <a class="nav-link" href="#/reserve">Reserve</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Recomend</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#/about">About us</a>
                 </li>
                 <li class="nav-item">
@@ -95,7 +92,9 @@ Vue.component("welcome",{
                 </div>
             </div>
             <div class="info">
-            
+                <div class="row float-sm-right">
+                    <p>KURAC</p>
+                </div>
                 <div class="row">
                     <div class="apartment col" v-for="a in apartments">
                         <div class="apartment-border">
@@ -107,9 +106,9 @@ Vue.component("welcome",{
                                 <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"> {{a.priceForNight}} €</p>
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <button class="reserve-more-info-button" type="button" v-on:click="showMore(a)" >More info...</button>
-                                    <button class="reserve-book-button" type="button" v-on:click="bookNow(a)">Book now!</button>
+                                    <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(a)">Book now!</button>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +234,7 @@ Vue.component("welcome",{
 
                                                 </div>
 
-                                                <button class="reserve-book-button" type="button" v-on:click="bookNow(selectedApartment)">Book now!</button>
+                                                <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(selectedApartment)">Book now!</button>
 
                                             </div>
                                         </div>
@@ -295,7 +294,13 @@ Vue.component("welcome",{
             return true;
         },
         bookNow : function(apartment){
-            window.location.href = "#/apartmentDetails?id=" + apartment.id;
+            var jwt = window.localStorage.getItem('jwt');
+            if(jwt){
+                window.location.href = "#/apartmentDetails?id=" + apartment.id;
+            }else{
+                alert("Please login to continue");
+                window.location.href="#/login";
+            }
         },
 		calculateMark: function(apartment){
 			var sum = 0;

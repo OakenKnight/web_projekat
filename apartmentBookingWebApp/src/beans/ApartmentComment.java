@@ -14,17 +14,21 @@ public class ApartmentComment {
 	private String text;
 	private int reviewsMark;
 	private boolean disabledForGuests;
+	private String apartmentId;
 	
 	public ApartmentComment() {}
 	
-	public ApartmentComment(String guestId, String text, int reviewsMark, boolean disabledForGuests) {
+
+	public ApartmentComment(String id, String guestId, String text, int reviewsMark, boolean disabledForGuests, String apartmentId) {
 		super();
+		this.id = id;
 		this.guestId = guestId;
 		this.text = text;
 		this.reviewsMark = reviewsMark;
 		this.disabledForGuests = disabledForGuests;
-	}
+		this.apartmentId = apartmentId;
 
+	}
 	
 	
 	public boolean isDisabledForGuests() {
@@ -57,6 +61,14 @@ public class ApartmentComment {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getApartmentId() {
+		return apartmentId;
+	}
+
+	public void setApartmentId(String apartmentId) {
+		this.apartmentId = apartmentId;
 	}
 
 	public int getReviewsMark() {

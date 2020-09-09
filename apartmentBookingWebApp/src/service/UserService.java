@@ -79,6 +79,15 @@ public class UserService {
 		else return null;
 	}
 	
-	
+	public User updateGuest(User user){
+		Guest guestForUpdate = guestRepository.getObj(user.getUsername());
+		guestForUpdate.setFirstName(user.getFirstName());
+		guestForUpdate.setLastName(user.getLastName());
+		guestForUpdate.setGender(user.getGender());
+		guestForUpdate.setPassword(user.getPassword());
+
+		guestRepository.update(guestForUpdate);
+		return user;
+	}
 
 }

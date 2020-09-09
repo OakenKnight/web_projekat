@@ -11,7 +11,7 @@
 }, {
   "username" : "coaPera",
   "password" : "123456789",
-  "firstName" : "Aleksandar ",
+  "firstName" : "Coa",
   "lastName" : "Peric",
   "gender" : "MALE",
   "userType" : "GUEST",
@@ -20,9 +20,9 @@
   "jwttoken" : null
 }, {
   "username" : "mitarMitar",
-  "password" : "mitar",
+  "password" : "mitar1",
   "firstName" : "Mitar Mitra",
-  "lastName" : "Mitra Mitar",
+  "lastName" : "Mitar Mitar",
   "gender" : "MALE",
   "userType" : "GUEST",
   "apartmentsId" : [ "app12" ],
@@ -58,4 +58,4 @@
   "apartmentsId" : [ "app32" ],
   "reservationId" : [ "kristina931" ],
   "jwttoken" : null
-}]
+} ]
