@@ -117,6 +117,7 @@ Vue.component("housekeeper",{
                                 <option value="3">Show only rejected</option>
                                 <option value="4">Show only created</option>
                                 <option value="5">Show only finished</option>
+                                <option value="6">Show only canceled</option>
                             </select>
                         </div>
                         <hr>
@@ -144,9 +145,9 @@ Vue.component("housekeeper",{
                                 </div>
                                 <div class="column right-housekeeper">
                                     <div class="buttons-housekeeper">
-                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'CREATED'">Accept</button>
-                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED' && r.reservationStatus != 'CREATED'">Reject</button>
-                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED'">Finish</button>
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'CREATED'" v-on:click="acceptReservation(r)">Accept</button>
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED' && r.reservationStatus != 'CREATED'" v-on:click="rejectReservation(r)">Reject</button>
+                                        <button type="button" class="btn btn-primary" :disabled="r.reservationStatus != 'ACCEPTED'" v-on:click="finishReservation(r)">Finish</button>
                                     </div>
                                 </div>
                             </div>
@@ -554,6 +555,24 @@ Vue.component("housekeeper",{
                     element.disabledForGuests = !element.disabledForGuests;
                 }
             });
+        },
+        acceptReservation: function(reservation){
+            reservation.reservationStatus = "ACCEPTED";
+            axios
+            .post("/rest/updateReservation", reservation)
+            .then(response=>(alert(response.data)));
+        },
+        finishReservation: function(reservation){
+            reservation.reservationStatus = "FINISH";
+            axios
+            .post("/rest/updateReservation", reservation)
+            .then(response=>(alert(response.data)));
+        },
+        rejectReservation: function(reservation){
+            reservation.reservationStatus = "REJECTED";
+            axios
+            .post("/rest/updateReservation", reservation)
+            .then(response=>(alert(response.data)));
         }
 
     },
@@ -623,6 +642,15 @@ Vue.component("housekeeper",{
                 var i = this.reservations.length;
                 while(i--){
                     if(this.reservations[i].reservationStatus !== "FINISHED"){
+                        this.reservations.splice(i,1);
+                    }
+                }
+            }else if(newType == 6){
+                this.reservations.splice(0,this.reservations.length);
+                this.reservations = [...this.reservationsBackUp];  
+                var i = this.reservations.length;
+                while(i--){
+                    if(this.reservations[i].reservationStatus !== "QUIT"){
                         this.reservations.splice(i,1);
                     }
                 }

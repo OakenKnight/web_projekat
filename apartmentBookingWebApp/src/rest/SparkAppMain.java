@@ -90,6 +90,17 @@ public class SparkAppMain {
 			return g.toJson(guest); 
 		});
 		
+		post("/rest/updateReservation", (req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+			Reservation reservation = g.fromJson(payload, Reservation.class);
+			ReservationRepository reservationRepository = new ReservationRepository();
+			if(reservationRepository.update(reservation)) {
+				return "Reservation update successfully";
+			}
+			return "Someting went wrong";
+		});
+		
 		post("/rest/updateApartment", (req,res) ->{
 			res.type("application/json");
 			String payload = req.body();
