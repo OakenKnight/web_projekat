@@ -5,7 +5,7 @@
   "totalPrice" : 100.0,
   "message" : "Dolazim oko pola cetiri",
   "guestId" : "mitarMitar",
-  "reservationStatus" : "CREATED",
+  "reservationStatus" : "ACCEPTED",
   "id" : "mitarMitar1"
 }, {
   "apartmentId" : "app12",
