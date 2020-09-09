@@ -150,7 +150,7 @@
     "guestId" : "mitarMitar",
     "text" : "Sta znam nako",
     "reviewsMark" : 7,
-    "disabledForGuests" : true,
+    "disabledForGuests" : false,
     "apartmentId" : "app12"
   }, {
     "id" : "123011",
@@ -171,7 +171,7 @@
     "guestId" : "coaPera",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3,
-    "disabledForGuests" : false,
+    "disabledForGuests" : true,
     "apartmentId" : "app12"
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
@@ -273,7 +273,7 @@
     "guestId" : "milica",
     "text" : "Sta znam nako",
     "reviewsMark" : 8,
-    "disabledForGuests" : true,
+    "disabledForGuests" : false,
     "apartmentId" : "app22"
   }, {
     "id" : "123015",
@@ -287,7 +287,7 @@
     "guestId" : "milica",
     "text" : "MOLIM TE RADI",
     "reviewsMark" : 6,
-    "disabledForGuests" : true,
+    "disabledForGuests" : false,
     "apartmentId" : "app22"
   }, {
     "id" : "1599687678250",
