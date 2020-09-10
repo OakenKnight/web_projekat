@@ -28,8 +28,8 @@
   "comments" : [ ],
   "pictures" : [ "1.jpg", "2.jpg" ],
   "priceForNight" : 100.0,
-  "arrivalTime" : "12:30:00",
-  "exitTime" : "09:30:00",
+  "arrivalTime" : "12:30",
+  "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ {
     "id" : "1599220943149",
@@ -121,7 +121,7 @@
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
-  "apartmentType" : "APPARTMENT",
+  "apartmentType" : "APARTMENT",
   "roomNumber" : 2,
   "guestNumber" : 5,
   "location" : {
@@ -176,8 +176,8 @@
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
   "priceForNight" : 150.0,
-  "arrivalTime" : "12:30:00",
-  "exitTime" : "09:30:00",
+  "arrivalTime" : "11:30",
+  "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ {
     "id" : "1599220943149",
@@ -244,7 +244,7 @@
 }, {
   "id" : "app22",
   "name" : "Hotel BlaBla",
-  "apartmentType" : "APPARTMENT",
+  "apartmentType" : "APARTMENT",
   "roomNumber" : 5,
   "guestNumber" : 10,
   "location" : {
@@ -299,8 +299,8 @@
   } ],
   "pictures" : [ "6.jpg", "5.jpg" ],
   "priceForNight" : 500.0,
-  "arrivalTime" : "12:30:00",
-  "exitTime" : "09:30:00",
+  "arrivalTime" : "12:30",
+  "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ {
     "id" : "1599220943149",
@@ -352,7 +352,7 @@
 }, {
   "id" : "app32",
   "name" : "Tiski cvet",
-  "apartmentType" : "APPARTMENT",
+  "apartmentType" : "APARTMENT",
   "roomNumber" : 1,
   "guestNumber" : 2,
   "location" : {
@@ -393,8 +393,8 @@
   } ],
   "pictures" : [ "7.jpg", "8.jpg" ],
   "priceForNight" : 20.0,
-  "arrivalTime" : "12:30:00",
-  "exitTime" : "09:30:00",
+  "arrivalTime" : "12:30",
+  "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ {
     "id" : "1599220943149",

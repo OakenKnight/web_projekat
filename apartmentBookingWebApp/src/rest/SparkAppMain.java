@@ -77,6 +77,7 @@ public class SparkAppMain {
 			return g.toJson(user); 
 		});
 		
+		
 		post("/rest/register", (req, res) ->{
 			res.type("application/json");
 			String payload = req.body();
@@ -94,6 +95,23 @@ public class SparkAppMain {
 			} 
 
 			return g.toJson(user); 
+		});
+		
+		post("/rest/createNewApartment", (req,res) ->{
+			res.type("application/json");
+			String payload = req.body();
+			Apartment apartment = g.fromJson(payload, Apartment.class);
+			ApartmentRepository apartmentRepository = new ApartmentRepository();
+			if(apartmentRepository.create(apartment)) {
+				return "Apartment created successfully";
+			}
+			return "Someting went wrong";
+		});
+		
+		get("/rest/getHousekeeper", (req,res)->{
+			String housekeeperId = getUser(req.queryParams("Authorization"));
+			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+			return g.toJson(housekeeperRepository.getObj(housekeeperId));
 		});
 		
 		post("/rest/updateReservation", (req,res)->{

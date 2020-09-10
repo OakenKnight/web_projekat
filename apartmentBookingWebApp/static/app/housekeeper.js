@@ -21,8 +21,30 @@ Vue.component("housekeeper",{
             facilityAmenities:[],
             diningAmenities:[],
             editApartmentMode: false,
-            allAmenitiesEver: []
-
+            allAmenitiesEver: [],
+            newApartmentDialog: false,
+            newApartment: {
+                id: null,
+                name: null,
+                apartmentType: "",
+                roomNumber: "",
+                guestNumber: "",
+                location: {latitude: null, longitude: null, address:{street: null, number: null, city:null, zipCode: null}},
+                freeDates: [],
+                housekeeper: null,
+                comments: [],
+                pictures: [],
+                priceForNight: "",
+                arrivalTime: "",
+                exitTime: "",
+                apartmentStatus: null,
+                amenities: [],
+                reservationsId: []
+            },
+            arrivalHours: "",
+            arrivalMinutes: "",
+            exitHours: "",
+            exitMinutes: ""
 		}
 	},
     template:`
@@ -62,7 +84,7 @@ Vue.component("housekeeper",{
                 </div>
                 <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
-                        <h3>All your apartments</h3>
+                        <h3>All your apartments</h3><button type="button" class="btn btn-primary" v-on:click="newApartmentDialog = true">Create New apartment</button>
                         <div class="search-housekeeper"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
                         <hr>
                         <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">
@@ -157,6 +179,165 @@ Vue.component("housekeeper",{
                 </div>
             </div>
             </div>
+            <div v-if="newApartmentDialog">
+                    <div class="modal-mask">
+                        <div class="modal-wrapper">
+                            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">More info about apartment</h4>
+                                        <button type="button" class="close absolute pin-t pin-r" v-on:click="newApartmentDialog = false">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="details">
+                                        
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Apartment's name" v-model="newApartment.name">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
+                                                    <div>
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Street" v-model="newApartment.location.address.street">
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Number" v-model="newApartment.location.address.number">
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="City" v-model="newApartment.location.address.city">
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Zip code" v-model="newApartment.location.address.zipCode">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>
+                                                    <div class="edit-combobox">
+                                                        <select required v-model="newApartment.guestNumber">
+                                                            <option value="" selected disabled>Guests</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"><strong>Rooms</strong></label>
+                                                    <div class="edit-combobox">
+                                                        <select required v-model="newApartment.roomNumber">
+                                                            <option value="">Rooms</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
+                                                    <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Price for night" v-model="newApartment.priceForNight">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/room-apartment-icon.png" alt="not found"><strong>Apartment Type</strong></label>
+                                                    <div class="edit-combobox">
+                                                        <select required v-model="newApartment.apartmentType">
+                                                            <option value="" selected disabled>Type</option>
+                                                            <option value="APARTMENT">Apartment</option>
+                                                            <option value="ROOM">Room</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-in-icon.png" alt="not found"><strong>Arrival time</strong></label>
+                                                    <div class="time">
+                                                        <select required v-model="arrivalHours">
+                                                            <option value="" selected disabled>Hours</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                        </select>
+                                                        <p style="display: inline-block">:</p>
+                                                        <select  required v-model="arrivalMinutes">
+                                                            <option value="" selected disabled>Mins</option>
+                                                            <option value="00">00</option>
+                                                            <option value="30">30</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-out-icon.png" alt="not found"><strong>Exit time</strong></label>
+                                                    <div class="time">
+                                                        <select required v-model="exitHours">
+                                                            <option value="" selected disabled>Hours</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                        </select>
+                                                        <p style="display: inline-block">:</p>
+                                                        <select  required v-model="exitMinutes">
+                                                            <option value="" selected disabled>Mins</option>
+                                                            <option value="00">00</option>
+                                                            <option value="30">30</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                            </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h4>Basic</h4> 
+                                                        <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'BASIC'">
+                                                            <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""> </label>
+                                                            <p>{{a.description}}</p>
+                                                        </div>
+                                                        <h4>Family features</h4> 
+                                                        <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'">
+                                                            <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                                            <p>{{a.description}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <h4>Facilities</h4> 
+                                                        <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'">
+                                                            <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                                            <p>{{a.description}}</p>
+                                                        </div>
+                                                        <h4>Dining</h4> 
+                                                        <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'DINING'">
+                                                            <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                                            <p>{{a.description}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="reserve-book-button" type="button" v-on:click="createNewApartment(newApartment)">Create apartment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             <div v-if="showApartment">
                             <div class="modal-mask">
                             <div class="modal-wrapper">
@@ -164,7 +345,7 @@ Vue.component("housekeeper",{
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">More info about apartment</h4>
-                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="editApartmentMode = true" v-if="editApartmentMode === false">Update info</button>
+                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="startEditingApartment()" v-if="editApartmentMode === false">Update info</button>
                                             <span v-else>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
@@ -175,7 +356,6 @@ Vue.component("housekeeper",{
                                         </div>
                                         <div class="modal-body">
                                             <div class="details">
-                                            
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
@@ -189,6 +369,7 @@ Vue.component("housekeeper",{
                                                         <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.location.address.street">
                                                         <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.location.address.number">
                                                         <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.location.address.city">
+                                                        <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.location.address.zipCode">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -224,6 +405,70 @@ Vue.component("housekeeper",{
                                                         <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
                                                         <p class="details-hotel-name-p" v-if="editApartmentMode === false">{{selectedApartment.priceForNight}}</p>
                                                         <input class="edit-apartment-input" type="text" name="hotelName" v-else v-model="selectedApartment.priceForNight">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/room-apartment-icon.png" alt="not found"><strong>Apartment Type</strong></label>
+                                                        <p class="details-hotel-name-p" v-if="editApartmentMode === false">{{selectedApartment.apartmentType}}</p>
+                                                        <div class="edit-combobox" v-else>
+                                                            <select required v-model="selectedApartment.apartmentType">
+                                                                <option value="" selected disabled>Type</option>
+                                                                <option value="APARTMENT">Apartment</option>
+                                                                <option value="ROOM">Room</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col">
+                                                        <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-in-icon.png" alt="not found"><strong>Arrival time</strong></label>
+                                                        <p class="details-hotel-name-p" v-if="editApartmentMode === false">{{selectedApartment.arrivalTime}}</p>
+                                                        <div class="time" v-else>
+                                                            <select required v-model="arrivalHours">
+                                                                <option value="" selected disabled>Hours</option>
+                                                                <option value="09">09</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+                                                                <option value="14">14</option>
+                                                                <option value="15">15</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                            </select>
+                                                            <p style="display: inline-block">:</p>
+                                                            <select  required v-model="arrivalMinutes">
+                                                                <option value="" selected disabled>Mins</option>
+                                                                <option value="00">00</option>
+                                                                <option value="30">30</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-out-icon.png" alt="not found"><strong>Exit time</strong></label>
+                                                        <p class="details-hotel-name-p" v-if="editApartmentMode === false">{{selectedApartment.exitTime}}</p>
+                                                        <div class="time" v-else>
+                                                            <select required v-model="exitHours">
+                                                                <option value="" selected disabled>Hours</option>
+                                                                <option value="09">09</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+                                                                <option value="14">14</option>
+                                                                <option value="15">15</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                            </select>
+                                                            <p style="display: inline-block">:</p>
+                                                            <select  required v-model="exitMinutes">
+                                                                <option value="" selected disabled>Mins</option>
+                                                                <option value="00">00</option>
+                                                                <option value="30">30</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                     <div class="row" v-if="editApartmentMode === false">
@@ -372,6 +617,12 @@ Vue.component("housekeeper",{
 
             axios.get('rest/getAllAmenities')
             .then(response => (this.allAmenitiesEver = response.data));
+
+            axios
+            .get('rest/getHousekeeper', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>(this.housekeeper = response.data));
         }
 
 	},
@@ -516,13 +767,22 @@ Vue.component("housekeeper",{
                 return false;
             }
         },
+        startEditingApartment: function(){
+            this.arrivalHours = this.selectedApartment.arrivalTime.split(':')[0];
+            this.arrivalMinutes = this.selectedApartment.arrivalTime.split(':')[1];
+            this.exitHours = this.selectedApartment.exitTime.split(':')[0];
+            this.exitMinutes = this.selectedApartment.exitTime.split(':')[1];
+            this.editApartmentMode = true;
+
+        },
         cancleEditingApartment: function(){
             this.editApartmentMode = false;
             this.selectedApartment = JSON.parse(JSON.stringify(this.selectedApartmentBackUp));
         },
         saveEditingApartmentChanges: function(){
             this.editApartmentMode = false;
-
+            this.selectedApartment.arrivalTime = this.arrivalHours + ":" + this.arrivalMinutes;
+            this.selectedApartment.exitTime = this.exitHours + ":" + this.exitMinutes;
             axios
             .post("/rest/updateApartment", this.selectedApartment)
             .then(function(response){
@@ -549,6 +809,9 @@ Vue.component("housekeeper",{
                 this.selectedApartment.amenities.push(amenity);
             }
         },
+        addAmenityToNewApartment: function(amenity){
+            this.newApartment.amenities.push(amenity);
+        },
         changeCommentarVisibillity: function(comment){
             this.selectedApartment.comments.forEach(element =>{
                 if(element.id === comment.id){
@@ -573,6 +836,46 @@ Vue.component("housekeeper",{
             axios
             .post("/rest/updateReservation", reservation)
             .then(response=>(alert(response.data)));
+        },
+        createNewApartment: function(){
+            var d = new Date();
+            this.newApartment.id = d.getTime();
+            var jwt = window.localStorage.getItem('jwt');
+            this.newApartment.housekeeper = this.housekeeper;
+            this.newApartment.apartmentStatus = "ACTIVE";
+            this.newApartment.arrivalTime = this.arrivalHours + ":" + this.arrivalMinutes;
+            this.newApartment.exitTime = this.exitHours + ":" + this.exitMinutes;
+            axios
+            .post("/rest/createNewApartment", this.newApartment)
+            .then(function(response){
+                alert(response.data);
+                var jwt = window.localStorage.getItem('jwt');
+                axios
+                .get('rest/housekeepersApartment', {params: {
+                 Authorization: 'Bearer ' + jwt
+                }})
+                .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
+
+            });
+
+            this.newApartmentDialog = false;
+            this.newApartment= {
+                id: null,
+                name: null,
+                apartmentType: "",
+                roomNumber: "",
+                guestNumber: "",
+                location: {latitude: null, longitude: null, address:{street: null, number: null, city:null, zipCode: null}},
+                freeDates: [],
+                housekeeper: null,
+                pictures: [],
+                priceForNight: "",
+                arrivalTime: "",
+                exitTime: "",
+                apartmentStatus: null,
+                amenities: [],
+                housekeeper: null,
+            }
         }
 
     },
