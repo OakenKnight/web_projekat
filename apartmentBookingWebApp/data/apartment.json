@@ -150,25 +150,29 @@
     "guestId" : "mitarMitar",
     "text" : "Sta znam nako",
     "reviewsMark" : 7,
-    "disabledForGuests" : true
+    "disabledForGuests" : false,
+    "apartmentId" : "app12"
   }, {
     "id" : "123011",
     "guestId" : "milica",
     "text" : "Dobar pravo",
     "reviewsMark" : 9,
-    "disabledForGuests" : false
+    "disabledForGuests" : false,
+    "apartmentId" : "app12"
   }, {
     "id" : "123012",
     "guestId" : "ral",
     "text" : "dobar",
     "reviewsMark" : 5,
-    "disabledForGuests" : false
+    "disabledForGuests" : false,
+    "apartmentId" : "app12"
   }, {
     "id" : "123013",
     "guestId" : "coaPera",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3,
-    "disabledForGuests" : false
+    "disabledForGuests" : true,
+    "apartmentId" : "app12"
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
   "priceForNight" : 150.0,
@@ -269,13 +273,29 @@
     "guestId" : "milica",
     "text" : "Sta znam nako",
     "reviewsMark" : 8,
-    "disabledForGuests" : true
+    "disabledForGuests" : false,
+    "apartmentId" : "app22"
   }, {
     "id" : "123015",
     "guestId" : "nikola",
     "text" : "Dobar skroz, gazda je sef",
     "reviewsMark" : 10,
-    "disabledForGuests" : false
+    "disabledForGuests" : false,
+    "apartmentId" : "app22"
+  }, {
+    "id" : "1599686825813",
+    "guestId" : "milica",
+    "text" : "MOLIM TE RADI",
+    "reviewsMark" : 6,
+    "disabledForGuests" : false,
+    "apartmentId" : "app22"
+  }, {
+    "id" : "1599687678250",
+    "guestId" : "milica",
+    "text" : "VYUIO",
+    "reviewsMark" : 4,
+    "disabledForGuests" : true,
+    "apartmentId" : "app22"
   } ],
   "pictures" : [ "6.jpg", "5.jpg" ],
   "priceForNight" : 500.0,
@@ -361,13 +381,15 @@
     "guestId" : "nikola",
     "text" : "dobar",
     "reviewsMark" : 7,
-    "disabledForGuests" : false
+    "disabledForGuests" : false,
+    "apartmentId" : "app32"
   }, {
     "id" : "123019",
     "guestId" : "kristina93",
     "text" : "Nije ni za svinje",
     "reviewsMark" : 3,
-    "disabledForGuests" : false
+    "disabledForGuests" : false,
+    "apartmentId" : "app32"
   } ],
   "pictures" : [ "7.jpg", "8.jpg" ],
   "priceForNight" : 20.0,

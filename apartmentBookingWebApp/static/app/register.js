@@ -15,12 +15,6 @@ Vue.component("register",{
         <li class="nav-item">
           <a class="nav-link" href="#/">Home</a>
         </li>				
-        <li class="nav-item">
-					<a class="nav-link" href="#">Reserve</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">Recomend</a>
-				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#/about">About us</a>
 				</li>

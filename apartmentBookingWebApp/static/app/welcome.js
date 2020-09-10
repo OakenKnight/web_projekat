@@ -19,6 +19,7 @@ Vue.component("welcome",{
             maxPrice:"",
             numberOfGuests:"",
             loggedIn:null,
+            apartmentSortCriteria: "1",
             loggedInUser:{},
             disabledArriveDates: {
                 to: new Date()
@@ -39,9 +40,6 @@ Vue.component("welcome",{
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#/reserve">Reserve</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Recomend</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#/about">About us</a>
@@ -95,7 +93,21 @@ Vue.component("welcome",{
                 </div>
             </div>
             <div class="info">
-            
+                <div class="row float-right">
+                    <div class="select-apartment-type">
+                        <select required v-model="apartmentSortCriteria">
+                            <option value="1" selected>Select sort method</option>
+                            <option value="2">Sort by name ascending </option>
+                            <option value="3">Sort by name descending</option>
+                            <option value="4">Sort by rating ascending</option>
+                            <option value="5">Sort by rating descending</option>
+                            <option value="6">Sort by price ascending</option>
+                            <option value="7">Sort by price descending</option>
+                            <option value="8">Sort by rooms ascending</option>
+                            <option value="9">Sort by rooms descending</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="apartment col" v-for="a in apartments">
                         <div class="apartment-border">
@@ -107,9 +119,9 @@ Vue.component("welcome",{
                                 <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"> {{a.priceForNight}} €</p>
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <button class="reserve-more-info-button" type="button" v-on:click="showMore(a)" >More info...</button>
-                                    <button class="reserve-book-button" type="button" v-on:click="bookNow(a)">Book now!</button>
+                                    <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(a)">Book now!</button>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +247,7 @@ Vue.component("welcome",{
 
                                                 </div>
 
-                                                <button class="reserve-book-button" type="button" v-on:click="bookNow(selectedApartment)">Book now!</button>
+                                                <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(selectedApartment)">Book now!</button>
 
                                             </div>
                                         </div>
@@ -295,7 +307,13 @@ Vue.component("welcome",{
             return true;
         },
         bookNow : function(apartment){
-            window.location.href = "#/apartmentDetails?id=" + apartment.id;
+            var jwt = window.localStorage.getItem('jwt');
+            if(jwt){
+                window.location.href = "#/apartmentDetails?id=" + apartment.id;
+            }else{
+                alert("Please login to continue");
+                window.location.href="#/login";
+            }
         },
 		calculateMark: function(apartment){
 			var sum = 0;
@@ -355,6 +373,7 @@ Vue.component("welcome",{
         },
         getComments:function(){
             this.comments = this.selectedApartment.comments;
+            //treba dodati da se vide samo oni koji su dozvoljeni
         },
         getBasicAmenities:function(){
             this.basicAmenities = this.amenities.filter(function(amenity){
@@ -381,9 +400,137 @@ Vue.component("welcome",{
         guestProfile:function(){
             window.location.href = "#/guestProfile";
             
+        },
+        compareNameASC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+          
+            let comparison = 0;
+            if (nameA > nameB) {
+              comparison = 1;
+            } else if (nameA < nameB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        compareNameDESC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+          
+            let comparison = 0;
+            if (nameA < nameB) {
+              comparison = 1;
+            } else if (nameA > nameB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        comparePriceDESC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.priceForNight;
+            const priceB = b.priceForNight;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = 1;
+            } else if (priceA > priceB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        comparePriceASC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.priceForNight;
+            const priceB = b.priceForNight;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = -1;
+            } else if (priceA > priceB) {
+              comparison = 1;
+            }
+            return comparison;
+        },
+        compareRatingASC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const markA = this.calculateMark(a);
+            const markB = this.calculateMark(b);
+          
+            let comparison = 0;
+            if (markA > markB) {
+              comparison = 1;
+            } else if (markA < markB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        compareRatingDESC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const markA = this.calculateMark(a);
+            const markB = this.calculateMark(b);
+          
+            let comparison = 0;
+            if (markA < markB) {
+              comparison = 1;
+            } else if (markA > markB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        compareRoomsASC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const roomA = a.roomNumber;
+            const roomB = b.roomNumber;
+          
+            let comparison = 0;
+            if (roomA > roomB) {
+              comparison = 1;
+            } else if (roomA < roomB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        compareRoomsDESC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const roomA = a.roomNumber;
+            const roomB = b.roomNumber;
+          
+            let comparison = 0;
+            if (roomA < roomB) {
+              comparison = 1;
+            } else if (roomA > roomB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        sortByNameASC : function(){
+            this.apartments.sort(this.compareNameASC);
+        },
+        sortByNameDESC : function(){
+            this.apartments.sort(this.compareNameDESC);
+        },
+        sortByRatingASC:function(){
+            this.apartments.sort(this.compareRatingASC);
+        },
+        sortByRatingDESC:function(){
+            this.apartments.sort(this.compareRatingDESC);
+        },
+        sortByPriceASC:function(){
+            this.apartments.sort(this.comparePriceASC);
+        },
+        sortByPriceDESC:function(){
+            this.apartments.sort(this.comparePriceDESC);
+        },
+        sortByRoomsASC:function(){
+            this.apartments.sort(this.compareRoomsASC);
+        },
+        sortByRoomsDESC:function(){
+            this.apartments.sort(this.compareRoomsDESC);
         }
-
-	},
+    },
+    
 	watch:{
 		arriveDate: function(newDate, oldDate){
             this.searchedApartment.arriveDate = this.arriveDate;
@@ -424,7 +571,28 @@ Vue.component("welcome",{
 			}
 		},
 
-
+        apartmentSortCriteria: function(newType, oldType){
+            console.log(newType);
+            if(newType == 2){
+                this.sortByNameASC();
+            }else if(newType == 3){
+                this.sortByNameDESC();
+            }else if(newType == 4){
+                this.sortByRatingASC();
+            }else if(newType == 5){
+                this.sortByRatingDESC();
+            }else if(newType == 6){
+                this.sortByPriceASC();
+            }else if(newType == 7){
+                this.sortByPriceDESC();
+            }else if(newType == 8){
+                this.sortByRoomsASC();
+            }else if(newType == 9){
+                this.sortByRoomsDESC();
+            }else{
+                
+            }
+        }
 	},
     components:{
 		vuejsDatepicker

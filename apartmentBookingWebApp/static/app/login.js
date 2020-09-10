@@ -16,12 +16,6 @@ Vue.component("login",{
 	  <a class="nav-link" href="#/">Home</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#/reserve">Reserve</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="">Recomend</a>
-			</li>
-			<li class="nav-item">
 				<a class="nav-link" href="#/about">About us</a>
 			</li>
 			<li class="nav-item">
