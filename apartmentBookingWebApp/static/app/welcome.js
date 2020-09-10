@@ -113,9 +113,9 @@ Vue.component("welcome",{
                         <div class="apartment-border">
                             <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                             <div class="apartment-info">
-                                <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
+                                <h5><strong>{{a.name}}</strong></h5>
                                 <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
-                                <p><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
+                                <p><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}, {{a.location.address.zipCode}} {{a.location.address.city}}</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
                                 <p><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"> {{a.priceForNight}} €</p>
@@ -150,7 +150,7 @@ Vue.component("welcome",{
                 
                     
 
-                <!--ASFASF-->
+                <!--MODALNI DIJALOG SA DETALJIMA APARTMANA-->
                     
                     <div v-if="myModal">
                         <!-- <transition name="modal"> -->
@@ -175,7 +175,11 @@ Vue.component("welcome",{
                                                         </div>
                                                         <div class="col">
                                                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
-                                                            <p class="details-hotel-name-p">{{selectedApartment.location.address.street}} {{selectedApartment.location.address.number}}, {{selectedApartment.location.address.city}}</p>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.location.address.street}} {{selectedApartment.location.address.number}}, {{selectedApartment.location.address.zipCode}} {{selectedApartment.location.address.city}} </p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/building-type.png" alt="not found"><strong>Type</strong></label>
+                                                            <p class="details-hotel-name-p">{{selectedApartment.apartmentType}}</p>
                                                         </div>
                                                         <div class="col">
                                                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>

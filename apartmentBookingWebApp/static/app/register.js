@@ -1,9 +1,19 @@
 Vue.component("register",{ 
     data: function(){
 		return{
-			user:{},
+      user:{},
+      username:"",
+      name:"",
+      lastname:"",
+      gender:"",
 			password: "",
-			confirmPassword: ""
+      confirmPassword: "",
+      emptyName:"",
+      emptyLastName:"",
+      emptyGender:"",
+      emptyPassword1:"",
+      emptyPassword2:"",
+      emptyUsername:""
 		}
 	},
 	template:`
@@ -41,31 +51,41 @@ Vue.component("register",{
             <form action="#!">
               <div class="form-group">
                 <label for="name">Enter Name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="enter your name" v-model="user.firstName">
+                <input type="text" name="name" id="name" class="form-control" placeholder="enter your name" v-model="name">
+                <p style="color:red">{{emptyName}}</p>
+
               </div>
               <div class="form-group">
                 <label for="lastname">Enter Lastname</label>
-                <input type="text" name="lastname" id="lastname" class="form-control" placeholder="enter your lastname" v-model="user.lastName">
-              </div>
+                <input type="text" name="lastname" id="lastname" class="form-control" placeholder="enter your lastname" v-model="lastname">
+                <p style="color:red">{{emptyLastName}}</p>
+               </div>
               <div class="form-group">
                 <label for="gender">Select Gender</label>
-                <select name="gender" id="gender" class="form-control" v-model="user.gender" >
+                <select name="gender" id="gender" class="form-control" v-model="gender" >
                   <option value="MALE">Male</option>
                   <option value="FEMALE">Female</option>
                   <option value="OTHER">Other...</option>
-                </select>                
+                </select>
+                <p style="color:red">{{emptyGender}}</p>
+                
               </div>
               <div class="form-group">
                 <label for="username">Enter Usename</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="user.username">
+                <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
+                <p style="color:red">{{emptyUsername}}</p>
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="password">
+                <p style="color:red">{{emptyPassword1}}</p>
+
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password Again</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword again" v-model="confirmPassword">
+                <p style="color:red">{{emptyPassword2}}</p>
+
               </div>
               <input name="register" id="register" class="btn btn-block register-btn" type="button" value="Register" v-on:click="tryRegister(user)">
             </form>
@@ -81,28 +101,114 @@ Vue.component("register",{
 	`
 	,
     methods: {
+      validate:function(){
+        if(this.validateName() & this.validateLastname() & this.validateGender() & this.validateUsername() & this.validatePassword()){
+          return true;
+        }
+        return false;
+      },
+      validateName:function(){
+        if(this.name===""  | this.name.trim()===""){
+          this.emptyName = "First name field is empty!";
+          return false;
+        }
+        this.emptyName = "";
+        return true;
+      },
+      validateLastname:function(){
+        if(this.lastname==="" | this.lastname.trim()===""){
+          this.emptyLastName = "Last name field is empty!";
+          return false;
+        }
+        this.emptyLastName = "";
+        return true;
+      },
+      validateGender:function(){
+        if(this.gender===""){
+          this.emptyGender = "Gender field is empty!";
+          return false;
+        }
+        this.emptyGender = "";
+        return true;
+      },
+      validateUsername: function(){
+        if(this.username===""  | this.username.trim()===""){
+          this.emptyUsername = "Username field is empty!";
+          return false;
+        }
+        this.emptyUsername = "";
+        return true;
+      },
+      validatePassword:function(){
+        if(this.validatePassword1() & this.validatePassword2()){
+          if(this.password===this.confirmPassword){
+            this.emptyPassword2="";
+            return true;
+          }
+          this.emptyPassword2="Passwords do not match!";
+          return false;
+        }
+      },
+      validatePassword1:function(){
+        if(this.password==="" | this.password.trim()===""){
+          this.emptyPassword1="Password field is empty!";
+          return false;
+        }
+        this.emptyPassword1="";
+        return true;
+      },
+      validatePassword2:function(){
+        if(this.confirmPassword==="" | this.confirmPassword.trim()===""){
+          this.emptyPassword2="Password field is empty!";
+          return false;
+        }
+        this.emptyPassword2="";
+        return true;
+      },
     	tryRegister : function(user) {
         console.log(user.password);
-			if(this.password > 8 && this.password === this.confirmPassword){
+			if(this.validate()){
+        console.log("pera");
 				axios
 				.post("/rest/register", user)
 				.then(function(response) {
-					window.location.href = '/#/login';
+          this.user = response.data;
+          window.localStorage.setItem('jwt', this.user.JWTToken);
+          window.location.href = '#/';
+          console.log(this.user.JWTToken);
 				})
-				.catch(function(error){alert("Username already exists!!!")})
-			}else{
-				alert("The password does not match or is shorter than 8 characters");
+				.catch(function(error){alert("Username already exists!")})
 			}
 			
 		},
     	
 	},
 	watch:{
+    name: function(newName,oldName){
+      this.name = newName;
+      this.user.firstName = this.name;
+    },
+    lastname: function(newLastName,oldLastName){
+      this.lastname = newLastName;
+      this.user.lastName = this.lastname;
+    },
+    gender: function(newGender,oldGender){
+      this.gender = newGender;
+      this.user.gender = this.gender;
+    },
+    username: function(newUserName,oldUserName){
+      this.username = newUserName;
+      this.user.username = this.username;
+    },
 		password: function(newPassword, oldPassword){
-			this.user.password = this.password;
+      this.password = newPassword;
+      this.user.password = this.password;
+      
+      /*
 			if(newPassword.length < 8){
 				// obavestenje o passwordu u toku kucanja
-			}
+      }
+      */
 		},
 	},
 });

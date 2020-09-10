@@ -3,7 +3,9 @@ Vue.component("login",{
 		return{
       user: null,
 			username: "",
-			password: ""
+      password: "",
+      emptypassword:"",
+      emptyusername:""
 		}
 	},
 	template:`
@@ -43,10 +45,12 @@ Vue.component("login",{
               <div class="form-group">
                 <label for="username">Usename</label>
                 <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
+                  <p style="color:red">{{emptyusername}}</p>
               </div>
               <div class="form-group mb-4">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="password">
+                <p style="color:red">{{emptypassword}}</p>
               </div>
               <input name="login" id="login" class="btn btn-block login-btn" type="button" value="Login" v-on:click="tryLog(username,password)" >
             </form>
@@ -63,21 +67,47 @@ Vue.component("login",{
 	`
 	,
     methods: {
+      validate:function(){
+        if(this.validatePassword() & this.validateUsername()){
+          return true;
+        }
+        return false;
+      },
+      validateUsername:function(){
+        if(this.username==="" | this.username.trim()===""){
+          this.emptyusername="Username field is empty";
+          return false;
+        }
+        this.emptyusername="";
+        return true;
+      },
+      validatePassword:function(){
+        if(this.password==="" | this.password.trim()===""){
+          this.emptypassword = "Password field is empty!"
+          return false;
+        }
+        this.emptypassword="";
+        return true;
+      },
     	tryLog : function(username, password) {
-    		axios
-    		.post("/rest/login", {username: this.username, password: this.password})
-    		.then(function(response) {
-          this.user = response.data;
-          window.localStorage.setItem('jwt', user.JWTToken);
-          if(this.user.userType === 'HOUSEKEEPER'){
-            window.location.href = '#/housekeeper';
-          }else if(this.user.userType === 'GUEST'){
-            window.location.href = '#/';
-          }else{
-            window.location.href = '/test.html';
-          }
-			})
-			.catch(function(error){alert("Wrong username or password")})
+        if(this.validate()){
+          axios
+          .post("/rest/login", {username: this.username, password: this.password})
+          .then(function(response) {
+            this.user = response.data;
+            window.localStorage.setItem('jwt', user.JWTToken);
+            if(this.user.userType === 'HOUSEKEEPER'){
+              window.location.href = '#/housekeeper';
+            }else if(this.user.userType === 'GUEST'){
+              window.location.href = '#/';
+            }else{
+              window.location.href = '/test.html';
+            }
+        })
+		    .catch(function(error){alert("Oooops something went wrong!")})
+
+        }
+    		
 			
 		},
     	

@@ -84,10 +84,16 @@ public class SparkAppMain {
 			UserService service = new UserService();
 			user.setUserType(UserType.GUEST);
 			Guest guest = service.registerNewGuest(user);
+			
+			
+			String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
+			user.setJWTToken(jwt);
+			
+			if(guest == null){
+				res.status(500);
+			} 
 
-			//if(guest == null) res.status(500);
-
-			return g.toJson(guest); 
+			return g.toJson(user); 
 		});
 		
 		post("/rest/updateReservation", (req,res)->{
