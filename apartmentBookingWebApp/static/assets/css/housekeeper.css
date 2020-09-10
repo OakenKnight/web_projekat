@@ -306,6 +306,7 @@
   border-width: thin;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
   border-radius: 4px;
+  text-align: center;
 }
 
 .edit-apartment-input{
@@ -329,5 +330,34 @@
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;
   background: gray;
+}
 
+.edit-combobox select:invalid,
+.edit-combobox select option[value=""]{
+    color: grey;
+}
+
+.time{
+  width: 150px;
+  margin-left: 20px;
+  margin-top:10px;
+}
+
+.time select:invalid,
+.time select option[value=""]{
+    color: grey;
+}
+
+.time select{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  color: black;
+  background-color: white;
+  width:60px;
+  display: inline-block;
+  height: 35px;
+  border-width: thin;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+  border-radius: 4px;
+  text-align: center;
 }

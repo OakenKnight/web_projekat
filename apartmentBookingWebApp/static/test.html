@@ -13,6 +13,99 @@
 
 </body>
 </html>
+
+<div v-if="newApartmentDialog">
+  <div class="modal-mask">
+      <div class="modal-wrapper">
+          <div class="modal-dialog modal-xl modal-dialog-scrollable">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title">More info about apartment</h4>
+                      <button type="button" class="close absolute pin-t pin-r" v-on:click="newApartmentDialog = false">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="details">
+                      
+                          <div class="row">
+                              <div class="col">
+                                  <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
+                                  <input class="edit-apartment-input" type="text" name="hotelName" v-model="newApartment.name">
+                              </div>
+                              <div class="col">
+                                  <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
+                                  <div>
+                                  <input class="edit-apartment-input" type="text" name="hotelName" v-model="newApartment.location.address.street">
+                                  <input class="edit-apartment-input" type="text" name="hotelName" v-model="newApartment.location.address.number">
+                                  <input class="edit-apartment-input" type="text" name="hotelName" v-model="newApartment.location.address.city">
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>
+                                  <div class="edit-combobox">
+                                      <select required v-model="newApartment.guestNumber">
+                                          <option value="1"selected>1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
+                                          <option value="5">5</option>
+                                          <option value="6">6</option>
+                                          <option value="7">7</option>
+                                          <option value="8">8</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"><strong>Rooms</strong></label>
+                                  <div class="edit-combobox">
+                                      <select required v-model="newApartment.roomNumber">
+                                          <option value="1"selected>1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
+                                          <option value="5">5</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
+                                  <input class="edit-apartment-input" type="text" name="hotelName" v-else v-model="newApartment.priceForNight">
+                              </div>
+                          </div>
+                              <div class="row">
+                                  <div class="col">
+                                      <h4>Basic</h4> 
+                                      <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'BASIC'">
+                                          <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""> </label>
+                                          <p>{{a.description}}</p>
+                                      </div>
+                                      <h4>Family features</h4> 
+                                      <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'">
+                                          <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                          <p>{{a.description}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col">
+                                      <h4>Facilities</h4> 
+                                      <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'">
+                                          <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                          <p>{{a.description}}</p>
+                                      </div>
+                                      <h4>Dining</h4> 
+                                      <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'DINING'">
+                                          <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
+                                          <p>{{a.description}}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 <!--
 
 

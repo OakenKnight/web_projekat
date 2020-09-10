@@ -19,8 +19,8 @@ public class Apartment {
 	private ArrayList<ApartmentComment> comments;
 	private ArrayList<String> pictures;
 	private double priceForNight;
-	private Time arrivalTime;
-	private Time exitTime;
+	private String arrivalTime;
+	private String exitTime;
 	private ApartmentStatus apartmentStatus;
 	private ArrayList<Amenity> amenities;
 	private ArrayList<String> reservationsId;
@@ -30,7 +30,7 @@ public class Apartment {
 	
 	public Apartment(String id, String name ,ApartmentType apartmentType, int roomNumber, int guestNumber, Location location,
 			ArrayList<Date> freeDates, Housekeeper housekeeper, ArrayList<ApartmentComment> comments,
-			ArrayList<String> pictures, double priceForNight, Time arrivalTime, Time exitTime,
+			ArrayList<String> pictures, double priceForNight, String arrivalTime, String exitTime,
 			ApartmentStatus apartmentStatus, ArrayList<Amenity> amenities, ArrayList<String> reservationsId) {
 		super();
 		this.id = id;
@@ -116,19 +116,19 @@ public class Apartment {
 		this.priceForNight = priceForNight;
 	}
 
-	public Time getArrivalTime() {
+	public String getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(Time arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
-	public Time getExitTime() {
+	public String getExitTime() {
 		return exitTime;
 	}
 
-	public void setExitTime(Time exitTime) {
+	public void setExitTime(String exitTime) {
 		this.exitTime = exitTime;
 	}
 
