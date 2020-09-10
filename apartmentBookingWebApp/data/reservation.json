@@ -52,4 +52,13 @@
   "guestId" : "kristina93",
   "reservationStatus" : "ACCEPTED",
   "id" : "kristina931"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : null,
+  "numberOfNights" : 5,
+  "totalPrice" : 0.0,
+  "message" : "Dolazim kad ocu, jasno???",
+  "guestId" : "milica",
+  "reservationStatus" : "QUIT",
+  "id" : "1599775594999"
 } ]

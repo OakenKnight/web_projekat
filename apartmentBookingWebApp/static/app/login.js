@@ -104,7 +104,7 @@ Vue.component("login",{
               window.location.href = '/test.html';
             }
         })
-		    .catch(function(error){alert("Oooops something went wrong!")})
+		    .catch(function(error){alert("Wrong username or password!")})
 
         }
     		

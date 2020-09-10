@@ -21,6 +21,7 @@ Vue.component("welcome",{
             loggedIn:null,
             apartmentSortCriteria: "1",
             loggedInUser:{},
+            commentsToSee:[],
             disabledArriveDates: {
                 to: new Date()
             },
@@ -70,10 +71,10 @@ Vue.component("welcome",{
                             <input class="search-destination" type="text" name="destination" placeholder="Search destination" v-model="searchedApartment.destination">
                             <div>
                                 <div class="datepicker">
-                                    <vuejs-datepicker :disabled-dates="disabledArriveDates" format="dd.MM.yyyy" placeholder="Arrive" name="arriveDate" v-model="arriveDate" ></vuejs-datepicker>
+                                    <vuejs-datepicker :disabled-dates="disabledArriveDates" format="dd.MM.yyyy" monday-first placeholder="Arrive" name="arriveDate" v-model="arriveDate" ></vuejs-datepicker>
                                 </div>
                                 <div class="datepicker">
-                                    <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" name="departDate" v-model="departDate"></vuejs-datepicker>
+                                    <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" monday-first placeholder="Depart" name="departDate" v-model="departDate"></vuejs-datepicker>
                                 </div>
                                 <select required v-model="numberOfGuests">
                                     <option value="" disabled selected hidden>Guests</option>
@@ -377,6 +378,11 @@ Vue.component("welcome",{
         },
         getComments:function(){
             this.comments = this.selectedApartment.comments;
+            for(i=0;i<this.comments.length;i++){
+                if(this.comments[i].disabledForGuests===false){
+                    this.commentsToSee.push(this.comments[i]);
+                }
+            }
             //treba dodati da se vide samo oni koji su dozvoljeni
         },
         getBasicAmenities:function(){
@@ -542,10 +548,10 @@ Vue.component("welcome",{
 
 			var date = new Date();
 			date.setDate(newDate.getDate());
-			date.setMonth(newDate.getMonth());
+            date.setMonth(newDate.getMonth());
 			this.disabledDepartDates.to = new Date(date);
-			console.log(newDate > this.departDate);
-			if(this.departDate != null && newDate > this.departDate){
+            console.log("DATUM" + date);
+            if(this.departDate != null && newDate > this.departDate){
 				this.departDate =  new Date(newDate.getTime()+86400000); //date.setDate(date.getDate() +1);
             }
 

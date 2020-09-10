@@ -344,8 +344,24 @@ public class SparkAppMain {
 				res.status(500);
 				return false;
 			}
+		});
+		
+		post("/rest/requestBooking",(req,res)->{
+			res.type("application/json");
+			String payload = req.body();
 
-	});
+			System.out.println(payload);
+			
+			Reservation reservation = g.fromJson(payload, Reservation.class);
+			ReservationRepository reservationRepository = new ReservationRepository();
+			if(reservationRepository.create(reservation)){
+				return true;
+			}else{
+				res.status(500);
+				return false;
+			}
+		});
+		
 	}
 	
 	public static String getUser(String auth) {
