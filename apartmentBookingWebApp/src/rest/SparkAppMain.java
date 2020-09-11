@@ -87,10 +87,16 @@ public class SparkAppMain {
 			UserService service = new UserService();
 			user.setUserType(UserType.GUEST);
 			Guest guest = service.registerNewGuest(user);
+			
+			
+			String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
+			user.setJWTToken(jwt);
+			
+			if(guest == null){
+				res.status(500);
+			} 
 
-			//if(guest == null) res.status(500);
-
-			return g.toJson(guest); 
+			return g.toJson(user); 
 		});
 		
 		post("/rest/createNewApartment", (req,res) ->{
@@ -355,8 +361,24 @@ public class SparkAppMain {
 				res.status(500);
 				return false;
 			}
+		});
+		
+		post("/rest/requestBooking",(req,res)->{
+			res.type("application/json");
+			String payload = req.body();
 
-	});
+			System.out.println(payload);
+			
+			Reservation reservation = g.fromJson(payload, Reservation.class);
+			ReservationRepository reservationRepository = new ReservationRepository();
+			if(reservationRepository.create(reservation)){
+				return true;
+			}else{
+				res.status(500);
+				return false;
+			}
+		});
+		
 	}
 	
 	public static String getUser(String auth) {

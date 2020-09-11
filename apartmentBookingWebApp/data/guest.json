@@ -58,4 +58,14 @@
   "apartmentsId" : [ "app32" ],
   "reservationId" : [ "kristina931" ],
   "jwttoken" : null
+}, {
+  "username" : "albertina",
+  "password" : "123123",
+  "firstName" : "Nina",
+  "lastName" : "Bertic",
+  "gender" : "FEMALE",
+  "userType" : "GUEST",
+  "apartmentsId" : [ ],
+  "reservationId" : [ ],
+  "jwttoken" : null
 } ]

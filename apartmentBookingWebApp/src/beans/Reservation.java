@@ -14,8 +14,9 @@ public class Reservation {
 	
 	public Reservation() {}
 	
-	public Reservation(String apartmentId, Date arrivalDate, int numberOfNights, double totalPrice,
+	public Reservation(String id, String apartmentId, Date arrivalDate, int numberOfNights, double totalPrice,
 			String message, String guestId, ReservationStatus reservationStatus) {
+		this.Id = id;
 		this.apartmentId = apartmentId;
 		this.arrivalDate = arrivalDate;
 		this.numberOfNights = numberOfNights;
