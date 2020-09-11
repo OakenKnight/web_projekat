@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "algoliasearch": "^3",
+    "places.js": "^1",
+    "vuetify-algolia-places": "^1.0.1"
+  }
+}

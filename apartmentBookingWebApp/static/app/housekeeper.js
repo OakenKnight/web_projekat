@@ -84,7 +84,7 @@ Vue.component("housekeeper",{
                 </div>
                 <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
-                        <h3>All your apartments</h3><button type="button" class="btn btn-primary" v-on:click="newApartmentDialog = true">Create New apartment</button>
+                        <h3>All your apartments</h3><button type="button" class="btn btn-primary" onclick="location.href='#/addApartment'">Create New apartment</button>
                         <div class="search-housekeeper"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
                         <hr>
                         <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">

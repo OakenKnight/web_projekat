@@ -67,6 +67,7 @@ Vue.component("reserve",{
                 <div class="bk-img row justify-content-center">
                     <div class="search-form col-md-4">
                         <form class="search" action="!#">
+                        
                             <input class="search-destination" type="text" name="destination" placeholder="Search destination" v-model="searchedApartment.destination">
                             <div>
                                 <div class="datepicker">
@@ -88,6 +89,8 @@ Vue.component("reserve",{
                             </div>
                                 <p class="depart-date-error" v-if="arriveDate!=null && departDate==null">Please select the depart date too.</p> 
                             <input name="search-btn" id="search-btn" class="btn btn-block" type="button" value="Search" v-on:click="searchApartments(searchedApartment)" :disabled="arriveDate!=null && departDate==null">
+                            <input name="search-btn" id="search-btn" class="btn btn-block" type="button" value="ALGOLIA TEST" onclick="location.href='#/algoliaPLACES'">
+
                         </form>
                     </div>
                 </div>

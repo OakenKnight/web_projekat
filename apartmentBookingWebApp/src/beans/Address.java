@@ -10,17 +10,23 @@ public class Address {
 	private String number;
 	private String city;
 	private String zipCode;
-
+	private String state;
 	public Address() {}
 	
-	public Address(String street, String number, String city, String zipCode) {
+	public Address(String street, String number, String city, String zipCode, String state) {
 		super();
 		this.street = street;
 		this.number = number;
 		this.city = city;
 		this.zipCode = zipCode;
+		this.state = state;
 	}
-
+	public String getState(){
+		return state;
+	}
+	public void setState(String state){
+		this.state = state;
+	}
 	public String getStreet() {
 		return street;
 	}

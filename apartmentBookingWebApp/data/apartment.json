@@ -5,13 +5,14 @@
   "roomNumber" : 1,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : 43.23,
-    "longitude" : 55.55,
+    "latitude" : "45.2496",
+    "longitude" : "19.8409",
     "address" : {
-      "street" : "Zeleznicka",
-      "number" : "97b",
+      "street" : "Zeleznicka 97",
+      "number" : null,
       "city" : "Novi Sad",
-      "zipCode" : "21000"
+      "zipCode" : "21000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ 1597960800000, 1598047200000, 1598133600000, 1598220000000, 1598306400000, 1598392800000, 1599948000000, 1600034400000, 1600120800000, 1600207200000, 1600552800000, 1600725600000, 1600812000000, 1600898400000, 1600984800000, 1601071200000, 1601157600000, 1601244000000 ],
@@ -125,13 +126,14 @@
   "roomNumber" : 2,
   "guestNumber" : 5,
   "location" : {
-    "latitude" : 73.93,
-    "longitude" : 15.65,
+    "latitude" : "45.249",
+    "longitude" : "19.8436",
     "address" : {
-      "street" : "Sremska",
-      "number" : "5",
-      "city" : "Sr Mitrovica",
-      "zipCode" : "22220"
+      "street" : "Maksima Gorkog 3",
+      "number" : null,
+      "city" : "Novi Sad",
+      "zipCode" : "21101",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ 1598911200000, 1596319200000, 1596405600000, 1596492000000, 1596578400000, 1596664800000 ],
@@ -248,13 +250,14 @@
   "roomNumber" : 5,
   "guestNumber" : 10,
   "location" : {
-    "latitude" : 78.93,
-    "longitude" : 15.65,
+    "latitude" : "45.2518",
+    "longitude" : "19.837",
     "address" : {
-      "street" : "Jevrejska",
-      "number" : "10h",
+      "street" : "Jevrejska 11",
+      "number" : null,
       "city" : "Novi Sad",
-      "zipCode" : "21000"
+      "zipCode" : "21101",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ 1598911200000, 1596319200000, 1596405600000, 1596492000000, 1596578400000, 1596664800000 ],
@@ -356,13 +359,14 @@
   "roomNumber" : 1,
   "guestNumber" : 2,
   "location" : {
-    "latitude" : 78.93,
-    "longitude" : 15.65,
+    "latitude" : "45.2511",
+    "longitude" : "19.8471",
     "address" : {
-      "street" : "Strazilovska",
-      "number" : "15",
+      "street" : "Strazilovska 15",
+      "number" : null,
       "city" : "Novi Sad",
-      "zipCode" : "21000"
+      "zipCode" : "21100",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ 1600725600000, 1598133600000, 1598220000000, 1598306400000, 1598392800000, 1598479200000 ],
@@ -468,4 +472,60 @@
     "amenityType" : "DINING"
   } ],
   "reservationsId" : [ "nikola2", "kristina931" ]
+}, {
+  "id" : "1599848262568",
+  "name" : "Test apartman",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 3,
+  "guestNumber" : 3,
+  "location" : {
+    "latitude" : "45.2908",
+    "longitude" : "21.1736",
+    "address" : {
+      "street" : "Dositeja Obradovića",
+      "number" : 7,
+      "city" : "Plandiste Municipality",
+      "zipCode" : "26365",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 120.0,
+  "arrivalTime" : "10:00",
+  "exitTime" : "09:30",
+  "apartmentStatus" : "ACTIVE",
+  "amenities" : [ {
+    "id" : "1599220943149",
+    "name" : "Wifi",
+    "description" : "Continous access in the listing",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "15992209431453",
+    "name" : "Air conditioning",
+    "description" : "",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943171",
+    "name" : "Microwave",
+    "description" : "",
+    "amenityType" : "DINING"
+  }, {
+    "id" : "1599220943172",
+    "name" : "Refrigerator",
+    "description" : "",
+    "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ ]
 } ]

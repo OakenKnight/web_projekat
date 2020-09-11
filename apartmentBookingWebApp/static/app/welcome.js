@@ -27,7 +27,21 @@ Vue.component("welcome",{
             },
             disabledDepartDates: {
                 to:  new Date(2021, 0,1)
-            }
+            },
+            addressAlg:"",
+            cityAlg:"",
+            stateAlg:"",
+            place:{},
+            places:null,
+            address:"",
+            adresaZaPretragu:"",
+            gradZaPretragu:"",
+            drzavaZaPretragu:"",
+            zipZaPretragu:"",
+            longZaPretragu:"",
+            latZaPretragu:"",
+            location:{},
+            adresaObjekat:{}
         }
 	},
     template:`
@@ -69,6 +83,7 @@ Vue.component("welcome",{
                     <div class="search-form col-md-4">
                         <form class="search" action="!#">
                             <input class="search-destination" type="text" name="destination" placeholder="Search destination" v-model="searchedApartment.destination">
+
                             <div>
                                 <div class="datepicker">
                                     <vuejs-datepicker :disabled-dates="disabledArriveDates" format="dd.MM.yyyy" monday-first placeholder="Arrive" name="arriveDate" v-model="arriveDate" ></vuejs-datepicker>
@@ -268,6 +283,31 @@ Vue.component("welcome",{
 	`
 	,
 	mounted () {
+
+        /*
+        this.places = places({
+            appId: 'plQ4P1ZY8JUZ',
+            apiKey: 'bc14d56a6d158cbec4cdf98c18aced26',
+            container: document.querySelector('#address'),
+                templates:{
+                        value:function(suggestion){
+                            return suggestion.name;
+                        }
+                    }
+                }).configure({
+                    type:'address'
+                });
+
+        this.places.on('change',function getLocationData(e){
+            document.querySelector('#address').value=e.suggestion.value || '';
+            document.querySelector('#stateAlg').value=e.suggestion.country || '';
+            document.querySelector('#cityAlg').value=e.suggestion.city || '';
+            document.querySelector('#long').value=e.suggestion.latlng.lng || '';
+            document.querySelector('#lat').value=e.suggestion.latlng.lat || '';
+            document.querySelector('#postalCode').value=e.suggestion.postcode || '';
+
+        });
+        */
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
             this.loggedIn=false;
@@ -279,8 +319,45 @@ Vue.component("welcome",{
             }})
             .then(response=>(this.loggedInUser = response.data));
         }
+
+        
 	},
 	methods:{
+        searchAlg:function(){
+            this.adresaZaPretragu = document.querySelector('#address').value;
+            this.drzavaZaPretragu = document.querySelector('#stateAlg').value;
+            this.gradZaPretragu = document.querySelector('#cityAlg').value;
+            this.longZaPretragu = document.querySelector('#long').value;
+            this.latZaPretragu = document.querySelector('#lat').value;                    
+            this.zipZaPretragu = document.querySelector('#postalCode').value;
+
+            this.location.latitude =this.latZaPretragu;
+            this.location.longitude =this.longZaPretragu;
+            this.adresaObjekat.street = this.adresaZaPretragu;
+            this.adresaObjekat.city = this.gradZaPretragu;
+            this.adresaObjekat.zipCode = this.zipZaPretragu;
+            this.adresaObjekat.state = this.drzavaZaPretragu;
+
+            this.location.address = this.adresaObjekat;
+
+
+            console.log(this.location);
+
+
+            console.log(this.adresaZaPretragu);
+            console.log(this.drzavaZaPretragu);
+
+            console.log(this.gradZaPretragu);
+
+            console.log(this.longZaPretragu);
+
+            console.log(this.latZaPretragu);
+
+            console.log(this.zipZaPretragu);
+
+
+
+        },
         logout: function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');

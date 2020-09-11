@@ -247,7 +247,7 @@ public class SearchService {
     public ArrayList<Apartment> filterByDestination(ArrayList<Apartment> apartments, String destination) {
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
         for(Apartment a : apartments){
-            if(a.getLocation().getAddress().getCity().equals(destination)){
+            if(a.getLocation().getAddress().getCity().toLowerCase().contains(destination.toLowerCase()) || a.getLocation().getAddress().getState().toLowerCase().contains(destination.toLowerCase())){
                 filteredApartments.add(a);
             }
         }
