@@ -361,3 +361,68 @@
   border-radius: 4px;
   text-align: center;
 }
+
+.buttons-admin{
+  text-align: left;
+  display: inline-block;
+}
+
+.buttons-admin h3{
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.select-amenity-type{
+  display: inline-block;
+}
+
+.select-amenity-type select{
+  height: 50px;
+  width: 200px;
+  
+  display: inline-block;
+  background-color:white;
+  border-radius: 4px;
+  margin: 4px;
+  font-size: 25px;
+  border-color: #dddfe2;
+  border: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  color: black;
+}
+
+.select-amenity-type select:invalid,
+.select-amenity-type select option[value=""]{
+    color: grey;
+}
+
+.select-amenity-type select:hover {
+  border-bottom:4px solid #3268a8;
+  border-radius: 4px;
+  transition: 0.1s;
+}
+
+.addingNewAmenity .search-housekeeper{
+  width: 30%;
+  margin: 4px;
+  display: inline-block;
+}
+
+.addingNewAmenity .btn{
+  margin: 4px;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+  border: 0px;
+  background-color:#3268a8;
+  color: #fff;
+  border-radius: 0;
+}
+
+.addingNewAmenity .btn:hover {
+  border: 1px solid #3268a8;
+  background-color: #fff;
+  color: #3268a8; }

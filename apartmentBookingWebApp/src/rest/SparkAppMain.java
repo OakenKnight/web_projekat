@@ -78,6 +78,8 @@ public class SparkAppMain {
 		});
 		
 		
+		
+		
 		post("/rest/register", (req, res) ->{
 			res.type("application/json");
 			String payload = req.body();
@@ -135,6 +137,21 @@ public class SparkAppMain {
 			List<Amenity> amenities = new ArrayList<Amenity>();
 			amenities = amenityRepository.getAll();
 			return g.toJson(amenities);
+		});
+		
+		get("/rest/getAllApartments", (req,res)->{
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			return g.toJson(apartmentRepository.getAll()); 
+		});
+		
+		get("/rest/getAllReservations", (req,res)->{
+			ReservationRepository  reservationRepository = new ReservationRepository();
+			return g.toJson(reservationRepository.getAll()); 
+		});
+		
+		get("/rest/getAllGuests", (req,res)->{
+			GuestRepository  guestRepository = new GuestRepository();
+			return g.toJson(guestRepository.getAll()); 
 		});
 		
 		get("/rest/housekeepersApartment", (req,res)->{

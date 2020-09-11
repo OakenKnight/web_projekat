@@ -8,6 +8,7 @@ const Welcome = {template: '<welcome></welcome>'}
 const Housekeeper = {template: '<housekeeper></housekeeper>'}
 const ApartmentDetails = {template: '<apartmentDetails></apartmentDetails>'}
 const GuestPofile = {template: '<guestProfile></guestProfile>'}
+const Admin = {template: '<admin></admin>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -21,7 +22,8 @@ const router = new VueRouter({
 		{ path: '/', component: Welcome },
 		{ path: '/housekeeper', component: Housekeeper},
 		{ path: '/apartmentDetails', component: ApartmentDetails},
-		{ path: '/guestProfile', component:GuestPofile}
+		{ path: '/guestProfile', component:GuestPofile},
+		{ path: '/admin', component: Admin}
 	  ]
 });
 
