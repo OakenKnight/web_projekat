@@ -12,6 +12,7 @@ const GuestPofile = {template: '<guestProfile></guestProfile>'}
 const Admin = {template: '<admin></admin>'}
 const algoliaPLACES = {template: '<algoliaPLACES></algoliaPLACES>'}
 const addApartment = {template: '<addApartment></addApartment>'}
+const editApartment={template:'<editApartment></editApartment>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -28,8 +29,8 @@ const router = new VueRouter({
 		{ path: '/guestProfile', component:GuestPofile},
 		{ path: '/admin', component: Admin},
 		{path:'/algoliaPLACES', component:algoliaPLACES},
-		{path:'/addApartment', component:addApartment}
-
+		{path:'/addApartment', component:addApartment},
+		{path:'/editApartment',component:editApartment}
 	  ]
 });
 
@@ -38,6 +39,4 @@ const router = new VueRouter({
 var app = new Vue({
 	router,
 	el: '#app',
-
-	
 });

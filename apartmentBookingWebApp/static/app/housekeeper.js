@@ -89,7 +89,7 @@ Vue.component("housekeeper",{
                         <hr>
                         <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">
                             <div class="apartment-border-housekeeper">
-                                <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
+                                <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found"> 
                                 <div class="apartment-info-housekeeper">
                                     <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
                                     <p><img class="apartment-info-icons-housekeeper" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
@@ -345,7 +345,7 @@ Vue.component("housekeeper",{
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">More info about apartment</h4>
-                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="startEditingApartment()" v-if="editApartmentMode === false">Update info</button>
+                                            <button type="button" class="btn btn-primary" style="margin-left:20px" onclick="location.href='#/editApartment'" v-if="editApartmentMode === false">Update info</button>
                                             <span v-else>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
@@ -473,13 +473,13 @@ Vue.component("housekeeper",{
                                                 </div>
                                                     <div class="row" v-if="editApartmentMode === false">
                                                         <div class="col">
-                                                            <h4>Basic</h4> 
+                                                            <h4 v-if="basicAmenities.length>0">Basic</h4> 
                                                             <div class="amenity col-md-6" v-for="a in basicAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
                                                             </div>
                                                         
-                                                            <h4>Family features</h4> 
+                                                            <h4 v-if="familyAmenities.length>0">Family features</h4> 
                                                             <div class="amenity col-md-6" v-for="a in familyAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
@@ -487,13 +487,13 @@ Vue.component("housekeeper",{
                                                         </div>
 
                                                         <div class="col">
-                                                            <h4>Facilities</h4> 
+                                                            <h4 v-if="facilityAmenities.length>0">Facilities</h4> 
                                                             <div class="amenity col-md-6" v-for="a in facilityAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
                                                             </div>
                                                         
-                                                            <h4>Dining</h4> 
+                                                            <h4 v-if="diningAmenities.length>0">Dining</h4> 
                                                             <div class="amenity col-md-6" v-for="a in diningAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>

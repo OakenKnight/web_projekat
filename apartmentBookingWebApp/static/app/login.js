@@ -100,8 +100,8 @@ Vue.component("login",{
               window.location.href = '#/housekeeper';
             }else if(this.user.userType === 'GUEST'){
               window.location.href = '#/';
-            }else{
-              window.location.href = '/test.html';
+            }else if(this.user.userType==='ADMIN'){
+              window.location.href = '#/admin';
             }
         })
 		    .catch(function(error){alert("Wrong username or password!")})

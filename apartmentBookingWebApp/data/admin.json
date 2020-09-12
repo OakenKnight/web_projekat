@@ -1,13 +1,9 @@
 [ {
-  "username" : "rale",
-  "password" : "rale",
-  "firstName" : "radovan",
-  "lastName" : "zupunski",
-  "gender" : "MALE"
-}, {
-  "username" : "juy",
-  "password" : "drfsg",
-  "firstName" : "t",
-  "lastName" : "rth",
-  "gender" : "FEMALE"
+  "username" : "pera",
+  "password" : "pera",
+  "firstName" : "Perica",
+  "lastName" : "Perovic",
+  "gender" : "MALE",
+  "userType" : "ADMIN",
+  "jwttoken" : null
 } ]

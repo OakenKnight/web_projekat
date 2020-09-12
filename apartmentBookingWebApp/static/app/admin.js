@@ -497,11 +497,11 @@ Vue.component("admin",{
     `
     ,
     mounted () {
-        // var jwt = window.localStorage.getItem('jwt');
-        // if(!jwt){
-        //     alert("Please log in again")
-        //     window.location.href = '#/login';
-        // }else{
+         var jwt = window.localStorage.getItem('jwt');
+         if(!jwt){
+             alert("Please log in again")
+             window.location.href = '#/login';
+         }else{
             axios
             .get('rest/getAllApartments')
             .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
@@ -520,7 +520,7 @@ Vue.component("admin",{
 
             axios.get('rest/getAllAmenities')
             .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
-        //}
+        }
 
 	},
     methods: {

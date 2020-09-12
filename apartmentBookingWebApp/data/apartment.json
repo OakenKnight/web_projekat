@@ -483,7 +483,7 @@
     "longitude" : "21.1736",
     "address" : {
       "street" : "Dositeja Obradovića",
-      "number" : 7,
+      "number" : "7",
       "city" : "Plandiste Municipality",
       "zipCode" : "26365",
       "state" : "Serbia"
@@ -526,6 +526,88 @@
     "name" : "Refrigerator",
     "description" : "",
     "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ ]
+}, {
+  "id" : "1599903300660",
+  "name" : "Novolinon",
+  "apartmentType" : "ROOM",
+  "roomNumber" : 1,
+  "guestNumber" : 1,
+  "location" : {
+    "latitude" : "45.2493",
+    "longitude" : "19.8421",
+    "address" : {
+      "street" : "Sremska",
+      "number" : "4",
+      "city" : "Novi Sad",
+      "zipCode" : "21101",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 40.0,
+  "arrivalTime" : "09:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "ACTIVE",
+  "amenities" : [ ],
+  "reservationsId" : [ ]
+}, {
+  "id" : "1599903639059",
+  "name" : "Novolinon2",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 2,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "45.2493",
+    "longitude" : "19.8421",
+    "address" : {
+      "street" : "Sremska 3",
+      "number" : null,
+      "city" : "Novi Sad",
+      "zipCode" : "21101",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 44.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "ACTIVE",
+  "amenities" : [ {
+    "id" : "1599220943149",
+    "name" : "Wifi",
+    "description" : "Continous access in the listing",
+    "amenityType" : "BASIC"
+  }, {
+    "id" : "1599220943151",
+    "name" : "Cable TV",
+    "description" : "",
+    "amenityType" : "BASIC"
   } ],
   "reservationsId" : [ ]
 } ]
