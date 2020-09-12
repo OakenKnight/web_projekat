@@ -84,15 +84,15 @@
   "description" : "No stairs in home",
   "amenityType" : "FACILITIES"
 }, {
-    "id" : "1599220943166",
-    "name" : "Free street parking",
-    "description" : "",
-    "amenityType" : "FACILITIES"
-},{
-    "id" : "1599220943173",
-    "name" : "Paid parking off premise",
-    "description" : "",
-    "amenityType" : "FACILITIES"
+  "id" : "1599220943166",
+  "name" : "Free street parking",
+  "description" : "",
+  "amenityType" : "FACILITIES"
+}, {
+  "id" : "1599220943173",
+  "name" : "Paid parking off premise",
+  "description" : "",
+  "amenityType" : "FACILITIES"
 }, {
   "id" : "1599220943167",
   "name" : "Kitchen",

@@ -110,6 +110,33 @@ public class SparkAppMain {
 			return "Someting went wrong";
 		});
 		
+		post("/rest/deleteAmenities", (req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+			payload = payload.substring(1, payload.length()-1);
+			String[] ids = payload.split(",");
+			for(int i = 0; i < ids.length; i++) {
+				ids[i] = ids[i].substring(1, ids[i].length()-1);					
+			}
+			AmenityRepository amenityRepository = new AmenityRepository();
+			for(int i = 0; i < ids.length; i++) {
+				amenityRepository.remove(ids[i]);
+			}
+			//TREBA OBRISATI I IZ SVIH APARTMANA
+			return "Amenities deleted successfully";
+		});
+		
+		post("/rest/addNewAmenity", (req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+			Amenity amenity = g.fromJson(payload, Amenity.class);
+			AmenityRepository amenityRepository = new AmenityRepository();
+			if(amenityRepository.create(amenity)) {
+				return "Amenity created successfully";
+			}
+			return "Someting went wrong";
+		});
+		
 		get("/rest/getHousekeeper", (req,res)->{
 			String housekeeperId = getUser(req.queryParams("Authorization"));
 			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
@@ -158,6 +185,11 @@ public class SparkAppMain {
 		get("/rest/getAllGuests", (req,res)->{
 			GuestRepository  guestRepository = new GuestRepository();
 			return g.toJson(guestRepository.getAll()); 
+		});
+		
+		get("/rest/getAllHousekeepers", (req,res)->{
+			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+			return g.toJson(housekeeperRepository.getAll());
 		});
 		
 		get("/rest/housekeepersApartment", (req,res)->{

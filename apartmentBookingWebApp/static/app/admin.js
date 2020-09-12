@@ -3,6 +3,8 @@ Vue.component("admin",{
 		return{
             apartments: [],
             apartmentsBackUp: [],
+            housekeepers: [],
+            housekeepersBackUp: [],
             guests: [],
             guestsBackUp: [],
             reservations: [],
@@ -21,11 +23,13 @@ Vue.component("admin",{
             addNewAmenityMode: false,
             allAmenitiesEver: [],
             allAmenitiesEverBackUp: [],
+            amenitiesForDelete: [],
+            newAmenity: {name:"", description: "", type: "", id:""},
             newApartmentDialog: false,
             arrivalHours: "",
             arrivalMinutes: "",
             exitHours: "",
-            exitMinutes: ""
+            exitMinutes: "",
 		}
 	},
     template:`
@@ -97,17 +101,36 @@ Vue.component("admin",{
                             <input type="radio" id="gentlemens" name="gender" value="gentlemens"  v-model="gen">
                         </div>
                         <hr>
-                        <div class="users-housekeeper" v-for="g in guests">
-                            <img class="icon-housekeeper" v-if="g.gender == 'MALE'" src="assets/images/male-icon.png">
-                            <img class="icon-housekeeper" v-else src="assets/images/female-icon.png">
-                            <div class="user-info-housekeeper">
-                                <h3 class="no-margin">{{g.firstName}} {{g.lastName}}</h3>
-                                <p class="no-margin">Username: {{g.username}}</p>
-                                <p>Last reservation: {{lastReservation(g)}}</p>
+                        <div class="column user-column">
+                            <h3>Guests:</h3>
+                            <div class="users-admin" v-for="g in guests">
+                                <img class="icon-housekeeper" v-if="g.gender == 'MALE'" src="assets/images/male-icon.png">
+                                <img class="icon-housekeeper" v-else src="assets/images/female-icon.png">
+                                <div class="user-info-housekeeper">
+                                    <h3 class="no-margin">{{g.firstName}} {{g.lastName}}</h3>
+                                    <p class="no-margin">Username: {{g.username}}</p>
+                                    <p>Last reservation: {{lastReservation(g)}}</p>
+                                </div>
+                                <div class="all-apartments-housekeeper">
+                                    <h4 class="no-margin"> All guest's reservation:</h4>
+                                    <p class="no-margin" v-for="r in g.reservationId">{{allGuestReservation(r)}}</p>
+                                </div>
                             </div>
-                            <div class="all-apartments-housekeeper">
-                                <h4 class="no-margin"> All guest's reservation:</h4>
-                                <p class="no-margin" v-for="r in g.reservationId">{{allGuestReservation(r)}}</p>
+                        </div>
+                        <div class="column user-column">
+                            <h3>Housekeepers:</h3>
+                            <div class="users-admin" v-for="h in housekeepers">
+                                <img class="icon-housekeeper" v-if="h.gender == 'MALE'" src="assets/images/male-icon.png">
+                                <img class="icon-housekeeper" v-else src="assets/images/female-icon.png">
+                                <div class="user-info-housekeeper">
+                                    <h3 class="no-margin">{{h.firstName}} {{h.lastName}}</h3>
+                                    <p class="no-margin">Username: {{h.username}}</p>
+                                    <p>Number of apartments: {{h.apartmentsId.length}}</p>
+                                </div>
+                                <div class="all-apartments-housekeeper">
+                                    <h4 class="no-margin"> All housekeeper's apartment:</h4>
+                                    <p class="no-margin" v-for="(a, index) in h.apartmentsId">{{index+1}}. {{findApartmentName(a)}}</p>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -125,10 +148,9 @@ Vue.component("admin",{
                             </select>
                         </div>
                         <hr>
-                        <div class="reservation-housekeeper" v-for="r in reservations">
+                        <div class="reservation-admin" v-for="r in reservations">
                             <div class="row" >
-                                <div class="column left-housekeeper">
-                                    <div style="text-align: center;">
+                                    <div style="text-align: center;margin: auto">
                                         <h3 style="display: inline-block;">Reservation {{r.reservationStatus}}</h3>
                                     </div>
                                     <div class="row">
@@ -146,7 +168,6 @@ Vue.component("admin",{
                                             <p>Message:<br>{{r.message}} 4</p>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </section>
@@ -161,29 +182,29 @@ Vue.component("admin",{
                             <div class="buttons-admin" v-if="deleteAmenityMode === true">
                                 <div class="buttons-admin">
                                     <h3>Select and
-                                        <button type="button" class="btn btn-primary" v-on:click="">Confirm</button>
+                                        <button type="button" class="btn btn-primary" v-on:click="deleteAndConfirmAmenity(amenitiesForDelete)">Confirm</button>
                                     </h3>
                                 </div>
                                 <div class="buttons-admin">
                                     <h3>or
-                                        <button type="button" class="btn btn-primary" v-on:click="deleteAmenityMode = false">Cancel</button>
+                                        <button type="button" class="btn btn-primary" v-on:click="getAllAmenitiesBack()">Cancel</button>
                                     </h3>
                                 </div>
                             </div>
                             <div class="addingNewAmenity" v-if="addNewAmenityMode === true">
-                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Amenity name"></div>
-                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Short description"></div>
+                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Amenity name" v-model="newAmenity.name"></div>
+                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Short description" v-model="newAmenity.description"></div>
                                 <div class="select-amenity-type">
-                                    <select required>
+                                    <select required v-model="newAmenity.type">
                                         <option value="" selected disabled>Type</option>
                                         <option value="BASIC">Basic</option>
                                         <option value="FAMILY_FEATURES">Famili features</option>
                                         <option value="FACILITIES">Facilities</option>
                                         <option value="DINING">Dining</option>
                                     </select>
-                                </div>
+                                </div >
                                 <button type="button" class="btn btn-primary" v-on:click="addNewAmenityMode = false">Cancel</button>
-                                <button type="button" class="btn btn-primary" v-on:click="">Confim</button>
+                                <button type="button" class="btn btn-primary" v-on:click="addAndConfirmNewAmenity(newAmenity)">Confim</button>
                                 <hr>
                             </div>
                                         
@@ -191,28 +212,28 @@ Vue.component("admin",{
                                 <div class="col">
                                     <h4>Basic:</h4> 
                                     <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'BASIC'">
-                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addAmenity(a)" value=""></label>
+                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addOrDeleteAmenity(a.id)" value=""></label>
                                         <p>{{a.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <h4>Femily feature:</h4> 
-                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'">
-                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addAmenity(a)" value=""></label>
+                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'" >
+                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addOrDeleteAmenity(a.id)" value=""></label>
                                         <p>{{a.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <h4>Facilities:</h4> 
-                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'">
-                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addAmenity(a)" value=""></label>
+                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'" >
+                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addOrDeleteAmenity(a.id)" value=""></label>
                                         <p>{{a.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <h4>Dining:</h4> 
                                     <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'DINING'">
-                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addAmenity(a)" value=""></label>
+                                        <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" v-if="deleteAmenityMode === true" type="checkbox" v-on:click="addOrDeleteAmenity(a.id)" value=""></label>
                                         <p>{{a.description}}</p>
                                     </div>
                                 </div>
@@ -493,6 +514,10 @@ Vue.component("admin",{
             .get('rest/getAllGuests')
             .then(response => (this.guests = response.data, this.guestsBackUp = [...this.guests]));
 
+            axios
+            .get('rest/getAllHousekeepers')
+            .then(response => (this.housekeepers = response.data, this.housekeepersBackUp = [...this.housekeepers]));
+
             axios.get('rest/getAllAmenities')
             .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
         //}
@@ -646,20 +671,54 @@ Vue.component("admin",{
                 this.selectedApartment.amenities.push(amenity);
             }
         },
-        createNewAmenity: function(amenity){
-            var a = this.allAmenitiesEver.filter(function(amenity){
-                return amenity.id == amn.id;
-            });
-     
-            if(a[0]){
-                for( var i = 0; i < this.allAmenitiesEver.length; i++){ 
-                    if ( this.allAmenitiesEver[i].id === amenity.id){
-                        this.allAmenitiesEver.splice(i, 1); 
-                    }  
-                }
-            }else{
-                this.allAmenitiesEver.push(amenity);
+        addOrDeleteAmenity: function(amn){
+            var finded = false;
+            for( var i = 0; i < this.amenitiesForDelete.length; i++){ 
+                if ( this.amenitiesForDelete[i] === amn){
+                    this.amenitiesForDelete.splice(i, 1); 
+                    finded = true;
+                }  
             }
+            if(!finded){
+                this.amenitiesForDelete.push(amn);
+            }
+            
+        },
+        addAndConfirmNewAmenity: function(amenity){
+            var d = new Date();
+            amenity.id = d.getTime().toString();
+            console.log(amenity.id);
+            this.allAmenitiesEver.push(amenity);
+            this.allAmenitiesEverBackUp.push(amenity);
+            axios
+            .post("/rest/addNewAmenity", amenity)
+            .then(function(response){
+                alert(response.data);
+                var jwt = window.localStorage.getItem('jwt');
+                axios.get('rest/getAllAmenities')
+                .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
+            });
+            this.newAmenity= {name: "", description: "", type: "", id: ""};
+            this.addNewAmenityMode = false;
+        },
+        deleteAndConfirmAmenity: function(amenities){
+            for( var i = 0; i < amenities.length; i++){
+                for( var j = 0; j < this.allAmenitiesEver.length; j++){
+                    if(amenities[i] === this.allAmenitiesEver[j].id){
+                        this.allAmenitiesEver.splice(j,1);
+                    }
+                }
+            }
+            axios
+            .post("/rest/deleteAmenities", amenities)
+            .then(function(response){
+                alert(response.data);
+                var jwt = window.localStorage.getItem('jwt');
+                axios.get('rest/getAllAmenities')
+                .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
+                
+            });
+            this.deleteAmenityMode = false;
         },
         addAmenityToNewApartment: function(amenity){
             this.newApartment.amenities.push(amenity);
@@ -671,6 +730,10 @@ Vue.component("admin",{
                 }
             });
         },
+        getAllAmenitiesBack: function(){
+            this.amenitiesForDelete = [];
+            this.deleteAmenityMode = false;
+        }
     },
     filters: {
     	dateFormat: function (value, format) {

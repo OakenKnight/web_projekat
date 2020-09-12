@@ -79,18 +79,18 @@
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);
   }
+.users-housekeeper:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+}
+.users-housekeeper:hover .all-apartments-housekeeper{
+  display: block;
+}
 .user-info-housekeeper{
   display: inline-block;
   vertical-align: middle;
 }
 .icon-housekeeper{
   display: inline-block;
-}
-.users-housekeeper:hover{
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
-}
-.users-housekeeper:hover .all-apartments-housekeeper{
-  display: block;
 }
 
 .all-apartments-housekeeper{
@@ -426,3 +426,47 @@
   border: 1px solid #3268a8;
   background-color: #fff;
   color: #3268a8; }
+
+.reservation-admin .row{
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.reservation-admin{
+  width: 60%;
+  border: 1px solid grey;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
+}
+
+.reservation-admin:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+}
+
+.users-admin{
+  text-align: left;
+  width: 90%;
+  border: 1px solid grey;
+  margin: 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.08);
+  }
+.users-admin:hover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+}
+.users-admin:hover .all-apartments-housekeeper{
+  display: block;
+}
+
+.user-column{
+  width: 50%;
+  text-align: center;
+}
