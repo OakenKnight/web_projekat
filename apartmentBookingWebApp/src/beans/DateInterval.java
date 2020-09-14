@@ -35,5 +35,5 @@ public class DateInterval {
 		this.endDate = endDate;
 	}
 	
-	
+	 
 }
