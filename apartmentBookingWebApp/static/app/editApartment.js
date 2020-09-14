@@ -1,37 +1,21 @@
-Vue.component("addApartment",{ 
+Vue.component("editApartment",{ 
 	data: function(){
 		return{
-            myModal:false,
-            error:false,
-            apartments: [],
-            amenities:[],
+            selectedApartmentBackUp:{},
+            selectedApartment:{},
+            apartments:[],
             basicAmenities:[],
             familyAmenities:[],
             facilityAmenities:[],
             diningAmenities:[],
-            searchedApartment:{},
-            selectedApartment:{},
             comments:[],
-            arriveDate: null,
-            departDate: null,
-            modal:false,
-            minPrice: "",
-            maxPrice:"",
-            numberOfGuests:"",
             loggedIn:null,
             apartmentSortCriteria: "1",
             loggedInUser:{},
-            disabledArriveDates: {
-                to: new Date()
-            },
-            disabledDepartDates: {
-                to:  new Date(2021, 0,1)
-            },
             allAmenitiesEver: [],
             addressAlg:"",
             cityAlg:"",
             stateAlg:"",
-            place:{},
             places:null,
             address:"",
             adresaZaPretragu:"",
@@ -42,25 +26,9 @@ Vue.component("addApartment",{
             latZaPretragu:"",
             location:{},
             adresaObjekat:{},
+
             testApartment:{},
-            newApartment: {
-                id: null,
-                name: null,
-                apartmentType: "",
-                roomNumber: "",
-                guestNumber: "",
-                location: {latitude: null, longitude: null, address:{street: null, number: null, city:null, zipCode: null, state:null}},
-                freeDates: [],
-                housekeeper: null,
-                comments: [],
-                pictures: [],
-                priceForNight: "",
-                arrivalTime: "",
-                exitTime: "",
-                apartmentStatus: null,
-                amenities: [],
-                reservationsId: []
-            },
+
             arrivalHours: "",
             arrivalMinutes: "",
             exitHours: "",
@@ -73,11 +41,9 @@ Vue.component("addApartment",{
             emptyRoomNumber:"",
             emptyAddress:"",
             emptyPrice:"",
-
-            name:"",
-            price:"",
-            rooms:"",
-            type:""
+            priceForNight:"",
+            myModal:false,
+            myModalFail:false
         }
 	},
     template:`
@@ -127,13 +93,14 @@ Vue.component("addApartment",{
                     <div class="row">
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
-                            <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Apartment's name" v-model="name">
+                            <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.name">
                             <p style="color:red">{{emptyName}}</p>
-                        </div>
 
+                        </div>
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
-                            <input type="search" id="address" placeholder="Address" />
+
+                            <input type="search" id="address" placeholder="Address" value=''/>
                             <p style="color:red">{{emptyAddress}}</p>
 
                             <label hidden for="city">City</label>
@@ -150,12 +117,12 @@ Vue.component("addApartment",{
                                             
                             <label hidden for="latitude">Lat</label>
                             <input hidden id="lat" class="form-control" type="text">
+
                         </div>
-                        
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>
                             <div class="edit-combobox">
-                                <select required v-model="numberOfGuests">
+                                <select required v-model="selectedApartment.guestNumber">
                                     <option value="" selected disabled>Guests</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -171,12 +138,11 @@ Vue.component("addApartment",{
 
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"><strong>Rooms</strong></label>
                             <div class="edit-combobox">
-                                <select required v-model="rooms">
+                                <select required v-model="selectedApartment.roomNumber">
                                     <option value="">Rooms</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -186,30 +152,28 @@ Vue.component("addApartment",{
                                 </select>
                             </div>
                             <p style="color:red">{{emptyRoomNumber}}</p>
-
                         </div>
 
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/room-apartment-icon.png" alt="not found"><strong>Apartment Type</strong></label>
                             <div class="edit-combobox">
-                                <select required v-model="type">
+                                <select required v-model="selectedApartment.apartmentType">
                                     <option value="" selected disabled>Type</option>
                                     <option value="APARTMENT">Apartment</option>
                                     <option value="ROOM">Room</option>
                                 </select>
                             </div>
                             <p style="color:red">{{emptyApartmentType}}</p>
-
                         </div>
 
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
-                            <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Price for night" style="width:220px" v-model="price"/>
+                            <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Price for night" style="width:220px" v-model="priceForNight"/>
                             <p style="color:red">{{emptyPrice}}</p>
-
                         </div>
+
                     </div>
-                    
+
                     <div class="row">
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-in-icon.png" alt="not found"><strong>Arrival time</strong></label>
@@ -237,6 +201,7 @@ Vue.component("addApartment",{
                             <p style="color:red">{{arrivalTimeEmpty}}</p>
 
                         </div>
+
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-out-icon.png" alt="not found"><strong>Exit time</strong></label>
                             <div class="time">
@@ -261,45 +226,90 @@ Vue.component("addApartment",{
                                 </select>
                             </div>
                             <p style="color:red">{{exitTimeEmpty}}</p>
-
-                        </div>  
+                        </div> 
                     </div>
-
                     <div class="row">
                         <div class="col">
-                            <h4 class="details-hotel-name-p">Basic</h4> 
+                            <h4>Basic</h4> 
                             <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'BASIC'">
-                                <label class="details-hotel-name-p"><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""> </label>
-                                <p class="details-hotel-name-p">{{a.description}}</p>
+                                <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" :checked="doesAmenityExist(a)" v-on:click="addAmenity(a)" value=""> </label>
+                                <p>{{a.description}}</p>
                             </div>
-                                        
-                            <h4 class="details-hotel-name-p">Family features</h4> 
+                        
+                            <h4>Family features</h4> 
                             <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'">
-                                <label class="details-hotel-name-p"><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
-                                <p class="details-hotel-name-p">{{a.description}}</p>
+                                <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" :checked="doesAmenityExist(a)" v-on:click="addAmenity(a)" value=""></label>
+                                <p>{{a.description}}</p>
                             </div>
                         </div>
-                                    
+
                         <div class="col">
-                            <h4 class="details-hotel-name-p">Facilities</h4> 
+                            <h4>Facilities</h4> 
                             <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'">
-                                <label class="details-hotel-name-p"><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" v-on:click="addAmenityToNewApartment(a)" value=""></label>
-                                <p class="details-hotel-name-p">{{a.description}}</p>
+                                <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" :checked="doesAmenityExist(a)" v-on:click="addAmenity(a)" value=""></label>
+                                <p>{{a.description}}</p>
                             </div>
-                                        
-                            <h4 class="details-hotel-name-p">Dining</h4> 
+                        
+                            <h4>Dining</h4> 
                             <div class="amenity col-md-6" v-for="a in allAmenitiesEver" v-if="a.type === 'DINING'">
-                                <label class="details-hotel-name-p"><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox"  v-on:click="addAmenityToNewApartment(a)" value=""></label>
-                                <p class="details-hotel-name-p">{{a.description}}</p>
+                                <label><strong>{{a.name}}</strong><input class="have-amenity-checkbox" type="checkbox" :checked="doesAmenityExist(a)" v-on:click="addAmenity(a)" value=""></label>
+                                <p>{{a.description}}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row justify-content-center">
-                        <button class="reserve-book-button" type="button" v-on:click="createNewApartment(newApartment)">Create apartment</button>
+                    <div v-for="c in selectedApartment.comments">
+                        <div class="comments" v-if="!c.disabledForGuests">
+                            <div class="comment-wrapper">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
+                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
+                                        <p class="details-hotel-name-label">{{c.text}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
+                                    </div>
+                                    <div class="col">
+                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
+                                    </div>
+                                    <div class="col hide-checkbox">
+                                        <label><input type="checkbox" v-on:click="changeCommentarVisibillity(c)" value=""> Hide this comment</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comments" v-else>
+                            <div class="comment-wrapper-disabled">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
+                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
+                                        <p class="details-hotel-name-label">{{c.text}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
+                                    </div>
+                                    <div class="col">
+                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
+                                    </div>
+                                    <div class="col hide-checkbox" >
+                                        <label><input type="checkbox" v-on:click="changeCommentarVisibillity(c)" :checked="true" value=""> Hide this comment</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
+                    <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -311,6 +321,24 @@ Vue.component("addApartment",{
             this.loggedIn=false;
         }else{
             this.loggedIn=true;
+            
+            axios
+            .get('rest/getHousekeeper', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>(this.housekeeper = response.data));
+
+            axios
+            .get('rest/editApartment/' + this.$route.query.id)
+            .then(response => {
+                this.selectedApartment = response.data;
+                this.selectedApartmentBackUp = response.data;
+                this.startEditingApartment();
+            });
+
+            axios
+            .get('rest/getAllAmenities')
+            .then(response => (this.allAmenitiesEver = response.data));
 
             axios
             .get('rest/housekeepersApartment', {params: {
@@ -318,29 +346,9 @@ Vue.component("addApartment",{
             }})
             .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
     
-            axios
-            .get('rest/housekeepersReservation', {params: {
-                Authorization: 'Bearer ' + jwt 
-            }})
-            .then(response =>(this.reservations = response.data ,this.reservationsBackUp = [...this.reservations]));
-    
-            axios
-            .get('rest/housekeepersGuests', {params: {
-                Authorization: 'Bearer ' + jwt
-            }})
-            .then(response => (this.guests = response.data, this.guestsBackUp = [...this.guests]));
-
-            axios.get('rest/getAllAmenities')
-            .then(response => (this.allAmenitiesEver = response.data));
-
-            axios
-            .get('rest/getHousekeeper', {params: {
-                Authorization: 'Bearer ' + jwt
-            }})
-            .then(response =>(this.housekeeper = response.data));
         }
 
-      this.places = places({
+        this.places = places({
             appId: 'plQ4P1ZY8JUZ',
             apiKey: 'bc14d56a6d158cbec4cdf98c18aced26',
             container: document.querySelector('#address'),
@@ -369,242 +377,185 @@ Vue.component("addApartment",{
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
         },
-        
-        
-        addAmenityToNewApartment: function(amenity){
-            this.newApartment.amenities.push(amenity);
-        },
-        
-        
-        getComments:function(){
-            this.comments = this.selectedApartment.comments;
-        },
-        getBasicAmenities:function(){
-            this.basicAmenities = this.amenities.filter(function(amenity){
-                return amenity.type === 'BASIC';
-            });
-        },
-        getFamilyAmenities:function(){
-            this.familyAmenities = this.amenities.filter(function(amenity){
-                return amenity.type === 'FAMILY_FEATURES';
-            });
-        },
-        getDiningAmenities:function(){
-            this.diningAmenities = this.amenities.filter(function(amenity){
-                return amenity.type === 'DINING';
-            });
-
-        },
-        getFacilityAmenities:function(){
-            this.facilityAmenities = this.amenities.filter(function(amenity){
-                return amenity.type === 'FACILITIES';
-            });
-
-        },
-
-        validateArrivalTime: function(){
-            if(this.arrivalHours==="" && this.arrivalMinutes===""){
-                this.testApartment.arrivalTime="14:00";
-                this.arrivalTimeEmpty="";
-                return true;
-            }else{
-                if(this.arrivalHours==="" && this.arrivalMinutes!==""){
-                    this.arrivalTimeEmpty = "Please select arrival hours";
-                    return false;
-                }else if(this.arrivalHours!=="" && this.arrivalMinutes===""){
-                    this.arrivalTimeEmpty = "Please select arrival minutes";
-                    return false;
-                }else{
-                    this.arrivalTime = this.arrivalHours + ":" + this.arrivalMinutes;
-                    this.testApartment.arrivalTime = this.arrivalTime;
-                    this.arrivalTimeEmpty="";
-                    return true;
+        findApartmentName: function(apId){
+            var n;
+            this.apartmentsBackUp.forEach(element =>{
+                if(element.id === apId){
+                    n =  element.name;
                 }
-            }
+            });
+            return n;
         },
-        validateDepartTime: function(){
-            if((this.exitHours==="" | this.exitHours.trim()==="") && (this.exitMinutes==="" | this.exitMinutes.trim()==="")){
-                this.testApartment.exitTime="10:00";
-                this.exitTimeEmpty="";
-                return true;
-            }else{
-                if((this.exitHours==="" | this.exitHours.trim()==="") && (this.exitMinutes!=="" | this.exitMinutes.trim()!=="")){
-                    this.exitTimeEmpty = "Please select depart hours";
-                    return false;
-                }else if((this.exitHours!=="" | this.exitHours.trim()!=="") && (this.exitMinutes==="" | this.exitMinutes.trim()==="")){
-                    this.exitTimeEmpty = "Please select depart minutes";
-                    return false;
-                }else{
-                    this.testApartment.exitTime = this.exitHours + ":" + this.exitMinutes;
-                    this.exitTimeEmpty="";
-                    return true;
-                }
-            }
+        startEditingApartment: function(){
+            this.arrivalHours = this.selectedApartment.arrivalTime.split(':')[0];
+            this.arrivalMinutes = this.selectedApartment.arrivalTime.split(':')[1];
+            this.exitHours = this.selectedApartment.exitTime.split(':')[0];
+            this.exitMinutes = this.selectedApartment.exitTime.split(':')[1];
+            
+            var addressForView = this.selectedApartment.location.address.street+' '+ this.selectedApartment.location.address.city;
+
+            document.querySelector('#address').value = addressForView;
+            this.priceForNight = this.selectedApartment.priceForNight.toString();
         },
-        validateName: function(){
-            if(this.name==="" | this.name.trim()===""){
-                this.emptyName="Please enter name";
-                console.log('NAME TRUE'+ this.name);
-                return false;
-            }
-            console.log('NAME '+ this.name);
-            this.emptyName="";
-            return true;
+        cancleEditingApartment: function(){
+            this.selectedApartment = JSON.parse(JSON.stringify(this.selectedApartmentBackUp));
+            this.$router.push('/housekeeper');
+
         },
-        validateGuests: function(){
-            if(this.numberOfGuests===""){
-                this.emptyGuests="Please select number of guests";
-                return false;
-            }
-            this.emptyGuests="";
-            return true;
-        },
-        validateRooms: function(){
-            if(this.rooms===""){
-                this.emptyRoomNumber="Please select number of rooms";
-                return false;
-            }
-            this.emptyRoomNumber="";
-            return true;
-        },
-        validateType: function(){
-            if(this.type===""){
-                this.emptyApartmentType="Please select type";
-                return false;
-            }
-            this.emptyApartmentType="";
-            return true;
-        },
-        validateAddress:function(){
+        saveEditingApartmentChanges: function(){
+            this.selectedApartment.arrivalTime = this.arrivalHours + ":" + this.arrivalMinutes;
+            this.selectedApartment.exitTime = this.exitHours + ":" + this.exitMinutes;
+
             this.adresaZaPretragu = document.querySelector('#address').value;
-            if(this.adresaZaPretragu===""){
-                this.emptyAddress="Please enter address"
-                return false;
-            }else{
-                this.emptyAddress="";
-                this.adresaZaPretragu = document.querySelector('#address').value;
-                this.drzavaZaPretragu = document.querySelector('#stateAlg').value;
-                this.gradZaPretragu = document.querySelector('#cityAlg').value;
-                this.longZaPretragu = document.querySelector('#long').value;
-                this.latZaPretragu = document.querySelector('#lat').value;                    
-                this.zipZaPretragu = document.querySelector('#postalCode').value;
+            this.drzavaZaPretragu = document.querySelector('#stateAlg').value;
+            this.gradZaPretragu = document.querySelector('#cityAlg').value;
+            this.longZaPretragu = document.querySelector('#long').value;
+            this.latZaPretragu = document.querySelector('#lat').value;                    
+            this.zipZaPretragu = document.querySelector('#postalCode').value;
     
-                this.location.latitude =this.latZaPretragu;
-                this.location.longitude =this.longZaPretragu;
-                this.adresaObjekat.street = this.adresaZaPretragu;
-                this.adresaObjekat.city = this.gradZaPretragu;
-                this.adresaObjekat.zipCode = this.zipZaPretragu;
-                this.adresaObjekat.state = this.drzavaZaPretragu;
+            this.location.latitude =this.latZaPretragu;
+            this.location.longitude =this.longZaPretragu;
+            this.adresaObjekat.street = this.adresaZaPretragu;
+            this.adresaObjekat.city = this.gradZaPretragu;
+            this.adresaObjekat.zipCode = this.zipZaPretragu;
+            this.adresaObjekat.state = this.drzavaZaPretragu;
     
-                this.location.address = this.adresaObjekat;
-                console.log(this.location);
-                this.testApartment.location = this.location;
+            this.location.address = this.adresaObjekat;
+            console.log(this.location);
+            this.selectedApartment.location = this.location;
 
-                return true;
-            }
-        },
-        validatePrice:function(){
-            if(this.price==="" | this.price.trim()===""){
-                this.emptyPrice="Please enter price";
-                return false;
-            }
-            this.emptyPrice=""
-            return true;
-        },
-        validate:function(){
-            if(this.validateArrivalTime() & this.validateDepartTime() & this.validateAddress() & this.validateGuests() & this.validateName() & this.validatePrice() & this.validateRooms() & this.validateType()){
-                return true;
-            }
-
-            return false;
-        },
-        createNewApartment: function(){
-
-            
-            this.testApartment.id = (new Date()).getTime();
-            this.testApartment.amenities = this.newApartment.amenities;
-            this.testApartment.comments = [];
-            this.testApartment.reservationsId=[]
-            this.testApartment.freeDates=[];
-            this.testApartment.pictures=[];
-            
-            //var jwt = window.localStorage.getItem('jwt');
-            this.testApartment.housekeeper = this.housekeeper;
-            this.testApartment.apartmentStatus = "ACTIVE";
-            
             if(this.validate()){
                 axios
-                .post("/rest/createNewApartment", this.testApartment)
+                .post("/rest/updateApartment", this.selectedApartment)
                 .then(function(response){
-                    alert(response.data);
                     var jwt = window.localStorage.getItem('jwt');
                     axios
                     .get('rest/housekeepersApartment', {params: {
-                    Authorization: 'Bearer ' + jwt
+                     Authorization: 'Bearer ' + jwt
                     }})
                     .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
 
                 });
 
-                this.newApartment= {
-                    id: null,
-                    name: "",
-                    apartmentType: "",
-                    roomNumber: "",
-                    guestNumber: "",
-                    location: {latitude: null, longitude: null, address:{street: null, number: null, city:null, zipCode: null, state:null}},
-                    freeDates: [],
-                    housekeeper: null,
-                    pictures: [],
-                    priceForNight: "",
-                    arrivalTime: "",
-                    exitTime: "",
-                    apartmentStatus: null,
-                    amenities: [],
-                    housekeeper: null,
-                }
+                this.$router.push('/housekeeper');
+
             }
-             
             
+        },
+        addAmenity: function(amenity){
+            if(this.doesAmenityExist(amenity)){
+                for( var i = 0; i < this.selectedApartment.amenities.length; i++){ 
+                    if ( this.selectedApartment.amenities[i].id === amenity.id){
+                        this.selectedApartment.amenities.splice(i, 1); 
+    
+                    }  
+                }
+            }else{
+                this.selectedApartment.amenities.push(amenity);
+            }
+        },
+        doesAmenityExist:function(amn){
+            var a = this.selectedApartment.amenities.filter(function(amenity){
+                return amenity.id == amn.id;
+            });
+     
+            if(a[0]){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        changeCommentarVisibillity: function(comment){
+            this.selectedApartment.comments.forEach(element =>{
+                if(element.id === comment.id){
+                    element.disabledForGuests = !element.disabledForGuests;
+                }
+            });
+        },
+        validateName:function(){
+            if(this.selectedApartment.name==="" | this.selectedApartment.name.trim() ===""){
+                this.emptyName="Please enter name";
+                return false;
+            }
+            this.emptyName="";
+            return true;
+        },
+        validatePrice:function(){
+            if(this.priceForNight ==="" | this.priceForNight.trim() ===""){
+                this.emptyPrice="Please enter price";
+                return false;
+            }
+            this.emptyPrice="";
+            return true;
+        },
+        validateType:function(){
+            if(this.selectedApartment.apartmentType===""){
+                this.emptyApartmentType="Please select type"
+                return false;
+            }
+            this.emptyApartmentType="";
+            return true;
+        },
+        validateGuests:function(){
+            if(this.selectedApartment.guestNumber===""){
+                this.emptyGuests="Please select guest num"
+                return false;
+            }
+            this.emptyGuests="";
+            return true;
+        },
+        validateRooms:function(){
+            if(this.selectedApartment.roomNumber===""){
+                this.emptyRoomNumber="Please select rooms";
+                return false;
+            }
+            this.emptyRoomNumber="";
+            return true;
+        },
+        validateArrivalTime:function(){
+            if(this.selectedApartment.arrivalTime==="" & this.selectedApartment.arrivalTime.trim()===""){
+                this.arrivalTimeEmpty="Please enter arrival time";
+                return false;
+            }
+            this.arrivalTimeEmpty="";
+            return true;
+        },
+        validateExitTime:function(){
+            if(this.selectedApartment.exitTime==="" & this.selectedApartment.exitTime.trim()===""){
+                this.exitTimeEmpty="Please enter arrival time";
+                return false;
+            }
+            this.exitTimeEmpty="";
+            return true;
+        },
+        validateAddress:function(){
+            if(this.adresaZaPretragu===""){
+                this.emptyAddress="Please enter address";
+                return false;
+            }
+            this.emptyAddress="";
+            return true;
+        },
+        validate:function(){
+            if(this.validateName() & this.validateGuests() & this.validatePrice() & this.validateRooms() & this.validateType() & this.validateArrivalTime() & this.validateExitTime() & this.validateAddress()){
+                return true;
+            }
+            return false;
         }
     },
-    
+    filters: {
+    	dateFormat: function (value, format) {
+    		var parsed = moment(value);
+    		return parsed.format(format);
+    	}
+    },
 	watch:{
-        type:function(newType,oldType){
-            this.type = newType;
-            this.testApartment.apartmentType=this.type;
-        },
-        rooms: function(newRooms, oldRooms){
-            this.rooms = newRooms;
-            this.testApartment.roomNumber = this.rooms;
-        },
-		name: function(newName, oldName){
-            this.name=newName;
-            this.testApartment.name=newName;
-		},
-		price: function(newPrice, oldPrice){
-            this.testApartment.priceForNight = this.price;
+        priceForNight: function(newPrice, oldPrice){
+            this.selectedApartment.priceForNight = this.priceForNight;
 
 			if(isNaN(newPrice)){
-				this.price = newPrice.substring(0,newPrice.length -1);
-            }
-
-        },
-        numberOfGuests: function(newGuests, oldGuests){
-            this.numberOfGuests=newGuests;
-            this.testApartment.guestNumber = this.numberOfGuests;
-        },
-        exitHours:function(newH,oldH){
-            this.exitHours = newH;
-        },
-        arrivalHours:function(newH,oldH){
-            this.arrivalHours = newH;
-        },
-        arrivalMinutes:function(newM,oldM){
-            this.arrivalMinutes = newM;
-        },
-        exitMinutes:function(newM,oldM){
-            this.exitMinutes = newM;
+				this.priceForNight = newPrice.substring(0,newPrice.length -1);
+			}
         },
         
 	},

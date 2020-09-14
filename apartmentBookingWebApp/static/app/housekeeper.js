@@ -345,7 +345,7 @@ Vue.component("housekeeper",{
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">More info about apartment</h4>
-                                            <button type="button" class="btn btn-primary" style="margin-left:20px" onclick="location.href='#/editApartment'" v-if="editApartmentMode === false">Update info</button>
+                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="editApartment(selectedApartment)" v-if="editApartmentMode === false">Update info</button>
                                             <span v-else>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
@@ -627,6 +627,9 @@ Vue.component("housekeeper",{
 
 	},
     methods: {
+        editApartment:function(selectedApartment){
+            window.location.href = "#/editApartment?id=" + selectedApartment.id;  
+        },
         calculateMark: function(apartment){
 			var sum = 0;
 			apartment.comments.forEach(element => {

@@ -302,6 +302,18 @@ public class SparkAppMain {
 			return g.toJson(a);
 		});
 		
+		get("/rest/editApartment/:id",(req,res)->{
+			res.type("application/json");
+			String id = req.params("id");
+			
+			System.out.println(id);
+			ApartmentRepository  apartmentRepository = new ApartmentRepository();
+			
+			Apartment a = apartmentRepository.getObj(id);
+
+			return g.toJson(a);
+		});
+
 		get("/rest/userLoggedInReservations", (req,res)->{
 		String guestUsername = getUser(req.queryParams("Authorization"));
 
