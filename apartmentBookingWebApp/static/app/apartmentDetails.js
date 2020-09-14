@@ -264,7 +264,6 @@ Vue.component("apartmentDetails", {
             .get('rest/apartments/' + this.$route.query.id)
             .then(response => {
                 this.selectedApartment = response.data;
-                this.freeDates = this.selectedApartment.freeDates;
                 this.setFreeDates();
                 this.mountAll();
 
