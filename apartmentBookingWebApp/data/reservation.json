@@ -61,4 +61,13 @@
   "guestId" : "milica",
   "reservationStatus" : "QUIT",
   "id" : "1599775594999"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1600962240000,
+  "numberOfNights" : 1,
+  "totalPrice" : 100.0,
+  "message" : "awref",
+  "guestId" : "coaPera",
+  "reservationStatus" : "CREATED",
+  "id" : "1600098276233"
 } ]
