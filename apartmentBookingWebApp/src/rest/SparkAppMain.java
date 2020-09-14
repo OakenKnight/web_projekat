@@ -470,12 +470,12 @@ public class SparkAppMain {
 	
 	public static ArrayList<DateInterval> resizeInterval(DateInterval intervalToResize, Date startReservation, Date endReservation){
 		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
-		if(startReservation.compareTo(intervalToResize.getStartDate())==0 && endReservation.compareTo(intervalToResize.getEndDate())<=0){
+		if(startReservation.compareTo(intervalToResize.getStartDate())==0 && endReservation.compareTo(intervalToResize.getEndDate())<0){
 			//newIntervals.add(new DateInterval(startReservation,endReservation));
 			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
 			return newIntervals;
 
-		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0 && startReservation.compareTo(intervalToResize.getStartDate())>=0){
+		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0 && startReservation.compareTo(intervalToResize.getStartDate())>0){
 			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
 			//newIntervals.add(new DateInterval(startReservation,endReservation));
 			return newIntervals;
@@ -488,6 +488,48 @@ public class SparkAppMain {
 		}
 	}
 	
+	public static ArrayList<DateInterval> mergeIntervals(ArrayList<DateInterval> allIntervals, DateInterval intervalToMerge){
+		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
+		
+
+		for(int i=0;i<allIntervals.size();i++){
+			if(allIntervals.get(i).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
+				for(int j=0;j<allIntervals.size();j++){
+					if(allIntervals.get(j).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
+						Date endInterval = allIntervals.get(j).getEndDate();
+						DateInterval date = new DateInterval(allIntervals.get(i).getStartDate(), endInterval);
+						allIntervals.remove(j);
+						allIntervals.set(i,date);
+						break;
+					}
+				}
+			}
+		}
+		return allIntervals;
+	}
+	/*
+	public static ArrayList<DateInterval> selectionSort(ArrayList<DateInterval> allIntervals)  
+	{  
+    	int i, j, min_idx;  
+  
+    // One by one move boundary of unsorted subarray  
+		for (i = 0; i < allIntervals.size()-1;i++)  
+		{  
+			// Find the minimum element in unsorted array  
+			min_idx = i;  
+			for (j = i+1; j < allIntervals.size(); j++)  
+			if (allIntervals.get(j).getStartDate().compareTo(allIntervals.get(i).getStartDate()) < 0){
+				min_idx = j;  
+			}  
+	
+			// Swap the found minimum element with the first element  
+			//swap(&allIntervals.get(min_idx), &allIntervals.get(i));  
+			DateInterval temp = allIntervals.get(min_idx); 
+            allIntervals.get(min_idx) = allIntervals.get(i); 
+            allIntervals.get(i) = temp; 
+		}  
+	}  
+	*/
 
 }
 

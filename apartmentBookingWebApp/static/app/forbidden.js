@@ -5,7 +5,7 @@ Vue.component("forbidden",{
         }
 	  },
     template:`
-    <p></strong>403 Forbidden</strong></p> 
+    <h1></strong>403 Forbidden</strong></h1> 
     `,
     
 
