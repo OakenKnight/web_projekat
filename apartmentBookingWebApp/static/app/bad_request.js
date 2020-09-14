@@ -5,7 +5,7 @@ Vue.component("bad_request",{
         }
 	  },
     template:`
-    <p></strong>404 Bad request</strong></p> 
+    <h1></strong>404 Bad request</strong></h1> 
     `,
     
 

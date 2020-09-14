@@ -30,6 +30,7 @@ Vue.component("admin",{
             arrivalMinutes: "",
             exitHours: "",
             exitMinutes: "",
+            loggedIn:false
 		}
 	},
     template:`
@@ -54,6 +55,11 @@ Vue.component("admin",{
                         <a class="nav-link" href="#/contact">Contact us</a>
                     </li>
                     <li>
+                    <div class="sign-in-up" style="right:0">
+                        <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
+                        <button type="button" class="btn my-2 my-lg-0"  v-if="loggedIn" >Profile</button>
+
+                        </div>
                     </li>
 
                 </ul>
@@ -503,10 +509,10 @@ Vue.component("admin",{
              alert("Please log in again")
              window.location.href = '#/login';
              */
-             window.location.href = '#/bad_request';
-
+             window.location.href = '#/forbidden';
+            this.loggedIn=false;
          }else{
-             
+            this.loggedIn = true;
             axios
             .get('rest/getAllApartments')
             .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
@@ -529,6 +535,10 @@ Vue.component("admin",{
 
 	},
     methods: {
+        logout:function(){
+            window.localStorage.removeItem('jwt');
+            this.$router.push('/login');
+        },
         calculateMark: function(apartment){
 			var sum = 0;
 			apartment.comments.forEach(element => {

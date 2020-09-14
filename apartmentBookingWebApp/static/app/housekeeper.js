@@ -69,6 +69,10 @@ Vue.component("housekeeper",{
                         <a class="nav-link" href="#/contact">Contact us</a>
                     </li>
                     <li>
+                        <div class="sign-in-up" style="right:0">
+                            <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" >Sign out</button>
+                            <button type="button" class="btn my-2 my-lg-0" >Profile</button>
+                        </div>
                     </li>
 
                 </ul>
@@ -627,6 +631,10 @@ Vue.component("housekeeper",{
 
 	},
     methods: {
+        logout:function(){
+            window.localStorage.removeItem('jwt');
+            this.$router.push('/login');
+        },
         editApartment:function(selectedApartment){
             window.location.href = "#/editApartment?id=" + selectedApartment.id;  
         },
