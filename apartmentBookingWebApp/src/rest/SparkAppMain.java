@@ -444,7 +444,7 @@ public class SparkAppMain {
 						apartment.getFreeDates().remove(i);
 						for (DateInterval di : dateIntervals) {
 							if(di != null) {
-								apartment.getFreeDates().add(di);								
+								apartment.getFreeDates().add(i++,di);								
 							}
 						}
 						break;
@@ -479,7 +479,6 @@ public class SparkAppMain {
 		if(startReservation.compareTo(intervalToResize.getStartDate())==0 && endReservation.compareTo(intervalToResize.getEndDate())<0){
 			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
 			return newIntervals;
-
 		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0 && startReservation.compareTo(intervalToResize.getStartDate())>0){
 			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
 			return newIntervals;
