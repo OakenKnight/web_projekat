@@ -21,6 +21,9 @@
   	},{
   	"startDate": 1600812000000,
   	"endDate" :  1601244000000 
+  	},{
+  	"startDate": 1602972000000,
+  	"endDate" :  1603576800000 
   	} ],
   "housekeeper" : {
     "username" : "pera",
@@ -143,7 +146,7 @@
     }
   },
   "freeDates" : [ {
-  	"startDate": 15979608000000,
+  	"startDate": 1589580000000,
   	"endDate" :  1601244000000 } ],
   "housekeeper" : {
     "username" : "joca",
@@ -274,7 +277,7 @@
     }
   },
   "freeDates" : [ {
-  	"startDate": 15979608000000,
+  	"startDate": 1589580000000,
   	"endDate" :  1601244000000 } ],
   "housekeeper" : {
     "username" : "joca",
@@ -385,7 +388,7 @@
     }
   },
   "freeDates" : [ {
-  	"startDate": 15979608000000,
+  	"startDate": 1589580000000,
   	"endDate" :  1601244000000 } ],
   "housekeeper" : {
     "username" : "joca",

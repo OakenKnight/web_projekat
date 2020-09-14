@@ -47,7 +47,7 @@ public class SearchService {
             apartments = filterByArriveDate(apartments, searchedApartment.getArriveDate());
         */
 
-        if(!isNullOrEmpty(searchedApartment.getArriveDate()) && !isNullOrEmpty(searchedApartment.getLeavingDate())){
+        if((searchedApartment.getArriveDate() != null) && (searchedApartment.getLeavingDate() != null)){
             apartments = filterByPeriod(apartments, searchedApartment.getArriveDate(), searchedApartment.getLeavingDate());
         }
          
@@ -116,18 +116,12 @@ public class SearchService {
     }
 
     */
-    public ArrayList<Apartment> filterByPeriod(ArrayList<Apartment> apartments, String arriveDate, String departDate){
+    public ArrayList<Apartment> filterByPeriod(ArrayList<Apartment> apartments, Date arriveDate, Date departDate){
 
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
-
-        DateParser dateParser = new DateParser();
-        Date depart_date = dateParser.formatDate(dateParser.parseDate(departDate));
-        Date arrive_date = dateParser.formatDate(dateParser.parseDate(arriveDate));
-
-        System.out.println(dateParser.getDaysBetween(arrive_date, depart_date));
         
         for(Apartment a : apartments){
-            if(checkApartmentAvailability(a,arrive_date, depart_date)){
+            if(checkApartmentAvailability(a,arriveDate, departDate)){
                 filteredApartments.add(a);
             }
         }
@@ -135,23 +129,12 @@ public class SearchService {
         return filteredApartments;
     }
     
-    public Boolean checkApartmentAvailability(Apartment a, Date arrive_date, Date depart_date) {
-        DateParser dateParser = new DateParser();
-
-        int days_between = dateParser.getDaysBetween(arrive_date,depart_date);
-
-        ArrayList<Long> dates = new ArrayList<Long>();
-
-        for(int i=0 ; i<=days_between; i++){
-            dates.add(i*86400000 + arrive_date.getTime());
+    public Boolean checkApartmentAvailability(Apartment a, Date arriveDate, Date departDate) {
+        for(int i = 0; i < a.getFreeDates().size(); i++) {
+        	if(a.getFreeDates().get(i).isDateInInterval(arriveDate) && a.getFreeDates().get(i).isDateInInterval(departDate))
+        		return true;
         }
-
-        for(Long date : dates){
-            if(!a.getFreeDates().contains(new Date(date))){
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     /*

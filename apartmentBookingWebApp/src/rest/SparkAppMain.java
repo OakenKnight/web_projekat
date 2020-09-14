@@ -55,20 +55,26 @@ public class SparkAppMain {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	public static void main(String[] args) throws FileNotFoundException {
-		SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy");
-		Date d1= null;
-		try {
-			 d1 = sdformat.parse("15.09.2020");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Date startDate = new Date();
-		Date date = new Date();
-		Date endDate = new Date();
-		System.out.println(d1.getTime());
-		DateInterval dateInterval = new DateInterval(startDate, endDate);
+//		SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy");
+//		Date d1= null;
+//		try {
+//			 d1 = sdformat.parse("15.09.2020");
+//		} catch (ParseException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		Date startDate = new Date();
+//		Date date = new Date();
+//		Date endDate = new Date();
+//		System.out.println(d1.getTime());
+//		DateInterval dateInterval = new DateInterval(startDate, endDate);
 
+		
+		Date d = new Date(1600415100000L);
+		Date d1 = new Date(1600425900000L);
+		
+		System.out.println(d1.compareTo(d));
+		
 		
 		port(5000);
 		try {
@@ -435,6 +441,7 @@ public class SparkAppMain {
 				ApartmentRepository apartmentRepository = new ApartmentRepository();
 				Apartment apartment = apartmentRepository.getObj(reservation.getApartmentId());
 				Date departDate = new Date(reservation.getArrivalDate().getTime() + 86400000*reservation.getNumberOfNights());
+				apartmentRepository.update(apartment);
 				for(int i = 0; i < apartment.getFreeDates().size(); i++) {
 				}
 				return true;

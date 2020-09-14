@@ -1,16 +1,17 @@
 package beans;
 
+import java.util.Date;
 
 public class SearchedApartment {
     private String destination;
-    private String arriveDate;
-    private String departDate;
+    private Date arriveDate;
+    private Date departDate;
     private String numberOfGuests;
     private String minPrice;
     private String maxPrice;
 
     public SearchedApartment(){}
-    public SearchedApartment(String destination, String arriveDate, String departDate, String numberOfGuests, String minimumPrice, String maximumPrice){
+    public SearchedApartment(String destination, Date arriveDate, Date departDate, String numberOfGuests, String minimumPrice, String maximumPrice){
         this.destination=destination;
         this.arriveDate = arriveDate;
         this.departDate = departDate;
@@ -27,19 +28,19 @@ public class SearchedApartment {
         this.destination = destination;
     }
 
-    public String getArriveDate(){
+    public Date getArriveDate(){
         return arriveDate;
     }
 
-    public void setArriveDate(String arrivingDate){
+    public void setArriveDate(Date arrivingDate){
         this.arriveDate = arrivingDate;
     }
 
-    public String getLeavingDate(){
+    public Date getLeavingDate(){
         return departDate;
     }
 
-    public void setLeavingDate(String leavingDate){
+    public void setLeavingDate(Date leavingDate){
         this.departDate = leavingDate;
     }
 
