@@ -244,6 +244,8 @@ Vue.component("apartmentDetails", {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
             this.loggedIn=false;
+            window.location.href = '#/forbidden';
+
         }else{
             this.loggedIn=true;
             axios

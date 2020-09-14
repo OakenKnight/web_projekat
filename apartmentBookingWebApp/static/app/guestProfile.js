@@ -306,14 +306,15 @@ Vue.component("guestProfile",{
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
             this.loggedIn=false;
+            window.location.href = '#/forbidden';
+
         }else{
             this.loggedIn=true;
             axios
-            .get('rest/userLoggedIn',{params:{
+            .get('rest/guestLoggedIn',{params:{
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response=>(this.loggedInUser = response.data));
-            
 
             axios
             .get('rest/userLoggedInReservations',{params:{

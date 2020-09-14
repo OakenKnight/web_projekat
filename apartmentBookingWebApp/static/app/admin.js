@@ -499,9 +499,14 @@ Vue.component("admin",{
     mounted () {
          var jwt = window.localStorage.getItem('jwt');
          if(!jwt){
+             /*
              alert("Please log in again")
              window.location.href = '#/login';
+             */
+             window.location.href = '#/bad_request';
+
          }else{
+             
             axios
             .get('rest/getAllApartments')
             .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));

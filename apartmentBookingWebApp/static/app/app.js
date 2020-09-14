@@ -13,7 +13,8 @@ const Admin = {template: '<admin></admin>'}
 const algoliaPLACES = {template: '<algoliaPLACES></algoliaPLACES>'}
 const addApartment = {template: '<addApartment></addApartment>'}
 const editApartment={template:'<editApartment></editApartment>'}
-
+const forbidden = {template: '<forbidden></forbidden>'}
+const bad_request={template: '<bad_request></bad_request>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -30,7 +31,9 @@ const router = new VueRouter({
 		{ path: '/admin', component: Admin},
 		{path:'/algoliaPLACES', component:algoliaPLACES},
 		{path:'/addApartment', component:addApartment},
-		{path:'/editApartment',component:editApartment}
+		{path:'/editApartment',component:editApartment},
+		{path:'/forbidden',component:forbidden},
+		{path:'/bad_request',component:bad_request}
 	  ]
 });
 

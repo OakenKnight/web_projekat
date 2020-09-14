@@ -319,6 +319,8 @@ Vue.component("editApartment",{
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
             this.loggedIn=false;
+            window.location.href = '#/bad_request';
+
         }else{
             this.loggedIn=true;
             
