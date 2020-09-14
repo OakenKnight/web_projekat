@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Key;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import beans.Apartment;
 import beans.ApartmentComment;
 import beans.ApartmentStatus;
 import beans.ApartmentType;
+import beans.DateInterval;
 import beans.Gender;
 import beans.Guest;
 import beans.Housekeeper;
@@ -52,7 +55,21 @@ public class SparkAppMain {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	public static void main(String[] args) throws FileNotFoundException {
-				
+		SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy");
+		Date d1= null;
+		try {
+			 d1 = sdformat.parse("15.09.2020");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Date startDate = new Date();
+		Date date = new Date();
+		Date endDate = new Date();
+		System.out.println(d1.getTime());
+		DateInterval dateInterval = new DateInterval(startDate, endDate);
+
+		
 		port(5000);
 		try {
 			staticFiles.externalLocation(new File("./static").getCanonicalPath());
@@ -398,12 +415,15 @@ public class SparkAppMain {
 		post("/rest/requestBooking",(req,res)->{
 			res.type("application/json");
 			String payload = req.body();
-
 			System.out.println(payload);
-			
 			Reservation reservation = g.fromJson(payload, Reservation.class);
 			ReservationRepository reservationRepository = new ReservationRepository();
 			if(reservationRepository.create(reservation)){
+				ApartmentRepository apartmentRepository = new ApartmentRepository();
+				Apartment apartment = apartmentRepository.getObj(reservation.getApartmentId());
+				Date departDate = new Date(reservation.getArrivalDate().getTime() + 86400000*reservation.getNumberOfNights());
+				for(int i = 0; i < apartment.getFreeDates().size(); i++) {
+				}
 				return true;
 			}else{
 				res.status(500);
