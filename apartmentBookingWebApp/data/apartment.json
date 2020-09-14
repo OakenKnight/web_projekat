@@ -9,21 +9,22 @@
     "longitude" : "19.8409",
     "address" : {
       "street" : "Zeleznicka 97",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21000",
       "state" : "Serbia"
     }
   },
   "freeDates" : [ {
-  	"startDate": 1600120800000,
-  	"endDate" :  1600380000000 
-  	},{
-  	"startDate": 1600812000000,
-  	"endDate" :  1601244000000 
-  	},{
-  	"startDate": 1602972000000,
-  	"endDate" :  1603576800000 
-  	} ],
+    "startDate" : 1600120800000,
+    "endDate" : 1600380000000
+  }, {
+    "startDate" : 1601071200000,
+    "endDate" : 1601244000000
+  }, {
+    "startDate" : 1602972000000,
+    "endDate" : 1603576800000
+  } ],
   "housekeeper" : {
     "username" : "pera",
     "password" : "pera",
@@ -126,11 +127,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-<<<<<<< HEAD
-  "reservationsId" : [ "a" ]
-=======
-  "reservationsId" : [ "a", "1600098276233", "1600099114843", "1600099645363", "1600100650546", "1600101050973" ]
->>>>>>> 23c770bdc20209ba3a651de80eeb5f01230b17e0
+  "reservationsId" : [ "a", "1600098276233", "1600099114843", "1600099645363", "1600100650546", "1600101050973", "1600101619773", "1600101822739" ]
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
@@ -142,14 +139,16 @@
     "longitude" : "",
     "address" : {
       "street" : "Maksima Gorkog 4",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21000",
       "state" : "Serbia"
     }
   },
   "freeDates" : [ {
-  	"startDate": 1589580000000,
-  	"endDate" :  1601244000000 } ],
+    "startDate" : 1589580000000,
+    "endDate" : 1601244000000
+  } ],
   "housekeeper" : {
     "username" : "joca",
     "password" : "joca",
@@ -272,14 +271,16 @@
     "longitude" : "19.837",
     "address" : {
       "street" : "Jevrejska 11",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"
     }
   },
   "freeDates" : [ {
-  	"startDate": 1589580000000,
-  	"endDate" :  1601244000000 } ],
+    "startDate" : 1589580000000,
+    "endDate" : 1601244000000
+  } ],
   "housekeeper" : {
     "username" : "joca",
     "password" : "joca",
@@ -382,14 +383,16 @@
     "longitude" : "19.8471",
     "address" : {
       "street" : "Strazilovska 15",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21100",
       "state" : "Serbia"
     }
   },
   "freeDates" : [ {
-  	"startDate": 1589580000000,
-  	"endDate" :  1601244000000 } ],
+    "startDate" : 1589580000000,
+    "endDate" : 1601244000000
+  } ],
   "housekeeper" : {
     "username" : "joca",
     "password" : "joca",
@@ -499,10 +502,11 @@
   "roomNumber" : 3,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "45.2908", 
+    "latitude" : "45.2908",
     "longitude" : "21.1736",
     "address" : {
       "street" : "Dositeja Obradovića 7",
+      "number" : null,
       "city" : "Plandiste Municipality",
       "zipCode" : "26365",
       "state" : "Serbia"
@@ -558,6 +562,7 @@
     "longitude" : "19.8421",
     "address" : {
       "street" : "Sremska 4",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"
@@ -593,6 +598,7 @@
     "longitude" : "19.8421",
     "address" : {
       "street" : "Sremska 3",
+      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"

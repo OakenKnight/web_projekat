@@ -97,4 +97,22 @@
   "guestId" : "coaPera",
   "reservationStatus" : "CREATED",
   "id" : "1600100969290"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1600898400000,
+  "numberOfNights" : 2,
+  "totalPrice" : 200.0,
+  "message" : "",
+  "guestId" : "coaPera",
+  "reservationStatus" : "CREATED",
+  "id" : "1600101619773"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1600812000000,
+  "numberOfNights" : 1,
+  "totalPrice" : 100.0,
+  "message" : "aef",
+  "guestId" : "coaPera",
+  "reservationStatus" : "CREATED",
+  "id" : "1600101822739"
 } ]

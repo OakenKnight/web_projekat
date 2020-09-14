@@ -326,6 +326,9 @@ Vue.component("apartmentDetails", {
             for(var i=1;i<=nights;i++){
                 this.listOfNights.push(i);  
             }
+            if(nights < 1){
+                this.listOfNights.push(1);
+            }
         },
         validate:function(){
             if(this.validateDate() & this.validateNights()){
