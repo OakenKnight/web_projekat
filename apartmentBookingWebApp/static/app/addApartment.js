@@ -564,7 +564,8 @@ Vue.component("addApartment",{
                     housekeeper: null,
                 }
             }
-             
+            this.$router.push('/housekeeper');
+
             
         }
     },
