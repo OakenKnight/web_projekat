@@ -69,8 +69,13 @@ public class SparkAppMain {
 		Date endDate = new Date();
 		System.out.println(d1.getTime());
 		DateInterval dateInterval = new DateInterval(startDate, endDate);
-
+		ApartmentRepository aaaaaa = new ApartmentRepository();
+		ArrayList<DateInterval> presorta = aaaaaa.getObj("app1").getFreeDates();
 		
+		for(DateInterval aaa : selectionSort(presorta)){
+			System.out.println(aaa.getStartDate() + ":" + aaa.getEndDate());
+		}
+
 		port(5000);
 		try {
 			staticFiles.externalLocation(new File("./static").getCanonicalPath());
@@ -382,7 +387,15 @@ public class SparkAppMain {
 					if(r.getGuestId().equals(reservation.getGuestId()))
 						guestReservations.add(r);
 				}
-				
+				ApartmentRepository apartmentRepository = new ApartmentRepository();
+				Apartment apartment = apartmentRepository.getObj(reservation.getApartmentId());
+				ArrayList<DateInterval> allIntervals = apartment.getFreeDates();
+				Date endReservation = new Date(reservation.getArrivalDate().getTime()+86400000*reservation.getNumberOfNights());
+				DateInterval dateToMerge = new DateInterval(reservation.getArrivalDate(), endReservation);
+				ArrayList<DateInterval> intervals = mergeIntervals(allIntervals, dateToMerge);
+
+				apartment.setFreeDates(intervals);;
+				apartmentRepository.update(apartment);
 				return g.toJson(guestReservations); 				
 		});
 
@@ -505,13 +518,35 @@ public class SparkAppMain {
 						allIntervals.remove(j);
 						allIntervals.set(i,date);
 						break;
+					}else{
+						DateInterval date = new DateInterval(allIntervals.get(i).getStartDate(), intervalToMerge.getEndDate());
+						allIntervals.set(i, date);
+						break;
+					}
+				}
+			}
+			if(allIntervals.get(i).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
+				for(int j=0;j<allIntervals.size();j++){
+					if(allIntervals.get(j).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
+						Date startInterval = allIntervals.get(j).getStartDate();
+						DateInterval date = new DateInterval(startInterval,allIntervals.get(i).getEndDate());
+						allIntervals.remove(i);
+						allIntervals.set(j,date);
+						break;
+					}else{
+						DateInterval date = new DateInterval(intervalToMerge.getStartDate(), allIntervals.get(i).getEndDate());
+						allIntervals.set(j, date);
+						break;
 					}
 				}
 			}
 		}
-		return allIntervals;
+		for(DateInterval date: allIntervals){
+			newIntervals.add(date);
+		}
+		return newIntervals;
 	}
-	/*
+	
 	public static ArrayList<DateInterval> selectionSort(ArrayList<DateInterval> allIntervals)  
 	{  
     	int i, j, min_idx;  
@@ -529,11 +564,12 @@ public class SparkAppMain {
 			// Swap the found minimum element with the first element  
 			//swap(&allIntervals.get(min_idx), &allIntervals.get(i));  
 			DateInterval temp = allIntervals.get(min_idx); 
-            allIntervals.get(min_idx) = allIntervals.get(i); 
-            allIntervals.get(i) = temp; 
-		}  
+            allIntervals.set(min_idx,allIntervals.get(i)); 
+            allIntervals.set(i, temp); 
+		} 
+		return allIntervals; 
 	}  
-	*/
+	
 
 }
 
