@@ -126,7 +126,11 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
+<<<<<<< HEAD
   "reservationsId" : [ "a" ]
+=======
+  "reservationsId" : [ "a", "1600098276233", "1600099114843", "1600099645363", "1600100650546", "1600101050973" ]
+>>>>>>> 23c770bdc20209ba3a651de80eeb5f01230b17e0
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
