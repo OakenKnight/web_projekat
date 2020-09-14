@@ -141,6 +141,9 @@
   },
   "freeDates" : [ {
     "startDate" : 1589580000000,
+    "endDate" : 1600357740000
+  }, {
+    "startDate" : 1600530540000,
     "endDate" : 1601244000000
   } ],
   "housekeeper" : {
@@ -253,7 +256,7 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
-  "reservationsId" : [ "mitarMitar1", "milica1" ]
+  "reservationsId" : [ "mitarMitar1", "milica1", "1600098612907" ]
 }, {
   "id" : "app22",
   "name" : "Hotel BlaBla",
