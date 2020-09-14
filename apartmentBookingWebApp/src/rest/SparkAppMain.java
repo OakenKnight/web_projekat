@@ -435,15 +435,21 @@ public class SparkAppMain {
 			if(reservationRepository.create(reservation)){
 				ApartmentRepository apartmentRepository = new ApartmentRepository();
 				Apartment apartment = apartmentRepository.getObj(reservation.getApartmentId());
-				/*
-				Date departDate = new Date(reservation.getArrivalDate().getTime() + 86400000*reservation.getNumberOfNights());
-				for(int i = 0; i < apartment.getFreeDates().size(); i++) {
-
-				}
-				*/
 				ArrayList<String> reservations = apartment.getReservationsId();
 				reservations.add(reservation.getId());
 				apartment.setReservationsId(reservations);
+				for (int i = 0; i < apartment.getFreeDates().size(); i++) {
+					if(apartment.getFreeDates().get(i).isDateInInterval(reservation.getArrivalDate())) {
+						ArrayList<DateInterval> dateIntervals = resizeInterval(apartment.getFreeDates().get(i), reservation.getArrivalDate(), new Date(reservation.getArrivalDate().getTime() + reservation.getNumberOfNights()*86400000));
+						apartment.getFreeDates().remove(i);
+						for (DateInterval di : dateIntervals) {
+							if(di != null) {
+								apartment.getFreeDates().add(di);								
+							}
+						}
+						break;
+					}
+				}
 				apartmentRepository.update(apartment);
 
 				return true;
@@ -471,18 +477,17 @@ public class SparkAppMain {
 	public static ArrayList<DateInterval> resizeInterval(DateInterval intervalToResize, Date startReservation, Date endReservation){
 		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
 		if(startReservation.compareTo(intervalToResize.getStartDate())==0 && endReservation.compareTo(intervalToResize.getEndDate())<0){
-			//newIntervals.add(new DateInterval(startReservation,endReservation));
 			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
 			return newIntervals;
 
 		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0 && startReservation.compareTo(intervalToResize.getStartDate())>0){
 			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
-			//newIntervals.add(new DateInterval(startReservation,endReservation));
 			return newIntervals;
-		}
-		else{
+		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0 && startReservation.compareTo(intervalToResize.getStartDate())==0){
+			newIntervals.add(null);
+			return newIntervals;
+		}else{
 			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
-			//newIntervals.add(new DateInterval(startReservation,endReservation));
 			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
 			return newIntervals;
 		}
