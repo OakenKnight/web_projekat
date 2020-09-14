@@ -8,10 +8,12 @@ Vue.component("apartmentDetails", {
             arriveDate: null,
             departDate: null,
             disabledArriveDates: {
-                to: new Date()
+                to: new Date(),
+                ranges:[ ]
             },
             disabledDepartDates: {
-                to:  new Date(2021, 0,1)
+                to:  new Date(2021, 0,1),
+                from: null
             },
             selectedApartment: {},
             amenities:[],
@@ -21,7 +23,7 @@ Vue.component("apartmentDetails", {
             diningAmenities:[],
             comments:[],
             commentsToSee:[],
-            numberOfNights:"",
+            numberOfNights: 0,
             message:"",
             price:"",
             reservation:{},
@@ -190,12 +192,13 @@ Vue.component("apartmentDetails", {
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <p><strong>Number of nights:</strong></p>
+                                                        <p style="margin-top:22px"><strong>Depart date:</strong></p>
                                                     </div>
-
                                                     <div class="col-8">
-                                                        <input type="text" style="width:80%" name="destination" placeholder="Nights" v-model="numberOfNights">
-                                                        <p style="color:red">{{emptyNights}}</p>
+                                                        <div class="datepicker">
+                                                            <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" name="arriveDate" v-model="departDate" ></vuejs-datepicker>
+                                                        </div>
+                                                        <p style="color:red">{{emptyDate}}</p>
 
                                                     </div>
                                                 </div>
@@ -227,17 +230,6 @@ Vue.component("apartmentDetails", {
             
     </div>
 
-
- 
-
-
-
-
-
-        
-        
-
-
 	`
     ,
     mounted() {
@@ -260,7 +252,9 @@ Vue.component("apartmentDetails", {
             .then(response => {
                 this.selectedApartment = response.data;
                 this.freeDates = this.selectedApartment.freeDates;
+                this.setFreeDates();
                 this.mountAll();
+
             });
         
     },
@@ -269,12 +263,25 @@ Vue.component("apartmentDetails", {
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
         },
+        setFreeDates: function(){
+            var today = new Date();
+            var newYear =  new Date(2021, 0,1);
+            this.disabledArriveDates.ranges.push({from: new Date(), to: new Date(this.selectedApartment.freeDates[0].startDate)});
+            for(var i = 0; i < this.selectedApartment.freeDates.length - 1; i ++){
+                this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[i].endDate), to: new Date(this.selectedApartment.freeDates[i+1].startDate)});
+            }
+            this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[this.selectedApartment.freeDates.length - 1].endDate), to: new Date(2021, 0,1)});
+        },
         requestBooking:function(){
             if(this.validate()){
+                this.numberOfNights = (this.departDate.getTime() - this.arriveDate.getTime()) / (1000 * 3600 * 24);
+                console.log(this.numberOfNights);
                 this.calculatePrice();
                 this.reservation.apartmentId = this.selectedApartment.id;
                 this.reservation.Id = (new Date()).getTime();
-                this.reservation.totalPrice = this.calculatePrice();
+                this.reservation.arrivalDate = new Date(this.arriveDate);
+                this.reservation.totalPrice = this.price;
+                this.reservation.numberOfNights = this.numberOfNights;
                 this.reservation.message = this.message;
                 this.reservation.guestId = this.loggedInUser.username;
                 this.reservation.reservationStatus = 'CREATED';
@@ -351,31 +358,30 @@ Vue.component("apartmentDetails", {
             });
 
         },
+        calculateAvaliableDepartDate: function(aD){
+            var d = new Date(aD);
+            for(var i = 0; i < this.selectedApartment.freeDates.length; i ++){
+                if(new Date(this.selectedApartment.freeDates[i].startDate) <= d && new Date(this.selectedApartment.freeDates[i].endDate) >= d){
+                    return this.selectedApartment.freeDates[i].endDate;
+                }
+                
+            }
+        }
 
     },
     watch: {
-
         arriveDate: function(newDate, oldDate){
             this.arriveDate = newDate;
-            this.reservation.arriveDate = new Date(this.arriveDate.toDateString())
 			var date = new Date();
 			date.setDate(newDate.getDate());
-			date.setMonth(newDate.getMonth());
-			this.disabledDepartDates.to = new Date(date);
-			console.log(newDate > this.departDate);
+            date.setMonth(newDate.getMonth());
+            this.disabledDepartDates.to = new Date(date);
+            this.disabledDepartDates.from = new Date(this.calculateAvaliableDepartDate(newDate));
 			if(this.departDate != null && newDate > this.departDate){
-				this.departDate =  new Date(newDate.getTime()+86400000); //date.setDate(date.getDate() +1);
+                //this.departDate =  new Date(newDate.getTime()+86400000); 
+                this.departDate = null;
             }
-
-            
         },
-        numberOfNights: function(newNumber, oldNumber){
-            if(isNaN(newNumber)){
-                this.numberOfNights = newNumber.substring(0,newNumber.length -1);
-            }
-
-            this.reservation.numberOfNights = this.numberOfNights;
-		}
     },
     components: {
         vuejsDatepicker
