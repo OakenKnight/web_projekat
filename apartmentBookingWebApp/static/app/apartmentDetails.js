@@ -293,13 +293,19 @@ Vue.component("apartmentDetails", {
                 this.calculatePrice();
                 this.reservation.apartmentId = this.selectedApartment.id;
                 this.reservation.Id = (new Date()).getTime();
-                this.reservation.arrivalDate = new Date(this.arriveDate);
+
+                var date = new Date();
+                date.setDate(this.arriveDate.getDate());
+                date.setMonth(this.arriveDate.getMonth());
+                date.setHours(0,0,0,0);
+
+                this.reservation.arrivalDate = date;
                 this.reservation.totalPrice = this.price;
                 this.reservation.numberOfNights = this.numberOfNights;
                 this.reservation.message = this.message;
                 this.reservation.guestId = this.loggedInUser.username;
                 this.reservation.reservationStatus = 'CREATED';
-
+                console.log(this.reservation.arrivalDate);
                 axios
                 .post('rest/requestBooking',this.reservation)
                 .then(response => {

@@ -70,4 +70,22 @@
   "guestId" : "coaPera",
   "reservationStatus" : "CREATED",
   "id" : "1600098276233"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1600185480000,
+  "numberOfNights" : 2,
+  "totalPrice" : 200.0,
+  "message" : "",
+  "guestId" : "coaPera",
+  "reservationStatus" : "CREATED",
+  "id" : "1600099114843"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1603144800000,
+  "numberOfNights" : 2,
+  "totalPrice" : 200.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "1600101050973"
 } ]

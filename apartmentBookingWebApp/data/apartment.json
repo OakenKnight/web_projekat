@@ -16,17 +16,8 @@
     }
   },
   "freeDates" : [ {
-    "startDate" : 1600120800000,
-    "endDate" : 1600380000000
-  }, {
     "startDate" : 1602972000000,
     "endDate" : 1603576800000
-  }, {
-    "startDate" : 1600812000000,
-    "endDate" : 1600962240000
-  }, {
-    "startDate" : 1601048640000,
-    "endDate" : 1601244000000
   } ],
   "housekeeper" : {
     "username" : "pera",
@@ -130,7 +121,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "a", "1600098276233" ]
+  "reservationsId" : [ "a", "1600098276233", "1600099114843", "1600099645363", "1600100650546", "1600101050973" ]
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
