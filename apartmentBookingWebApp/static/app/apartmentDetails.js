@@ -194,12 +194,12 @@ Vue.component("apartmentDetails", {
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <p style="margin-top:22px"><strong>Depart date:</strong></p>
+                                                        <p style="margin-top:22px"><strong>Number of nights:</strong></p>
                                                     </div>
                                                     <div class="col-8">
                                                    
 
-                                                    <select name="sub_type" class="form-control" v-if="listOfNights.length>0">
+                                                    <select name="sub_type" class="form-control" v-if="listOfNights.length>0" v-model="numberOfNights">
                                                             <option v-for='a in listOfNights'
                                                                 :value='a'
                                                             >
@@ -287,7 +287,8 @@ Vue.component("apartmentDetails", {
         },
         requestBooking:function(){
             if(this.validate()){
-                this.numberOfNights = (this.departDate.getTime() - this.arriveDate.getTime()) / (1000 * 3600 * 24);
+                //this.numberOfNights = (this.departDate.getTime() - this.arriveDate.getTime()) / (1000 * 3600 * 24);
+                
                 console.log(this.numberOfNights);
                 this.calculatePrice();
                 this.reservation.apartmentId = this.selectedApartment.id;
@@ -410,6 +411,7 @@ Vue.component("apartmentDetails", {
             }
             this.arriveDateSelected=true;
             this.listOfNights=[];
+            this.numberOfNights="";
             this.calucalateNights(this.arriveDate);
         },
     },

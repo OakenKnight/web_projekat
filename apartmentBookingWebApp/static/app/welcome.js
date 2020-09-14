@@ -626,6 +626,7 @@ Vue.component("welcome",{
 			var date = new Date();
 			date.setDate(newDate.getDate());
             date.setMonth(newDate.getMonth());
+            date.setHours(0,0,0,0);
 			this.disabledDepartDates.to = new Date(date);
             console.log("DATUM" + date);
             if(this.departDate != null && newDate > this.departDate){

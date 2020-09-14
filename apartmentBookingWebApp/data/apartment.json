@@ -9,7 +9,6 @@
     "longitude" : "19.8409",
     "address" : {
       "street" : "Zeleznicka 97",
-      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21000",
       "state" : "Serbia"
@@ -138,11 +137,10 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4 Novi Sad    ",
-      "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "street" : "Maksima Gorkog 4",
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -270,7 +268,6 @@
     "longitude" : "19.837",
     "address" : {
       "street" : "Jevrejska 11",
-      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"
@@ -381,7 +378,6 @@
     "longitude" : "19.8471",
     "address" : {
       "street" : "Strazilovska 15",
-      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21100",
       "state" : "Serbia"
@@ -499,11 +495,10 @@
   "roomNumber" : 3,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "45.2908",
+    "latitude" : "45.2908", 
     "longitude" : "21.1736",
     "address" : {
-      "street" : "Dositeja Obradovića",
-      "number" : "7",
+      "street" : "Dositeja Obradovića 7",
       "city" : "Plandiste Municipality",
       "zipCode" : "26365",
       "state" : "Serbia"
@@ -558,8 +553,7 @@
     "latitude" : "45.2493",
     "longitude" : "19.8421",
     "address" : {
-      "street" : "Sremska",
-      "number" : "4",
+      "street" : "Sremska 4",
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"
@@ -595,7 +589,6 @@
     "longitude" : "19.8421",
     "address" : {
       "street" : "Sremska 3",
-      "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
       "state" : "Serbia"
