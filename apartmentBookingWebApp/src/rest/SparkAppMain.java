@@ -4,6 +4,7 @@ import static spark.Spark.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.security.Key;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -434,9 +435,17 @@ public class SparkAppMain {
 			if(reservationRepository.create(reservation)){
 				ApartmentRepository apartmentRepository = new ApartmentRepository();
 				Apartment apartment = apartmentRepository.getObj(reservation.getApartmentId());
+				/*
 				Date departDate = new Date(reservation.getArrivalDate().getTime() + 86400000*reservation.getNumberOfNights());
 				for(int i = 0; i < apartment.getFreeDates().size(); i++) {
+
 				}
+				*/
+				ArrayList<String> reservations = apartment.getReservationsId();
+				reservations.add(reservation.getId());
+				apartment.setReservationsId(reservations);
+				apartmentRepository.update(apartment);
+
 				return true;
 			}else{
 				res.status(500);
@@ -459,7 +468,25 @@ public class SparkAppMain {
 		return "";
 	}
 	
-	
+	public static ArrayList<DateInterval> resizeInterval(DateInterval intervalToResize, Date startReservation, Date endReservation){
+		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
+		if(startReservation.compareTo(intervalToResize.getStartDate())==0){
+			newIntervals.add(new DateInterval(startReservation,endReservation));
+			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
+			return newIntervals;
+
+		}else if(endReservation.compareTo(intervalToResize.getEndDate())==0){
+			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
+			newIntervals.add(new DateInterval(startReservation,endReservation));
+			return newIntervals;
+		}else{
+			newIntervals.add(new DateInterval(intervalToResize.getStartDate(),startReservation));
+			newIntervals.add(new DateInterval(startReservation,endReservation));
+			newIntervals.add(new DateInterval(endReservation,intervalToResize.getEndDate()));
+			return newIntervals;
+
+		}
+	}
 	
 
 }
