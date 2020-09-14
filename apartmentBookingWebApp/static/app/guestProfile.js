@@ -311,7 +311,7 @@ Vue.component("guestProfile",{
         }else{
             this.loggedIn=true;
             axios
-            .get('rest/guestLoggedIn',{params:{
+            .get('rest/userLoggedIn',{params:{
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response=>(this.loggedInUser = response.data));

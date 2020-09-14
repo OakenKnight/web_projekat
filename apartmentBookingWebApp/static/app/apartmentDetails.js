@@ -28,7 +28,9 @@ Vue.component("apartmentDetails", {
             price:"",
             reservation:{},
             emptyNights:"",
-            emptyDate:""
+            emptyDate:"",
+            listOfNights:[],
+            arriveDateSelected:false
         }
     },
     template: `
@@ -195,9 +197,20 @@ Vue.component("apartmentDetails", {
                                                         <p style="margin-top:22px"><strong>Depart date:</strong></p>
                                                     </div>
                                                     <div class="col-8">
+                                                   
+
+                                                    <select name="sub_type" class="form-control" v-if="listOfNights.length>0">
+                                                            <option v-for='a in listOfNights'
+                                                                :value='a'
+                                                            >
+                                                                {{a}}
+                                                            </option>
+                                                    </select>
+                                                        <!--
                                                         <div class="datepicker">
                                                             <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" name="arriveDate" v-model="departDate" ></vuejs-datepicker>
                                                         </div>
+                                                        -->
                                                         <p style="color:red">{{emptyDate}}</p>
 
                                                     </div>
@@ -294,6 +307,20 @@ Vue.component("apartmentDetails", {
                 .catch(function(error){alert("Ooooops something went wrong!")});       
             }
         },
+        calucalateNights:function(aD){
+            var dDate = new Date();
+            var d = new Date(aD);
+            for(var i = 0; i < this.selectedApartment.freeDates.length; i ++){
+                if(new Date(this.selectedApartment.freeDates[i].startDate) <= d && new Date(this.selectedApartment.freeDates[i].endDate) >= d){
+                    dDate = new Date(this.selectedApartment.freeDates[i].endDate);
+                }
+                
+            }
+            var nights = (dDate.getTime() - aD.getTime()) / (1000 * 3600 * 24);
+            for(var i=1;i<=nights;i++){
+                this.listOfNights.push(i);  
+            }
+        },
         validate:function(){
             if(this.validateDate() & this.validateNights()){
                 return true;
@@ -381,6 +408,9 @@ Vue.component("apartmentDetails", {
                 //this.departDate =  new Date(newDate.getTime()+86400000); 
                 this.departDate = null;
             }
+            this.arriveDateSelected=true;
+            this.listOfNights=[];
+            this.calucalateNights(this.arriveDate);
         },
     },
     components: {

@@ -220,7 +220,7 @@ public class SparkAppMain {
 			}
 			return g.toJson(apartments); 
 		});
-		get("/rest/guestLoggedIn", (req,res)->{
+		get("/rest/userLoggedIn", (req,res)->{
 			String username = getUser(req.queryParams("Authorization"));
 			GuestRepository guestRepository = new GuestRepository();
 
