@@ -130,19 +130,19 @@ public class SparkAppMain {
 			Apartment apartment = g.fromJson(payload, Apartment.class);
 			ApartmentRepository apartmentRepository = new ApartmentRepository();
 
-			ArrayList<String> convertedImages = new ArrayList<String>();
-			int i=1;
-			for(String s:apartment.getPictures()){
-				String path ="images/apartmentsimg/a"+apartment.getId()+i+".jpg";
-				System.out.println(path);
-				Base64ToImage decoder = new Base64ToImage();
-				decoder.Base64DecodeAndSave(s, path);
-				path = "a"+apartment.getId()+i+".jpg";
-				convertedImages.add(path);
-				i++;
-			}
-			apartment.setPictures(convertedImages);
-			System.out.println(apartment.getPictures());
+//			ArrayList<String> convertedImages = new ArrayList<String>();
+//			int i=1;
+//			for(String s:apartment.getPictures()){
+//				String path ="images/apartmentsimg/a"+apartment.getId()+i+".jpg";
+//				System.out.println(path);
+//				Base64ToImage decoder = new Base64ToImage();
+//				decoder.Base64DecodeAndSave(s, path);
+//				path = "a"+apartment.getId()+i+".jpg";
+//				convertedImages.add(path);
+//				i++;
+//			}
+//			apartment.setPictures(convertedImages);
+//			System.out.println(apartment.getPictures());
 			if(apartmentRepository.create(apartment)) {
 				return "Apartment created successfully";
 			}
