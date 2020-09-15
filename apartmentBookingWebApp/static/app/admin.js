@@ -30,7 +30,8 @@ Vue.component("admin",{
             arrivalMinutes: "",
             exitHours: "",
             exitMinutes: "",
-            loggedIn:false
+            loggedIn:false,
+            loggedInUser:{}
 		}
 	},
     template:`
@@ -68,6 +69,7 @@ Vue.component("admin",{
             <div class="row">
                 <div class="options-housekeeper column">
                     <ul>
+                        <li class="option-housekeeper" v-on:click="mode = 'profile'"><p>Profile</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'apartments'"><p>Apartments</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'guests'"><p>Guests</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'reservations'"><p>Reservations</p></li>
@@ -246,6 +248,49 @@ Vue.component("admin",{
                             </div>
                         </div>
                     </section>
+<!--
+                    <section id="profile" v-if="mode === 'profile'">
+                        <div class="row" style="width:40%">
+                            <div class="col">
+                                <label class="profile-info-label">Username:</label>
+                            </div>
+                            <div class="col">
+                                <p class="profile-info-p">{{loggedInUser.username}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="width:40%">
+                            <div class="col">
+                                <label class="profile-info-label">Name:</label>
+                            </div>
+                            <div class="col">
+                                <p class="profile-info-p">{{loggedInUser.firstName}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="width:40%">
+                            <div class="col">
+                                <label class="profile-info-label">Lastname:</label>
+                            </div>
+                            <div class="col">
+                                <p class="profile-info-p">{{loggedInUser.lastName}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="width:40%">
+                            <div class="col">
+                                <label class="profile-info-label">Gender:</label>
+                            </div>
+                            <div class="col">
+                                <p class="profile-info-p" style="padding-bottom: 25px;">{{loggedInUser.gender}}</p>
+                            </div>
+                        </div>
+
+                
+                
+                        <button class="edit-info-button" type="button" v-on:click="setMode('edit')"><i class="edit-icon material-icons">edit</i>Edit info</button>
+                    </section>
+                    -->
                 </div>
             </div>
             </div>
@@ -505,14 +550,28 @@ Vue.component("admin",{
     mounted () {
          var jwt = window.localStorage.getItem('jwt');
          if(!jwt){
-             /*
-             alert("Please log in again")
-             window.location.href = '#/login';
-             */
-             window.location.href = '#/forbidden';
+            alert("Please log in again");
             this.loggedIn=false;
+
+             window.location.href = '#/login';
+             
          }else{
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{  if (response.data !== "ADMIN")
+                window.location.href = '#/forbidden';
+            });
             this.loggedIn = true;
+
+            axios
+            .get('rest/adminLoggedIn',{params:{
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response=>(this.loggedInUser = response.data));
+
+
             axios
             .get('rest/getAllApartments')
             .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));

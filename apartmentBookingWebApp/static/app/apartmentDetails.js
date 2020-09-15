@@ -239,8 +239,10 @@ Vue.component("apartmentDetails", {
     mounted() {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
+            alert("Please log in again");
             this.loggedIn=false;
-            window.location.href = '#/forbidden';
+
+            window.location.href = '#/login';
 
         }else{
             this.loggedIn=true;
@@ -249,7 +251,18 @@ Vue.component("apartmentDetails", {
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response=>(this.loggedInUser = response.data));
+
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ if (response.data !== "GUEST")
+                window.location.href = '#/forbidden';
+            });
+
         }
+        
+
 
         axios
             .get('rest/apartments/' + this.$route.query.id)

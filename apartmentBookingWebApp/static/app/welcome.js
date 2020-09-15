@@ -47,8 +47,8 @@ Vue.component("welcome",{
             cboxes:null,
             expanded :false,
             apartmentsBackUp:[],
-            apartmentsForFilter:[]
-
+            apartmentsForFilter:[],
+            type:""
         }
 	},
     template:`
@@ -60,9 +60,7 @@ Vue.component("welcome",{
                 <li class="nav-item">
                     <a class="nav-link" href="#/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#/reserve">Reserve</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="#/about">About us</a>
                 </li>
@@ -74,7 +72,7 @@ Vue.component("welcome",{
                         <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
                         <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
                         <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
-                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
+                        <button type="button" class="btn my-2 my-lg-0"  v-on:click="takeMeHome()" v-if="loggedIn==true" >Profile</button>
 
                         </div>
                 </li>
@@ -333,31 +331,6 @@ Vue.component("welcome",{
 	`
 	,
 	mounted () {
-
-        /*
-        this.places = places({
-            appId: 'plQ4P1ZY8JUZ',
-            apiKey: 'bc14d56a6d158cbec4cdf98c18aced26',
-            container: document.querySelector('#address'),
-                templates:{
-                        value:function(suggestion){
-                            return suggestion.name;
-                        }
-                    }
-                }).configure({
-                    type:'address'
-                });
-
-        this.places.on('change',function getLocationData(e){
-            document.querySelector('#address').value=e.suggestion.value || '';
-            document.querySelector('#stateAlg').value=e.suggestion.country || '';
-            document.querySelector('#cityAlg').value=e.suggestion.city || '';
-            document.querySelector('#long').value=e.suggestion.latlng.lng || '';
-            document.querySelector('#lat').value=e.suggestion.latlng.lat || '';
-            document.querySelector('#postalCode').value=e.suggestion.postcode || '';
-
-        });
-        */
        
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
@@ -369,7 +342,12 @@ Vue.component("welcome",{
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response=>(this.loggedInUser = response.data));
-            
+
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ this.type = response.data });
             
         }
         axios
@@ -378,94 +356,42 @@ Vue.component("welcome",{
         
     },
 	methods:{
-        searchAlg:function(){
-            this.adresaZaPretragu = document.querySelector('#address').value;
-            this.drzavaZaPretragu = document.querySelector('#stateAlg').value;
-            this.gradZaPretragu = document.querySelector('#cityAlg').value;
-            this.longZaPretragu = document.querySelector('#long').value;
-            this.latZaPretragu = document.querySelector('#lat').value;                    
-            this.zipZaPretragu = document.querySelector('#postalCode').value;
-
-            this.location.latitude =this.latZaPretragu;
-            this.location.longitude =this.longZaPretragu;
-            this.adresaObjekat.street = this.adresaZaPretragu;
-            this.adresaObjekat.city = this.gradZaPretragu;
-            this.adresaObjekat.zipCode = this.zipZaPretragu;
-            this.adresaObjekat.state = this.drzavaZaPretragu;
-
-            this.location.address = this.adresaObjekat;
-
-
-            console.log(this.location);
-
-
-            console.log(this.adresaZaPretragu);
-            console.log(this.drzavaZaPretragu);
-
-            console.log(this.gradZaPretragu);
-
-            console.log(this.longZaPretragu);
-
-            console.log(this.latZaPretragu);
-
-            console.log(this.zipZaPretragu);
-
-
-
-        },
+        takeMeHome:function(){
+            if(this.type==="GUEST"){
+              window.location.href="#/guestProfile";
+            }else if(this.type==="ADMIN"){
+                window.location.href="#/admin";
+            }else{
+                window.location.href="#/housekeeper";
+            }
+          },
         filterSearch:function(){
             console.log(this.apartmentsBackUp);
             this.apartments = [...this.apartmentsBackUp];
             var lista=[];
-            /*
-            if(this.amenitiesForFilter.length!==0){
-                for(var i=0;i<this.amenitiesForFilter.length;i++){
-                    for(var j=0; j<this.apartmentsBackUp.length;j++){
-                        if (!this.amExists(this.apartmentsBackUp[j], this.amenitiesForFilter[i])) {
-                            if(!this.apExists(lista, this.apartmentsBackUp[j])){
-                                lista.push(this.apartmentsBackUp[j])
-                            }
-                            break;
-                        }
-                    }
-                }  
-            }else{
-                this.apartments = JSON.parse(JSON.stringify(this.apartmentsBackUp));
-            }
-*/
-            console.log(lista);
+           
             var brojac=0;
-            for(var i=0;i<this.apartmentsBackUp.length;i++){
-                for(var j=0;j<this.amenitiesForFilter.length;j++){
-                    for(var k=0;k<this.apartmentsBackUp[i].amenities.length;k++){
-                        if(this.apartmentsBackUp[i].amenities[k].id===this.amenitiesForFilter[j].id){
-                            brojac++;
+            if(this.amenitiesForFilter.length>0){
+                for(var i=0;i<this.apartmentsBackUp.length;i++){
+                    for(var j=0;j<this.amenitiesForFilter.length;j++){
+                        for(var k=0;k<this.apartmentsBackUp[i].amenities.length;k++){
+                            if(this.apartmentsBackUp[i].amenities[k].id===this.amenitiesForFilter[j].id){
+                                brojac++;
+                            }
+                        }
+                        if(brojac==this.amenitiesForFilter.length){
+                            lista.push(this.apartmentsBackUp[i]);
                         }
                     }
-                    if(brojac==this.amenitiesForFilter.length){
-                        lista.push(this.apartmentsBackUp[i]);
-                    }
+                    brojac=0;
                 }
-                brojac=0;
-            }
+    
+               this.apartments=[...lista];
 
-                /*
-            var asd = [];
-            for(var k=0;k<this.apartmentsBackUp.length;k++){
-                if (this.apartmentsBackUp[k].some(e => e.Name === 'Magenic')) {
-                    vendors contains the element we're looking for
-                  }
+            }else{
+                this.apartments=[...this.apartmentsBackUp];
             }
             
-            for(var i=0;i<this.amenitiesForFilter.length;i++){
-                for(var j=0;j<this.apartmentsBackUp.length;j++){
-                    if(this.apartmentsBackUp[j].amenities){
-
-                    }
-                }
-            }
-            */
-           this.apartments=[...lista];
         },
         amExists:function(apartment,amenity){
             if(apartment.amenities.some(e => e.name === amenity.name))

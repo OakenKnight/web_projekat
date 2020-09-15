@@ -133,14 +133,17 @@ public class SparkAppMain {
 			ArrayList<String> convertedImages = new ArrayList<String>();
 			int i=1;
 			for(String s:apartment.getPictures()){
-				String path ="images/apartmentsimg/a"+apartment.getId()+i+".jpg";
+				String path ="/assets/images/apartmentsimg/a"+apartment.getId()+i+".jpg";
 				System.out.println(path);
 				Base64ToImage decoder = new Base64ToImage();
 				decoder.Base64DecodeAndSave(s, path);
 				path = "a"+apartment.getId()+i+".jpg";
 				convertedImages.add(path);
+				System.out.println(convertedImages.size());
 				i++;
 			}
+			System.out.println(convertedImages.size());
+
 			apartment.setPictures(convertedImages);
 			System.out.println(apartment.getPictures());
 			if(apartmentRepository.create(apartment)) {
@@ -248,7 +251,18 @@ public class SparkAppMain {
 
 			return g.toJson(guestRepository.getObj(username));			
 		});
-		
+		get("/rest/adminLoggedIn", (req,res)->{
+			String username = getUser(req.queryParams("Authorization"));
+			AdminRepository adminRepository = new AdminRepository();
+
+			return g.toJson(adminRepository.getObj(username));			
+		});
+		get("/rest/housekeeperLoggedIn", (req,res)->{
+			String username = getUser(req.queryParams("Authorization"));
+			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+
+			return g.toJson(housekeeperRepository.getObj(username));			
+		});
 		get("/rest/housekeepersGuests", (req,res)->{
 			String housekeeperId = getUser(req.queryParams("Authorization"));
 			GuestRepository guestRepository = new GuestRepository();

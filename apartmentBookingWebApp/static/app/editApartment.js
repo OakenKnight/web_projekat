@@ -53,7 +53,8 @@ Vue.component("editApartment",{
             myModal:false,
             myModalFail:false,
             addOrDeleteFreeDates: "none",
-            freeDatesForDelete: []
+            freeDatesForDelete: [],
+            type:""
 
         }
 	},
@@ -80,7 +81,7 @@ Vue.component("editApartment",{
                         <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
                         <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
                         <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
-                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
+                        <button type="button" class="btn my-2 my-lg-0"  v-on:click="takeMeHome()" v-if="loggedIn==true" >Profile</button>
 
                         </div>
                 </li>
@@ -352,16 +353,18 @@ Vue.component("editApartment",{
 	mounted () {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
+            alert("Please log in!");
             this.loggedIn=false;
-            window.location.href = '#/bad_request';
+
+            window.location.href = '#/login';
 
         }else{
             axios
             .get('rest/getUserRole', {params: {
                 Authorization: 'Bearer ' + jwt
             }})
-            .then(response =>{ if (response.data === "GUEST")
-                window.location.href = '#/'
+            .then(response =>{ this.type = response.data; if (response.data === "GUEST")
+                window.location.href = '#/forbidden';
             });
 
             this.loggedIn=true;
@@ -417,6 +420,13 @@ Vue.component("editApartment",{
                 });
 	},
 	methods:{
+        takeMeHome:function(){
+            if(this.type==="ADMIN"){
+              alert('AFISAJBF');
+            }else{
+              alert('HJOIH');
+            }
+          },
         setFreeDates: function(){
             for(var i = 0; i < this.selectedApartment.freeDates.length; i ++){
                 this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[i].startDate), to: new Date(this.selectedApartment.freeDates[i].endDate)});

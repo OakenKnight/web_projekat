@@ -2,7 +2,8 @@ Vue.component("contact",{
   data: function(){
 		return{
             loggedIn:null,
-            loggedInUser:{}
+            loggedInUser:{},
+            type:""
         }
 	  },
     template:`
@@ -26,7 +27,7 @@ Vue.component("contact",{
                 <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
                 <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
                 <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
-                <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
+                <button type="button" class="btn my-2 my-lg-0"  v-on:click="takeMeHome()" v-if="loggedIn==true" >Profile</button>
               </div>
           </li>
   
@@ -69,7 +70,13 @@ mounted () {
       if(!jwt){
           this.loggedIn=false;
       }else{
-          this.loggedIn=true;
+        axios
+        .get('rest/getUserRole', {params: {
+            Authorization: 'Bearer ' + jwt
+        }})
+        .then(response =>{ this.type = response.data });
+      
+      this.loggedIn=true;
           axios
           .get('rest/userLoggedIn',{params:{
               Authorization: 'Bearer ' + jwt
@@ -78,6 +85,15 @@ mounted () {
       }
 },
 methods:{
+  takeMeHome:function(){
+    if(this.type==="GUEST"){
+      window.location.href="#/guestProfile";
+    }else if(this.type==="ADMIN"){
+      alert('AFISAJBF');
+    }else{
+      alert('HJOIH');
+    }
+  },
       logout: function(){
           window.localStorage.removeItem('jwt');
           this.$router.push('/login');

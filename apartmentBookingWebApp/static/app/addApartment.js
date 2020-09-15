@@ -81,7 +81,8 @@ Vue.component("addApartment",{
             imagesForBack:[],
             images:[],
             imageCount:0,
-            filename:""
+            filename:"",
+            type:""
         }
 	},
     template:`
@@ -94,7 +95,6 @@ Vue.component("addApartment",{
                     <a class="nav-link" href="#/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/reserve">Reserve</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#/about">About us</a>
@@ -107,7 +107,7 @@ Vue.component("addApartment",{
                         <button type="button" class="btn my-2 my-lg-0" onclick="location.href='#/register'" v-if="loggedIn!=true" >Create account</button>
                         <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/login'" v-if="loggedIn!=true" >Sign in</button>
                         <button type="button" class="btn my-2 my-lg-0"  v-on:click="logout()" v-if="loggedIn" >Sign out</button>
-                        <button type="button" class="btn my-2 my-lg-0"  onclick="location.href='#/guestProfile'" v-if="loggedIn==true" >Profile</button>
+                        <button type="button" class="btn my-2 my-lg-0"  v-on:click="takeMeHome()" v-if="loggedIn==true" >Profile</button>
 
                         </div>
                 </li>
@@ -130,7 +130,7 @@ Vue.component("addApartment",{
                 <div class="details">
                     <div class="row">
                         <div class="col">
-                            <!-- <input type="file" id="myFile" name="filename" @change=imageAdded> -->
+                            <input type="file" id="myFile" name="filename" @change=imageAdded> 
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
                             <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Apartment's name" v-model="name">
                             <p style="color:red">{{emptyName}}</p>
@@ -313,8 +313,23 @@ Vue.component("addApartment",{
 	mounted () {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
+            alert("Please log in!");
             this.loggedIn=false;
+
+            window.location.href = '#/login';
+
         }else{
+
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ this.type = response.data; if (response.data === "GUEST")
+                window.location.href = '#/forbidden';
+            });
+
+            
+          
             this.loggedIn=true;
 
             axios
@@ -370,6 +385,13 @@ Vue.component("addApartment",{
                 });
 	},
 	methods:{
+        takeMeHome:function(){
+            if(this.type==="ADMIN"){
+              alert('AFISAJBF');
+            }else{
+              alert('HJOIH');
+            }
+          },
         imageAdded(e){
             const file = e.target.files[0];
             this.createBase64(file);
@@ -549,7 +571,7 @@ Vue.component("addApartment",{
             this.testApartment.freeDates=[];
             console.log(this.images);
             console.log(this.imagesForBack)
-            this.testApartment.pictures=[];
+            this.testApartment.pictures=this.imagesForBack;
             
             this.testApartment.housekeeper = this.housekeeper;
             this.testApartment.apartmentStatus = "ACTIVE";

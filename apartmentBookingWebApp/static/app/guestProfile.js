@@ -305,10 +305,19 @@ Vue.component("guestProfile",{
 	mounted () {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
+            alert("Please log in!");
             this.loggedIn=false;
-            window.location.href = '#/forbidden';
+
+            window.location.href = '#/login';
 
         }else{
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ if (response.data !== "GUEST")
+                window.location.href = '#/forbidden';
+            });
             this.loggedIn=true;
             axios
             .get('rest/userLoggedIn',{params:{

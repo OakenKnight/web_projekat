@@ -64,9 +64,36 @@ Vue.component("login",{
       </div>
     </div>
   </main>
-	`
-	,
+  `
+  ,
+  mounted() {
+    var jwt = window.localStorage.getItem('jwt');
+    if(!jwt){
+        this.loggedIn=false;
+    }else{
+      axios
+          .get('rest/getUserRole', {params: {
+              Authorization: 'Bearer ' + jwt
+          }})
+          .then(response =>{ this.type = response.data });
+        
+        this.loggedIn=true;
+        axios
+        .get('rest/userLoggedIn',{params:{
+            Authorization: 'Bearer ' + jwt
+        }})
+        .then(response=>(this.loggedInUser = response.data));
+        
+    }
+},
     methods: {
+      takeMeHome:function(){
+        if(this.type==="ADMIN"){
+          alert('AFISAJBF');
+        }else{
+          alert('HJOIH');
+        }
+      },
       validate:function(){
         if(this.validatePassword() & this.validateUsername()){
           return true;

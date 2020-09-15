@@ -639,4 +639,40 @@
     "amenityType" : "BASIC"
   } ],
   "reservationsId" : [ ]
- } ]
+}, {
+  "id" : "1600189613746",
+  "name" : "JOCA",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 3,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "45.2453",
+    "longitude" : "19.8321",
+    "address" : {
+      "street" : "Mise Dimitrijevica 2",
+      "number" : null,
+      "city" : "Novi Sad",
+      "zipCode" : "21102",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ "a16001896137461.jpg" ],
+  "priceForNight" : 22.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "ACTIVE",
+  "amenities" : [ ],
+  "reservationsId" : [ ]
+} ]

@@ -44,7 +44,8 @@ Vue.component("housekeeper",{
             arrivalHours: "",
             arrivalMinutes: "",
             exitHours: "",
-            exitMinutes: ""
+            exitMinutes: "",
+            loggedIn:null
 		}
 	},
     template:`
@@ -598,9 +599,19 @@ Vue.component("housekeeper",{
     mounted () {
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
-            alert("Please log in again")
+            alert("Please log in!");
+            this.loggedIn=false;
+
             window.location.href = '#/login';
         }else{
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ if (response.data !== "HOUSEKEEPER")
+                window.location.href = '#/forbidden';
+            });
+            this.loggedIn= true;
             axios
             .get('rest/housekeepersApartment', {params: {
                 Authorization: 'Bearer ' + jwt
