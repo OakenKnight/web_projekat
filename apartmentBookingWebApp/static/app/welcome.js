@@ -41,7 +41,14 @@ Vue.component("welcome",{
             longZaPretragu:"",
             latZaPretragu:"",
             location:{},
-            adresaObjekat:{}
+            adresaObjekat:{},
+            allAmenitiesEver:[],
+            amenitiesForFilter:[],
+            cboxes:null,
+            expanded :false,
+            apartmentsBackUp:[],
+            apartmentsForFilter:[]
+
         }
 	},
     template:`
@@ -109,20 +116,63 @@ Vue.component("welcome",{
                 </div>
             </div>
             <div class="info">
-                <div class="row float-right">
-                    <div class="select-apartment-type">
-                        <select required v-model="apartmentSortCriteria">
-                            <option value="1" selected>Select sort method</option>
-                            <option value="2">Sort by name ascending </option>
-                            <option value="3">Sort by name descending</option>
-                            <option value="4">Sort by rating ascending</option>
-                            <option value="5">Sort by rating descending</option>
-                            <option value="6">Sort by price ascending</option>
-                            <option value="7">Sort by price descending</option>
-                            <option value="8">Sort by rooms ascending</option>
-                            <option value="9">Sort by rooms descending</option>
-                        </select>
-                    </div>
+                <div class="row">
+                        <div style="text-align: center; height: 30px;
+                            width: 230px;
+                            background-color:white;
+                            margin: 20px;
+                            box-sizing: border-box;
+                            border:0px;
+                            outline:0px;
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);" >
+                            <select required v-model="apartmentSortCriteria">
+                                <option value="1" selected >Select sort method</option>
+                                <option value="2">Sort by name ascending </option>
+                                <option value="3">Sort by name descending</option>
+                                <option value="4">Sort by rating ascending</option>
+                                <option value="5">Sort by rating descending</option>
+                                <option value="6">Sort by price ascending</option>
+                                <option value="7">Sort by price descending</option>
+                                <option value="8">Sort by rooms ascending</option>
+                                <option value="9">Sort by rooms descending</option>
+                            </select>
+                        </div>
+
+                        
+                        <ul style="list-style-type:none">
+                            <li class="dropdown">
+                                <p data-toggle="dropdown" class="dropdown-toggle" 
+                                style="text-align: center; height: 30px;
+                                    width: 200px;
+                                    background-color:white;
+                                    border-radius: 4px;
+                                    margin: 20px;
+                                    border-color: #dddfe2;
+                                    border: hidden;
+                                    box-sizing: border-box;
+                                    box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+                                    
+                                    "
+                                    >
+                                    Select amenities<b class="caret"></b></p>
+                                    <ul class="dropdown-menu" >
+                                        <li v-for='a in allAmenitiesEver'>
+                                            <div class="checkbox">
+                                                <label style="margin-left:8px; font-weight:bold;font-size: medium;">{{a.name}}<input type="checkbox" :id='a.id' v-on:click="addAmenity(a)":checked="doesAmenityExist(a)"/></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                            </li>
+                        </ul>
+
+                        <button class="btn" style="height:50px;" v-on:click="filterSearch()">Filter search</button>
+
+                    
+
+                    
+
+                    
+                    
                 </div>
                 <div class="row">
                     <div class="apartment col" v-for="a in apartments">
@@ -308,6 +358,7 @@ Vue.component("welcome",{
 
         });
         */
+       
         var jwt = window.localStorage.getItem('jwt');
         if(!jwt){
             this.loggedIn=false;
@@ -318,10 +369,14 @@ Vue.component("welcome",{
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response=>(this.loggedInUser = response.data));
+            
+            
         }
-
+        axios
+        .get('rest/getAllAmenities')
+        .then(response => (this.allAmenitiesEver = response.data));
         
-	},
+    },
 	methods:{
         searchAlg:function(){
             this.adresaZaPretragu = document.querySelector('#address').value;
@@ -357,6 +412,97 @@ Vue.component("welcome",{
 
 
 
+        },
+        filterSearch:function(){
+            console.log(this.apartmentsBackUp);
+            this.apartments = [...this.apartmentsBackUp];
+            var lista=[];
+            /*
+            if(this.amenitiesForFilter.length!==0){
+                for(var i=0;i<this.amenitiesForFilter.length;i++){
+                    for(var j=0; j<this.apartmentsBackUp.length;j++){
+                        if (!this.amExists(this.apartmentsBackUp[j], this.amenitiesForFilter[i])) {
+                            if(!this.apExists(lista, this.apartmentsBackUp[j])){
+                                lista.push(this.apartmentsBackUp[j])
+                            }
+                            break;
+                        }
+                    }
+                }  
+            }else{
+                this.apartments = JSON.parse(JSON.stringify(this.apartmentsBackUp));
+            }
+*/
+            console.log(lista);
+            var brojac=0;
+            for(var i=0;i<this.apartmentsBackUp.length;i++){
+                for(var j=0;j<this.amenitiesForFilter.length;j++){
+                    for(var k=0;k<this.apartmentsBackUp[i].amenities.length;k++){
+                        if(this.apartmentsBackUp[i].amenities[k].id===this.amenitiesForFilter[j].id){
+                            brojac++;
+                        }
+                    }
+                    if(brojac==this.amenitiesForFilter.length){
+                        lista.push(this.apartmentsBackUp[i]);
+                    }
+                }
+                brojac=0;
+            }
+
+                /*
+            var asd = [];
+            for(var k=0;k<this.apartmentsBackUp.length;k++){
+                if (this.apartmentsBackUp[k].some(e => e.Name === 'Magenic')) {
+                    vendors contains the element we're looking for
+                  }
+            }
+            
+            for(var i=0;i<this.amenitiesForFilter.length;i++){
+                for(var j=0;j<this.apartmentsBackUp.length;j++){
+                    if(this.apartmentsBackUp[j].amenities){
+
+                    }
+                }
+            }
+            */
+           this.apartments=[...lista];
+        },
+        amExists:function(apartment,amenity){
+            if(apartment.amenities.some(e => e.name === amenity.name))
+                return true;
+            else{
+                return false;
+            }
+        },
+        apExists:function(apartments,a){
+            if(apartments.some(e => e.id === a.id))
+                return true;
+            else{
+                return false;
+            }
+        },
+        addAmenity: function(amenity){
+            if(this.doesAmenityExist(amenity)){
+                for( var i = 0; i < this.amenitiesForFilter.length; i++){ 
+                    if ( this.amenitiesForFilter[i].id === amenity.id){
+                        this.amenitiesForFilter.splice(i, 1); 
+    
+                    }  
+                }
+            }else{
+                this.amenitiesForFilter.push(amenity);
+            }
+        },
+        doesAmenityExist:function(amn){
+            var a = this.amenitiesForFilter.filter(function(amenity){
+                return amenity.id == amn.id;
+            });
+     
+            if(a[0]){
+                return true;
+            }else{
+                return false;
+            }
         },
         logout: function(){
             window.localStorage.removeItem('jwt');
@@ -417,7 +563,7 @@ Vue.component("welcome",{
                 
                 axios
                 .post('rest/search',aptDTO)
-                .then(response => {this.apartments = response.data})
+                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[]})
             }else{
                 console.log(this.arriveDate);
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:this.arriveDate,
@@ -425,7 +571,7 @@ Vue.component("welcome",{
                 minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};     
                 axios
                 .post('rest/search',aptDTO)
-                .then(response => {this.apartments = response.data})           
+                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[]})           
             }
 
             
