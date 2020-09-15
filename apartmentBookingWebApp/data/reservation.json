@@ -115,4 +115,13 @@
   "guestId" : "coaPera",
   "reservationStatus" : "CREATED",
   "id" : "1600101822739"
-}]
+}, {
+  "apartmentId" : "app32",
+  "arrivalDate" : 1600293600000,
+  "numberOfNights" : 4,
+  "totalPrice" : 80.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "QUIT",
+  "id" : "1600206502322"
+} ]

@@ -350,9 +350,20 @@ Vue.component("welcome",{
             .then(response =>{ this.type = response.data });
             
         }
+
         axios
         .get('rest/getAllAmenities')
         .then(response => (this.allAmenitiesEver = response.data));
+
+
+        var checkboxes = document.getElementById("checkbox");
+        if(!this.expanded){
+            checkboxes.style.display="block";
+            this.expanded=true;
+        }else{
+            checkboxes.style.display="none";
+            this.expanded=false;
+        }
         
     },
 	methods:{
@@ -364,7 +375,7 @@ Vue.component("welcome",{
             }else{
                 window.location.href="#/housekeeper";
             }
-          },
+        },
         filterSearch:function(){
             console.log(this.apartmentsBackUp);
             this.apartments = [...this.apartmentsBackUp];
@@ -392,20 +403,6 @@ Vue.component("welcome",{
                 this.apartments=[...this.apartmentsBackUp];
             }
             
-        },
-        amExists:function(apartment,amenity){
-            if(apartment.amenities.some(e => e.name === amenity.name))
-                return true;
-            else{
-                return false;
-            }
-        },
-        apExists:function(apartments,a){
-            if(apartments.some(e => e.id === a.id))
-                return true;
-            else{
-                return false;
-            }
         },
         addAmenity: function(amenity){
             if(this.doesAmenityExist(amenity)){

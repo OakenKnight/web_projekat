@@ -423,6 +423,7 @@ public class SparkAppMain {
 				ArrayList<DateInterval> allIntervals = apartment.getFreeDates();
 				Date endReservation = new Date(reservation.getArrivalDate().getTime()+86400000*reservation.getNumberOfNights());
 				DateInterval dateToMerge = new DateInterval(reservation.getArrivalDate(), endReservation);
+
 				ArrayList<DateInterval> intervals = mergeIntervals(allIntervals, dateToMerge);
 
 				apartment.setFreeDates(intervals);;
@@ -543,7 +544,7 @@ public class SparkAppMain {
 	
 	public static ArrayList<DateInterval> mergeIntervals(ArrayList<DateInterval> allIntervals, DateInterval intervalToMerge){
 		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
-		
+		/*
 		for(int i=0;i<allIntervals.size();i++){
 			if(allIntervals.get(i).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
 				for(int j=0;j<allIntervals.size();j++){
@@ -557,9 +558,11 @@ public class SparkAppMain {
 						DateInterval date = new DateInterval(allIntervals.get(i).getStartDate(), intervalToMerge.getEndDate());
 						allIntervals.set(i, date);
 						break;
-					}
+					}				
+					
 				}
 			}
+			
 			if(allIntervals.get(i).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
 				for(int j=0;j<allIntervals.size();j++){
 					if(allIntervals.get(j).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
@@ -576,6 +579,93 @@ public class SparkAppMain {
 				}
 			}
 		}
+
+		for(int i=0;i<allIntervals.size()-1;i++){
+			for(int j=i+1;j<allIntervals.size();j++){
+				if(allIntervals.get(i).getEndDate().compareTo(allIntervals.get(j).getStartDate())==0){
+					Date start = allIntervals.get(i).getStartDate();
+					Date end = allIntervals.get(j).getEndDate();
+					allIntervals.remove(j);
+					allIntervals.set(i,new DateInterval(start, end));
+				}
+			}
+		}
+		*/
+		
+		/*
+		for(int i=0;i<allIntervals.size();i++){
+			if(allIntervals.get(i).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
+				if(allIntervals.get(i+1).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
+
+				}else{
+					DateInterval date = new DateInterval(allIntervals.get(i).getStartDate(), intervalToMerge.getEndDate());
+					allIntervals.set(i, date);
+					break;
+				}
+				
+			}
+		}
+
+		for(int i=0;i<allIntervals.size();i++){
+			if(allIntervals.get(i).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
+				DateInterval date = new DateInterval(intervalToMerge.getStartDate(),allIntervals.get(i).getEndDate());
+				allIntervals.set(i, date);
+				break;
+			}
+		}
+		*/
+		int control=0;
+		
+		for(int i=0;i<allIntervals.size();i++){
+			if(allIntervals.get(i).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
+				DateInterval date = new DateInterval(allIntervals.get(i).getStartDate(),intervalToMerge.getEndDate());
+				allIntervals.set(i, date);
+				control=1;
+				break;
+			}
+		}
+		if(control==0){
+			for(int i=0;i<allIntervals.size();i++){
+				if(allIntervals.get(i).getStartDate().compareTo(intervalToMerge.getEndDate())==0){
+					DateInterval date = new DateInterval(intervalToMerge.getStartDate(),allIntervals.get(i).getEndDate());
+					allIntervals.set(i, date);
+					break;
+				}
+			}
+		}
+
+		for(int i=0;i<allIntervals.size()-1;i++){
+			if(allIntervals.get(i).getEndDate().compareTo(allIntervals.get(i+1).getStartDate())==0){
+				Date start = allIntervals.get(i).getStartDate();
+				Date end = allIntervals.get(i+1).getEndDate();
+				allIntervals.remove(i+1);
+				allIntervals.set(i,new DateInterval(start, end));
+				break;
+			}
+		}
+		
+		for(int i=0;i<allIntervals.size()-1;i++){
+			if(allIntervals.get(i).getEndDate().compareTo(allIntervals.get(i+1).getStartDate())>0){
+				Date start = allIntervals.get(i).getStartDate();
+				Date end = allIntervals.get(i+1).getEndDate();
+				allIntervals.remove(i+1);
+				allIntervals.set(i,new DateInterval(start, end));
+				break;
+			}
+		}
+		/*
+		for(int i=0;i<allIntervals.size()-1;i++){
+			for(int j=i+1;j<allIntervals.size();j++){
+				if(allIntervals.get(i).getEndDate().compareTo(allIntervals.get(j).getStartDate())==0){
+					Date start = allIntervals.get(i).getStartDate();
+					Date end = allIntervals.get(j).getEndDate();
+					allIntervals.remove(j);
+					allIntervals.set(i,new DateInterval(start, end));
+					break;
+				}
+			}
+		}
+		*/
 		for(DateInterval date: allIntervals){
 			newIntervals.add(date);
 		}

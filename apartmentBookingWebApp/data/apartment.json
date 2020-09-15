@@ -396,7 +396,7 @@
     }
   },
   "freeDates" : [ {
-    "startDate" : 1589580000000,
+    "startDate" : 1600120800000,
     "endDate" : 1601244000000
   } ],
   "housekeeper" : {
@@ -500,7 +500,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "nikola2", "kristina931" ]
+  "reservationsId" : [ "nikola2", "kristina931", "1600202461092", "1600206502322" ]
 }, {
   "id" : "1599848262568",
   "name" : "Test apartman",
