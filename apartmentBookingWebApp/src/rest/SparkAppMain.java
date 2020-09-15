@@ -37,6 +37,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoder;
 import io.jsonwebtoken.security.Keys;
 import repository.AdminRepository;
 import repository.AmenityRepository;
@@ -45,6 +46,7 @@ import repository.ApartmentRepositoryInterface;
 import repository.GuestRepository;
 import repository.HousekeeperRepository;
 import repository.ReservationRepository;
+import service.Base64ToImage;
 import service.SearchService;
 import service.UserService;
 
@@ -127,6 +129,20 @@ public class SparkAppMain {
 			String payload = req.body();
 			Apartment apartment = g.fromJson(payload, Apartment.class);
 			ApartmentRepository apartmentRepository = new ApartmentRepository();
+
+			ArrayList<String> convertedImages = new ArrayList<String>();
+			int i=1;
+			for(String s:apartment.getPictures()){
+				String path ="images/apartmentsimg/a"+apartment.getId()+i+".jpg";
+				System.out.println(path);
+				Base64ToImage decoder = new Base64ToImage();
+				decoder.Base64DecodeAndSave(s, path);
+				path = "a"+apartment.getId()+i+".jpg";
+				convertedImages.add(path);
+				i++;
+			}
+			apartment.setPictures(convertedImages);
+			System.out.println(apartment.getPictures());
 			if(apartmentRepository.create(apartment)) {
 				return "Apartment created successfully";
 			}

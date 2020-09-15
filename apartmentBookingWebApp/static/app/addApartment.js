@@ -77,7 +77,11 @@ Vue.component("addApartment",{
             name:"",
             price:"",
             rooms:"",
-            type:""
+            type:"",
+            imagesForBack:[],
+            images:[],
+            imageCount:0,
+            filename:""
         }
 	},
     template:`
@@ -126,6 +130,7 @@ Vue.component("addApartment",{
                 <div class="details">
                     <div class="row">
                         <div class="col">
+                            <!-- <input type="file" id="myFile" name="filename" @change=imageAdded> -->
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
                             <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Apartment's name" v-model="name">
                             <p style="color:red">{{emptyName}}</p>
@@ -365,6 +370,22 @@ Vue.component("addApartment",{
                 });
 	},
 	methods:{
+        imageAdded(e){
+            const file = e.target.files[0];
+            this.createBase64(file);
+            this.imageCount++;
+            this.images.push(URL.createObjectURL(file));
+        },
+        createBase64(file){
+            const reader = new FileReader();
+            reader.onload=(e)=>{
+                let img = e.target.result;
+                img.replace("data:image\/(png|jpg|jpeg);base64","");
+                console.log(img);
+                this.imagesForBack.push(img);
+            }
+            reader.readAsDataURL(file);
+        },
         logout: function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
@@ -526,12 +547,12 @@ Vue.component("addApartment",{
             this.testApartment.comments = [];
             this.testApartment.reservationsId=[]
             this.testApartment.freeDates=[];
+            console.log(this.images);
+            console.log(this.imagesForBack)
             this.testApartment.pictures=[];
             
-            //var jwt = window.localStorage.getItem('jwt');
             this.testApartment.housekeeper = this.housekeeper;
             this.testApartment.apartmentStatus = "ACTIVE";
-            
             if(this.validate()){
                 axios
                 .post("/rest/createNewApartment", this.testApartment)
