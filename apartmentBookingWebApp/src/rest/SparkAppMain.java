@@ -495,7 +495,6 @@ public class SparkAppMain {
 	public static ArrayList<DateInterval> mergeIntervals(ArrayList<DateInterval> allIntervals, DateInterval intervalToMerge){
 		ArrayList<DateInterval> newIntervals = new ArrayList<DateInterval>();
 		
-
 		for(int i=0;i<allIntervals.size();i++){
 			if(allIntervals.get(i).getEndDate().compareTo(intervalToMerge.getStartDate())==0){
 				for(int j=0;j<allIntervals.size();j++){
