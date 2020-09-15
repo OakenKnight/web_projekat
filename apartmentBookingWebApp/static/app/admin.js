@@ -256,7 +256,7 @@ Vue.component("admin",{
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">More info about apartment</h4>
-                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="startEditingApartment()" v-if="editApartmentMode === false">Update info</button>
+                                            <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="editApartment(selectedApartment)" v-if="editApartmentMode === false">Update info</button>
                                             <span v-else>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
                                             <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
@@ -535,6 +535,9 @@ Vue.component("admin",{
 
 	},
     methods: {
+        editApartment:function(selectedApartment){
+            window.location.href = "#/editApartment?id=" + selectedApartment.id;  
+        },
         logout:function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');

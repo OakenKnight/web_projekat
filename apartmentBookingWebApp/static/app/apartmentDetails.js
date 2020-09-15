@@ -12,7 +12,7 @@ Vue.component("apartmentDetails", {
                 ranges:[ ]
             },
             disabledDepartDates: {
-                to:  new Date(2021, 0,1),
+                to:  new Date(2022, 0,1),
                 from: null
             },
             selectedApartment: {},
