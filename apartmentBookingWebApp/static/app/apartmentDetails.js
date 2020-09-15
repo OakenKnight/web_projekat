@@ -200,18 +200,9 @@ Vue.component("apartmentDetails", {
                                                    
 
                                                     <select name="sub_type" class="form-control" v-if="listOfNights.length>0" v-model="numberOfNights">
-                                                            <option v-for='a in listOfNights'
-                                                                :value='a'
-                                                            >
-                                                                {{a}}
-                                                            </option>
-                                                    </select>
-                                                        <!--
-                                                        <div class="datepicker">
-                                                            <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" placeholder="Depart" name="arriveDate" v-model="departDate" ></vuejs-datepicker>
-                                                        </div>
-                                                        -->
-                                                        <p style="color:red">{{emptyDate}}</p>
+                                                            <option v-for='a in listOfNights' :value='a'> {{a}}</option>
+                                                    </select>    
+                                                    <p style="color:red">{{emptyDate}}</p>
 
                                                     </div>
                                                 </div>
