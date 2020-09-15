@@ -506,12 +506,12 @@ Vue.component("editApartment",{
         },
         deleteFreeDates: function(interval){
             var a = this.freeDatesForDelete.filter(function(freeDate){
-                return freeDate.startDate.getTime() == inteval.startDate.getTime() && freeDate.endDate.getTime() == inteval.endDate.getTime();
+                return new Date (freeDate.startDate).getTime() == new Date (interval.startDate).getTime() && new Date (freeDate.endDate).getTime() == new Date (interval.endDate).getTime();
             });
      
             if(a[0]){
                 for( var i = 0; i < this.freeDatesForDelete.length; i++){ 
-                    if (this.freeDatesForDelete[i].startDate.getTime() == inteval.startDate.getTime() && this.freeDatesForDelete[i].startDate.getTime() == inteval.endDate.getTime()){
+                    if (new Date (this.freeDatesForDelete[i].startDate).getTime() == new Date (interval.startDate).getTime() && new Date (this.freeDatesForDelete[i].startDate).getTime() == new Date (interval.endDate).getTime()){
                         this.freeDatesForDelete.splice(i, 1); 
                     }  
                 }
@@ -522,7 +522,7 @@ Vue.component("editApartment",{
         deleteSelectedFreeDates: function(){
             for( var i = 0; i < this.freeDatesForDelete.length; i++){ 
                 for( var j = 0; j < this.selectedApartment.freeDates.length; j++){ 
-                    if (this.freeDatesForDelete[i].startDate == this.selectedApartment.freeDates[j].startDate && this.freeDatesForDelete[i].endDate == this.selectedApartment.freeDates[j].endDate){
+                    if (new Date (this.freeDatesForDelete[i].startDate).getTime() == new Date (this.selectedApartment.freeDates[j].startDate).getTime() && new Date (this.freeDatesForDelete[i].endDate).getTime() == new Date (this.selectedApartment.freeDates[j].endDate).getTime()){
                         this.selectedApartment.freeDates.splice(j, 1); 
                     }  
                 }
@@ -705,7 +705,7 @@ Vue.component("editApartment",{
                 return new Date(2021, 0,1);
             }
             for(var i = 0; i < this.selectedApartment.freeDates.length -1; i ++){
-                if(new Date(this.selectedApartment.freeDates[i].endDate) <= d){
+                if(new Date(this.selectedApartment.freeDates[i].endDate) <= d  && new Date(this.selectedApartment.freeDates[i + 1].startDate) > d){
                     return this.selectedApartment.freeDates[i + 1].startDate;
                 }
                 
@@ -720,15 +720,19 @@ Vue.component("editApartment",{
     },
 	watch:{
         arriveDate: function(newDate, oldDate){
-            this.arriveDate = newDate;
-			var date = new Date();
-			date.setDate(newDate.getDate());
-            date.setMonth(newDate.getMonth());
-            this.disabledDepartDates.to = new Date(date);
-            this.disabledDepartDates.from = new Date(this.calculateAvaliableDepartDate(newDate));
-			if(this.departDate != null && newDate > this.departDate){
-                //this.departDate =  new Date(newDate.getTime()+86400000); 
-                this.departDate = null;
+            if(newDate != null){
+                this.arriveDate = newDate;
+                var date = new Date();
+                date.setDate(newDate.getDate());
+                date.setMonth(newDate.getMonth());
+                this.disabledDepartDates.to = new Date(date);
+                this.disabledDepartDates.from = new Date(this.calculateAvaliableDepartDate(newDate));
+                console.log(this.disabledDepartDates.to);
+                console.log(this.disabledDepartDates.from);
+                if(this.departDate != null && newDate > this.departDate){
+                    //this.departDate =  new Date(newDate.getTime()+86400000); 
+                    this.departDate = null;
+                }
             }
         },
         priceForNight: function(newPrice, oldPrice){

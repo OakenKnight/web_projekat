@@ -146,6 +146,7 @@ public class SparkAppMain {
 
 			apartment.setPictures(convertedImages);
 			System.out.println(apartment.getPictures());
+
 			if(apartmentRepository.create(apartment)) {
 				return "Apartment created successfully";
 			}
