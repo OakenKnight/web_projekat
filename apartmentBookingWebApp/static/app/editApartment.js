@@ -356,6 +356,14 @@ Vue.component("editApartment",{
             window.location.href = '#/bad_request';
 
         }else{
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{ if (response.data === "GUEST")
+                window.location.href = '#/'
+            });
+
             this.loggedIn=true;
             
             axios

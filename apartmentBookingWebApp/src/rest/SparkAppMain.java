@@ -399,7 +399,12 @@ public class SparkAppMain {
 				return g.toJson(guestReservations); 				
 		});
 
-
+		get("rest/getUserRole", (req, res)->{
+			String userId = getUser(req.queryParams("Authorization"));
+			UserService userService = new UserService();
+			User user = userService.findAnyTypeOfUser(userId);
+			return user.getUserType();
+		});
 			
 		post("/rest/update",(req,res)->{
 				res.type("application/json");
