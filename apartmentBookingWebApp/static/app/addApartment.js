@@ -59,7 +59,8 @@ Vue.component("addApartment",{
                 exitTime: "",
                 apartmentStatus: null,
                 amenities: [],
-                reservationsId: []
+                reservationsId: [],
+                deleted: false
             },
             addOrDeleteFreeDates: "none", 
             freeDatesForDelete: [],
@@ -715,7 +716,7 @@ Vue.component("addApartment",{
             this.testApartment.pictures=this.imagesForBack;
             
             this.testApartment.housekeeper = this.housekeeper;
-            this.testApartment.apartmentStatus = "ACTIVE";
+            this.testApartment.apartmentStatus = "INACTIVE";
             if(this.validate()){
                 axios
                 .post("/rest/createNewApartment", this.testApartment)
@@ -746,6 +747,7 @@ Vue.component("addApartment",{
                     apartmentStatus: null,
                     amenities: [],
                     housekeeper: null,
+                    deleted:false
                 }
             }
             this.$router.push('/housekeeper');

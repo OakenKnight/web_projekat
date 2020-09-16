@@ -89,9 +89,9 @@ methods:{
     if(this.type==="GUEST"){
       window.location.href="#/guestProfile";
     }else if(this.type==="ADMIN"){
-      alert('AFISAJBF');
+      window.location.href="#/admin";
     }else{
-      alert('HJOIH');
+      window.location.href="#/housekeeper";
     }
   },
       logout: function(){

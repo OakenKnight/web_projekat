@@ -6,16 +6,18 @@ public class SearchedApartment {
     private String destination;
     private Date arriveDate;
     private Date departDate;
-    private String numberOfGuests;
+    private String minGuests;
+    private String maxGuests;
     private String minPrice;
     private String maxPrice;
 
     public SearchedApartment(){}
-    public SearchedApartment(String destination, Date arriveDate, Date departDate, String numberOfGuests, String minimumPrice, String maximumPrice){
+    public SearchedApartment(String destination, Date arriveDate, Date departDate, String minGuests, String maxGuests ,String minimumPrice, String maximumPrice){
         this.destination=destination;
         this.arriveDate = arriveDate;
         this.departDate = departDate;
-        this.numberOfGuests=numberOfGuests;
+        this.minGuests=minGuests;
+        this.maxGuests = maxGuests;
         this.minPrice=minimumPrice;
         this.maxPrice=maximumPrice;
     }
@@ -44,12 +46,19 @@ public class SearchedApartment {
         this.departDate = leavingDate;
     }
 
-    public String getNumberOfGuests(){
-        return numberOfGuests;
+    public String getMinGuests(){
+        return minGuests;
     }
 
-    public void setNumberOfGuests(String numerOfGuests){
-        this.numberOfGuests = numerOfGuests;
+    public void setMinGuests(String numerOfGuests){
+        this.minGuests = numerOfGuests;
+    }
+    public String getMaxGuests(){
+        return maxGuests;
+    }
+
+    public void setMaxGuests(String numerOfGuests){
+        this.maxGuests = numerOfGuests;
     }
 
     public String getMinimumPrice(){
@@ -71,7 +80,7 @@ public class SearchedApartment {
     @Override
 
     public String toString(){
-        return "[" +destination +","+ arriveDate+","+departDate+","+numberOfGuests+","+minPrice+","+maxPrice+"]";
+        return "[" +destination +","+ arriveDate+","+departDate+","+minGuests+","+maxGuests+","+minPrice+","+maxPrice+"]";
     }
 
 

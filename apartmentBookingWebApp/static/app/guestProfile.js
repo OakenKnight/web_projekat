@@ -31,7 +31,10 @@ Vue.component("guestProfile",{
             selectedApartment:"",
             commentText:"",
             commentRate:"",
-            commentApartment:{}
+            commentApartment:{},
+            selectedApartment1:{},
+            comments:[],
+            commentsToSee:[]
         }
 	},
     template:`
@@ -253,7 +256,8 @@ Vue.component("guestProfile",{
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <button class="reserve-more-info-button " type="button" v-if="r.reservationStatus==='CREATED' | r.reservationStatus==='ACCEPTED'" v-on:click="cancel(r)" >Cancel</button>
+                                        <button class="reserve-more-info-button" type="button" v-on:click="showMore(r)">Show apartment</button>
+                                        <button class="reserve-more-info-button" type="button" :disabled="oldReservation(r)" v-if="r.reservationStatus==='CREATED' | r.reservationStatus==='ACCEPTED'" v-on:click="cancel(r)" >Cancel</button>
                                     </div>
                                     
                                 </div>
@@ -295,6 +299,116 @@ Vue.component("guestProfile",{
                
         
             </div>
+
+
+                <div v-if="myModal">
+                <!-- <transition name="modal"> -->
+                    <div class="modal-mask">
+                        <div class="modal-wrapper">
+                            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">More info about apartment</h4>
+                                        <button type="button" class="close absolute pin-t pin-r" v-on:click="myModal = false">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="details">
+                                        
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.name}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.location.address.street}} {{selectedApartment1.location.address.number}}, {{selectedApartment1.location.address.zipCode}} {{selectedApartment1.location.address.city}} </p>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/building-type.png" alt="not found"><strong>Type</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.apartmentType}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/people-icon.png" alt="not found"><strong>Guests</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.guestNumber}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/rooms-icon.png" alt="not found"><strong>Rooms</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.roomNumber}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"><strong>Price</strong></label>
+                                                    <p class="details-hotel-name-p">{{selectedApartment1.priceForNight}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4>Basic</h4> 
+                                                    <div class="amenity col-md-6" v-for="a in basicAmenities">
+                                                        <label><strong>{{a.name}}</strong></label>
+                                                        <p>{{a.description}}</p>
+                                                    </div>
+                                                
+                                                    <h4>Family features</h4> 
+                                                    <div class="amenity col-md-6" v-for="a in familyAmenities">
+                                                        <label><strong>{{a.name}}</strong></label>
+                                                        <p>{{a.description}}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <h4>Facilities</h4> 
+                                                    <div class="amenity col-md-6" v-for="a in facilityAmenities">
+                                                        <label><strong>{{a.name}}</strong></label>
+                                                        <p>{{a.description}}</p>
+                                                    </div>
+                                                
+                                                    <h4>Dining</h4> 
+                                                    <div class="amenity col-md-6" v-for="a in diningAmenities">
+                                                        <label><strong>{{a.name}}</strong></label>
+                                                        <p>{{a.description}}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <h4 class="details-hotel-name-label" v-if="commentsToSee.length>0">Comments</h4>
+                                                        
+                                                    <div class="comments" v-for="c in comments">
+                                                        <div class="comment-wrapper">
+                                                            <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
+                                                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
+                                                                        <p class="details-hotel-name-label">{{c.text}}</p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </transition> -->
+            </div>
+
 
         </div>
 
@@ -341,6 +455,56 @@ Vue.component("guestProfile",{
         }
 	},
 	methods:{
+        showMore:function(reservation){
+            this.selectedApartment1 = this.findApartment(reservation.apartmentId);
+            this.amenities = this.selectedApartment1.amenities;
+            this.getBasicAmenities();
+            this.getDiningAmenities();
+            this.getFacilityAmenities();
+            this.getFamilyAmenities();
+            this.getComments();
+            this.myModal=true;
+        },
+        getComments:function(){
+            this.comments = this.selectedApartment1.comments;
+            for(i=0;i<this.comments.length;i++){
+                if(this.comments[i].disabledForGuests===false){
+                    this.commentsToSee.push(this.comments[i]);
+                }
+            }
+            //treba dodati da se vide samo oni koji su dozvoljeni
+        },
+        getBasicAmenities:function(){
+            this.basicAmenities = this.amenities.filter(function(amenity){
+                return amenity.type === 'BASIC';
+            });
+        },
+        getFamilyAmenities:function(){
+            this.familyAmenities = this.amenities.filter(function(amenity){
+                return amenity.type === 'FAMILY_FEATURES';
+            });
+        },
+        getDiningAmenities:function(){
+            this.diningAmenities = this.amenities.filter(function(amenity){
+                return amenity.type === 'DINING';
+            });
+
+        },
+        getFacilityAmenities:function(){
+            this.facilityAmenities = this.amenities.filter(function(amenity){
+                return amenity.type === 'FACILITIES';
+            });
+
+        },
+        oldReservation:function(r){
+            var todaysDate = new Date();
+            var milis = r.arrivalDate;
+            if(todaysDate.getTime()< new Date(milis - 86400000)){
+                return false;
+            }else{
+                return true;
+            }
+        },
         save: function(){
                 if(this.checkFieldsForUpdate()){
                     axios
@@ -503,6 +667,7 @@ Vue.component("guestProfile",{
                 }
             }
         },
+        
         rateApartmentFromReservation : function(reservation){
             selectedApartment = this.findApartment(reservation.apartmentId);
             if(reservation.reservationStatus==='REJECTED' | reservation.reservationStatus==='FINISHED'){

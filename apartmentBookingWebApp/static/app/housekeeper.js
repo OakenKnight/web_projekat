@@ -45,7 +45,21 @@ Vue.component("housekeeper",{
             arrivalMinutes: "",
             exitHours: "",
             exitMinutes: "",
-            loggedIn:null
+            loggedIn:null,
+            loggedInUser:{},
+            loggedInUserBackup:{},
+            password1:"",
+            password2:"",
+            oldPassword:"",
+            emptyName:"",
+            emptyLastname:"",
+            emptyGender:"",
+            emptyPassword1:"",
+            emptyPassword2:"",
+            passwordFieldType0:"password",
+            passwordFieldType1:"password",
+            passwordFieldType2:"password",
+            emptyOldPassword:"",
 		}
 	},
     template:`
@@ -76,6 +90,7 @@ Vue.component("housekeeper",{
             <div class="row">
                 <div class="options-housekeeper column">
                     <ul>
+                        <li class="option-housekeeper" v-on:click="setMode('profile')"><p>Profile</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('apartments')"><p>Apartments</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('guests')"><p>Guests</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('reservations')"><p>Reservations</p></li>
@@ -174,7 +189,109 @@ Vue.component("housekeeper",{
                             </div>
                         </div>
                     </section>
-                    
+                    <section id="profile" v-if="mode === 'profile'">
+
+                        <div class="column user-column" style="width:40%">
+                            <p class="profile-info-label">Username:</p>
+                            <p class="profile-info-label">Name:</p>
+
+                            <p class="profile-info-label">Lastname:</p>
+
+                            <p class="profile-info-label">Gender:</p>
+
+                        </div>
+
+                        <div class="column user-column" style="width:40%">
+                            <p class="profile-info-p">{{loggedInUser.username}}</p>
+
+                            <p class="profile-info-p">{{loggedInUser.firstName}}</p>
+                            <p class="profile-info-p">{{loggedInUser.lastName}}</p>
+
+                            <p class="profile-info-p" style="padding-bottom: 25px;">{{loggedInUser.gender}}</p>
+
+                        </div>
+
+
+                        <button class="edit-info-button" type="button" v-on:click="setMode('edit')"><i class="edit-icon material-icons">edit</i>Edit info</button>
+                    </section>
+
+                    <section id="edit" v-if="mode === 'edit'">
+
+                        <div class="row">
+                            
+                                <table style="width:900px">
+                                
+                                    <tr>
+                                        <td><p class="profile-info-label">Username</p></td>
+                                        <td><p class="profile-info-p">{{loggedInUser.username}}</p></td>    
+                                    </tr>
+
+                                    <tr>
+                                        <td><p class="profile-info-label">Name</p></td>
+                                        <td><input required class="profile-info-p" type="text" name="firstName" v-model="loggedInUser.firstName"></td> 
+                                        <td><p style="color:red">{{emptyName}}</p></td>  
+                                    </tr>
+
+                                    <tr>
+                                        <td><p class="profile-info-label">Lastname</p></td>
+                                        <td><input class="profile-info-p" type="text" name="lastname" v-model="loggedInUser.lastName"></td> 
+                                        <td><p style="color:red">{{emptyLastname}}</p></td>  
+                                    </tr>
+
+                                    <tr>
+                                        <td><p class="profile-info-label">Gender</p></td>
+                                        <td><select class="profile-info-p" required v-model="loggedInUser.gender">
+                                        <option value="MALE" selected>MALE</option>
+                                        <option value="FEMALE">FEMALE</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select></td> 
+                                        <td><p style="color:red" v-if="emptyGender">Gender field is empty.</p></td>  
+                                    </tr>
+                                    <tr>
+                                    <td><p style="color:white">AAAAAAAAAAAAAA</p></td></tr>
+                                    <tr>
+                                        <td><button class="edit-info-button" type="button" v-on:click="setMode('passwordReset')">Reset password</button></td>
+                                        <td><button class="edit-info-button" type="button" v-on:click="cancelEdit()">Cancel</button> <button class="edit-info-button" type="button" v-on:click="save()" >Save</button></td>
+                                    </tr>
+                                </table> 
+                                
+                            
+                        </div>
+                        
+                            
+                       
+
+                    </section>
+        
+                    <section v-if="mode==='passwordReset'" id="passwordReset">
+                        <div class="row">
+                            <table>
+                                <tr>
+                                    <td><label class="profile-info-label">Old password:</label></td>
+                                    <td><input class="profile-info-p" name="password" id="oldinput" :type="passwordFieldType0" v-model="oldPassword"></td>
+                                    <td><input type="checkbox" v-on:click="toggleOldPassword()">Show Password</td>
+                                    <td><p style="color:red">{{emptyOldPassword}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="profile-info-label">Password:</label></td>
+                                    <td><input class="profile-info-p" name="password" id="firstinput" :type="passwordFieldType1" v-model="password1"></td>
+                                    <td><input type="checkbox" v-on:click="toggleFirstPassword()">Show Password</td>
+                                    <td><p style="color:red">{{emptyPassword1}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="profile-info-label">Please enter password again:</label></td>
+                                    <td><input class="profile-info-p" :type="passwordFieldType2" name="password" id="secondinput" v-model="password2"></td>
+                                    <td><input type="checkbox" v-on:click="toggleSecondPassword()">Show Password</td>
+                                    <td><p style="color:red">{{emptyPassword2}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td><button class="edit-info-button" type="button" v-on:click="cancelPasswordReset()">Cancel</button></td>
+                                    <td><button class="edit-info-button" type="button" v-on:click="reset()" >Reset password</button></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </section>      
                 </div>
             </div>
             </div>
@@ -624,11 +741,139 @@ Vue.component("housekeeper",{
             .get('rest/getHousekeeper', {params: {
                 Authorization: 'Bearer ' + jwt
             }})
-            .then(response =>(this.housekeeper = response.data));
+            .then(response =>(this.loggedInUser=response.data, this.loggedInUserBackup=response.data));
         }
 
 	},
     methods: {
+        save: function(){
+            if(this.checkFieldsForUpdate()){
+                axios
+                .post('rest/updateHousekeeper',this.loggedInUser)
+                .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+            }
+        },
+        cancelEdit:function(){
+            this.loggedInUser=JSON.parse(JSON.stringify(this.loggedInUserBackup))
+            this.setMode('profile');
+        },
+        setMode:function(mode){
+            if(mode === "profile"){                
+
+                this.password1="";
+                this.password2="";
+                this.oldPassword="";
+                this.mode = mode;
+            }else if(mode === "edit"){
+                this.loggedInUserBackup = JSON.parse(JSON.stringify(this.loggedInUser));
+                this.secondPassword = this.loggedInUser.password;
+                
+                this.mode = mode;
+            }else if(mode ==='passwordReset'){
+                this.mode=mode;
+            }else if(mode === "apartments"){
+                this.mode = mode;
+            }else if(mode === "guests"){
+                this.mode = mode;
+            }else if(mode === "reservations"){
+                this.mode = mode;
+            }
+        },
+        reset: function(){
+
+            if(this.password1!=="" && this.password2!=="" && this.oldPassword!==""){
+                this.emptyPassword1="";
+                this.emptyPassword2="";
+                this.emptyOldPassword="";
+                if(this.password1 === this.password2 && this.oldPassword === this.loggedInUserBackup.password){
+                    axios
+                    .post('rest/updateAdmin',this.loggedInUser)
+                    .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+                }else if(this.password1!==this.password2){
+                    alert("Passwords do not match!");
+                }else if(this.oldPassword!==this.loggedInUserBackup.password){
+                    alert("Old password doesnt match!");
+                }
+            }else{
+                if(this.oldPassword ===""){
+                    this.emptyOldPassword="OldPassword is empty!";
+                }else{
+                    this.emptyOldPassword="";
+                }
+                
+                if(this.password1===""){
+                    this.emptyPassword1="Password field is empty";
+                }else{
+                    this.emptyPassword1="";
+                }
+    
+                if(this.password2===""){
+                    this.emptyPassword2="Password field is empty";
+                }else{
+                    this.emptyPassword2="";
+                }
+            }
+        },
+        validateName: function(){
+            if(this.loggedInUser.firstName==="" | this.loggedInUser.firstName.trim().length==0){          //length==0 | !this.name.trim()){
+                this.emptyName="Name field is empty!";
+                return false;
+            }else{
+                this.emptyName="";
+                return true;                
+            }
+        },
+        validateLastName: function(){
+            if(this.loggedInUser.lastName==="" | this.loggedInUser.lastName.trim().length==0){          //length==0 | !this.name.trim()){
+                this.emptyLastname="Last name field is empty!";
+                return false;
+            }else{
+                this.emptyLastname="";
+                return true;                
+            }  
+        },
+        validatePassword1: function(){
+            if(this.password1==="" | this.password1.trim().length==0){          //length==0 | !this.name.trim()){
+                this.emptyPassword1="Password field is empty!";
+                return false;
+            }else{
+                this.emptyPassword1="";
+                return true;                
+            }
+        },
+        
+        toggleFirstPassword: function(){
+            if(this.passwordFieldType1 === "password"){
+                this.passwordFieldType1 = "text";
+              }else {
+                this.passwordFieldType1 = "password";
+              }
+        },
+        toggleOldPassword: function(){
+            if(this.passwordFieldType0 === "password"){
+                this.passwordFieldType0 = "text";
+              }else {
+                this.passwordFieldType0 = "password";
+              }
+        },
+        toggleSecondPassword: function(){
+            if(this.passwordFieldType2 === "password"){
+                this.passwordFieldType2 = "text";
+              }else {
+                this.passwordFieldType2 = "password";
+              }
+        },
+        checkFieldsForUpdate: function(){
+            if(this.validateName() && this.validateLastName()){ 
+                return true;
+            }else{
+                return false;
+            }
+        },
+        cancelPasswordReset:function(){
+            this.loggedInUser=JSON.parse(JSON.stringify(this.loggedInUserBackup))
+            this.setMode('edit');
+        },
         logout:function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
@@ -725,15 +970,7 @@ Vue.component("housekeeper",{
                 }
             }
         },
-        setMode: function(mode){
-            if(mode === "apartments"){
-                this.mode = mode;
-            }else if(mode === "guests"){
-                this.mode = mode;
-            }else if(mode === "reservations"){
-                this.mode = mode;
-            }
-        },
+
         showApartmentDetails: function(apartmentToShow){
             this.selectedApartment = apartmentToShow;
             this.selectedApartmentBackUp = JSON.parse(JSON.stringify(apartmentToShow)); 
@@ -850,7 +1087,7 @@ Vue.component("housekeeper",{
             var d = new Date();
             this.newApartment.id = d.getTime();
             var jwt = window.localStorage.getItem('jwt');
-            this.newApartment.housekeeper = this.housekeeper;
+            this.newApartment.housekeeper = this.loggedInUser;
             this.newApartment.apartmentStatus = "ACTIVE";
             this.newApartment.arrivalTime = this.arrivalHours + ":" + this.arrivalMinutes;
             this.newApartment.exitTime = this.exitHours + ":" + this.exitMinutes;
@@ -970,7 +1207,31 @@ Vue.component("housekeeper",{
                 this.reservations.splice(0,this.reservations.length);
                 this.reservations = [...this.reservationsBackUp];  
             }
-        }
+        },
+        name: function(newName, oldName){
+            this.name = newName;
+            this.loggedInUser.firstName = newName;
+
+        },
+        lastName: function(newLastname, oldLastname){
+            this.lastname = newLastname;
+            this.loggedInUser.lastName = newLastname;
+        },
+        gender: function(newGender, oldGender){
+            this.gender = newGender;
+            this.loggedInUser = newGender;
+        },
+        oldPassword:function(newOldPassword, oldOldPassword){
+            this.oldPassword = newOldPassword;
+        },
+        password1: function(newPassword1, oldPassword1){
+            this.password1 = newPassword1;
+            this.loggedInUser.password = this.password1;
+        },
+        password2: function(newPassword2, oldPassword2){
+            this.password2 = newPassword2;
+            
+        },
     }
 
 });
