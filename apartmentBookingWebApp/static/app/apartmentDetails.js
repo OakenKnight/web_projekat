@@ -30,7 +30,7 @@ Vue.component("apartmentDetails", {
             emptyNights:"",
             emptyDate:"",
             listOfNights:[],
-            arriveDateSelected:false
+            arriveDateSelected:false,
         }
     },
     template: `
@@ -67,7 +67,7 @@ Vue.component("apartmentDetails", {
             </div>
             <div class="info">
                 <div class="row justify-content-center">
-                    <img v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" alt="image not found">
+                    <img v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" v-on:click="" alt="image not found">
                 </div>
                 <div class="row">
                     <div class="col">

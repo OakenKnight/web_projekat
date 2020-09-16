@@ -133,7 +133,6 @@ Vue.component("addApartment",{
                 <div class="details">
                     <div class="row">
                         <div class="col">
-                            <input type="file" id="myFile" name="filename" @change=imageAdded> 
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
                             <input class="edit-apartment-input" type="text" name="hotelName" placeholder="Apartment's name" v-model="name">
                             <p style="color:red">{{emptyName}}</p>
@@ -328,6 +327,11 @@ Vue.component("addApartment",{
                     </div>
 
                     <div class="row justify-content-center">
+                        <h3>Add pictures:</h3>
+                        <input type="file" id="myFile" name="filename" @change=imageAdded> 
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
                         <button class="reserve-book-button" type="button" v-on:click="createNewApartment(newApartment)">Create apartment</button>
                     </div>
 
@@ -433,6 +437,7 @@ Vue.component("addApartment",{
                 console.log(img);
                 this.imagesForBack.push(img);
             }
+            reader.readAsDataURL(file);
         },
         setFreeDates: function(){
             for(var i = 0; i < this.newApartment.freeDates.length; i ++){

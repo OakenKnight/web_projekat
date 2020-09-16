@@ -347,16 +347,18 @@ Vue.component("editApartment",{
                             </div>
                         </div>
                     </div>
+                    <h3>Pictures:</h3>
                     <div class="row justify-content-center">
-                        <input type="file" id="myFile" name="filename" @change=imageAdded v-if="disabledButton===false">
-                        <div v-else>
-                            <!-- <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" alt="image not found"> -->
-                            <input type="file" id="myFile" name="filename" @change=imageAdded :disabled="true">
-                            <p>{{flag}}</p>
+                        <div v-for="p in selectedApartment.pictures">
+                            <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + p" alt="image not found"> 
+                            <p>{{p}}</p> <button type="button" class="btn btn-primary" style="margin-top: -40px" v-on:click="deletePicturesFromList(p)">Delete</button>
                         </div>
-
                     </div>
 
+                    <div class="row justify-content-center">
+                        <h3>Add picture: </h3>
+                        <input type="file" id="myFile" name="filename" @change=imageAdded>
+                    </div>
 
                     <button type="button" class="btn btn-primary" style="margin-left:20px" :disabled="selectedApartment.deleted" v-on:click="deleteApartment()">Delete</button>
                     <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
@@ -500,6 +502,14 @@ Vue.component("editApartment",{
                 }
             });
             return n;
+        },
+        deletePicturesFromList: function(pic){
+            var i = this.selectedApartment.pictures.length
+            while(i--){
+                if(this.selectedApartment.pictures[i] === pic){
+                    this.selectedApartment.pictures.splice(i,1);
+                }
+            }
         },
         reserFreeDatesForAdd: function(){
             this.addOrDeleteFreeDates = 'none';
