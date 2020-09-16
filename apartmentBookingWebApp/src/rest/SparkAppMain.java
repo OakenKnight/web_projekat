@@ -183,6 +183,7 @@ public class SparkAppMain {
 		get("/rest/getHousekeeper", (req,res)->{
 			String housekeeperId = getUser(req.queryParams("Authorization"));
 			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+			
 			return g.toJson(housekeeperRepository.getObj(housekeeperId));
 		});
 		

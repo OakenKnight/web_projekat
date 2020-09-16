@@ -127,7 +127,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "a", "1600098276233", "1600099114843", "1600099645363", "1600100650546", "1600101050973", "1600101619773", "1600101822739", "1600102194983", "1600102204146", "1600103749025", "1600103786003", "1600103841601", "1600104192175" ]
+  "reservationsId" : [ "a" ]
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
@@ -146,14 +146,8 @@
     }
   },
   "freeDates" : [ {
-    "startDate" : 1589580000000,
+    "startDate" : 1600120800000,
     "endDate" : 1601244000000
-  }, {
-    "startDate" : 1601416800000,
-    "endDate" : 1602021600000
-  }, {
-    "startDate" : 1602972000000,
-    "endDate" : 1603576800000
   } ],
   "housekeeper" : {
     "username" : "joca",
@@ -265,7 +259,7 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
-  "reservationsId" : [ "mitarMitar1", "milica1" ]
+  "reservationsId" : [ "mitarMitar1", "milica1", "1600260682637", "1600261072648" ]
 }, {
   "id" : "app22",
   "name" : "Hotel BlaBla",
@@ -500,7 +494,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "nikola2", "kristina931", "1600202461092", "1600206502322" ]
+  "reservationsId" : [ "nikola2", "kristina931" ]
 }, {
   "id" : "1599848262568",
   "name" : "Test apartman",

@@ -57,12 +57,6 @@ Vue.component("admin",{
                         <a class="nav-link" href="#/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="#/reserve">Reserve</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Recomend</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#/about">About us</a>
                     </li>
                     <li class="nav-item">
@@ -295,24 +289,24 @@ Vue.component("admin",{
                                 <table style="width:900px">
                                 
                                     <tr>
-                                        <td>Username</td>
+                                        <td><p class="profile-info-label">Username</p></td>
                                         <td><p class="profile-info-p">{{loggedInUser.username}}</p></td>    
                                     </tr>
 
                                     <tr>
-                                        <td>Name</td>
+                                        <td><p class="profile-info-label">Name</p></td>
                                         <td><input required class="profile-info-p" type="text" name="firstName" v-model="loggedInUser.firstName"></td> 
                                         <td><p style="color:red">{{emptyName}}</p></td>  
                                     </tr>
 
                                     <tr>
-                                        <td>Lastname</td>
+                                        <td><p class="profile-info-label">Lastname</p></td>
                                         <td><input class="profile-info-p" type="text" name="lastname" v-model="loggedInUser.lastName"></td> 
                                         <td><p style="color:red">{{emptyLastname}}</p></td>  
                                     </tr>
 
                                     <tr>
-                                        <td>Gender</td>
+                                        <td><p class="profile-info-label">Gender</p></td>
                                         <td><select class="profile-info-p" required v-model="loggedInUser.gender">
                                         <option value="MALE" selected>MALE</option>
                                         <option value="FEMALE">FEMALE</option>

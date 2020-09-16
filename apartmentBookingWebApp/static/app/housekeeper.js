@@ -58,12 +58,6 @@ Vue.component("housekeeper",{
                         <a class="nav-link" href="#/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="#/reserve">Reserve</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Recomend</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#/about">About us</a>
                     </li>
                     <li class="nav-item">
@@ -166,7 +160,7 @@ Vue.component("housekeeper",{
                                             <h4>Guest info</h4>
                                             <p v-for="g in guests" v-if="g.username == r.guestId">Guest name: {{g.firstName}} {{g.lastName}}</p>
                                             <p>Guest username: {{r.guestId}}</p>
-                                            <p>Message:<br>{{r.message}} 4</p>
+                                            <p>Message:<br>{{r.message}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -604,14 +598,7 @@ Vue.component("housekeeper",{
 
             window.location.href = '#/login';
         }else{
-            axios
-            .get('rest/getUserRole', {params: {
-                Authorization: 'Bearer ' + jwt
-            }})
-            .then(response =>{ if (response.data !== "HOUSEKEEPER")
-                window.location.href = '#/forbidden';
-            });
-            this.loggedIn= true;
+            
             axios
             .get('rest/housekeepersApartment', {params: {
                 Authorization: 'Bearer ' + jwt

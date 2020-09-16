@@ -53,75 +53,21 @@
   "reservationStatus" : "ACCEPTED",
   "id" : "kristina931"
 }, {
-  "apartmentId" : "app1",
-  "arrivalDate" : null,
-  "numberOfNights" : 5,
-  "totalPrice" : 0.0,
-  "message" : "Dolazim kad ocu, jasno???",
-  "guestId" : "milica",
-  "reservationStatus" : "QUIT",
-  "id" : "1599775594999"
-}, {
-  "apartmentId" : "app1",
-  "arrivalDate" : 1600962240000,
-  "numberOfNights" : 1,
-  "totalPrice" : 100.0,
-  "message" : "awref",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600098276233"
-}, {
   "apartmentId" : "app12",
-  "arrivalDate" : 1600357740000,
-  "numberOfNights" : 2,
-  "totalPrice" : 300.0,
-  "message" : "",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600098612907"
-}, {
-  "apartmentId" : "app1",
-  "arrivalDate" : 1600964640000,
-  "numberOfNights" : 2,
-  "totalPrice" : 200.0,
-  "message" : "",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600100667626"
-}, {
-  "apartmentId" : "app1",
-  "arrivalDate" : 1600964940000,
-  "numberOfNights" : 2,
-  "totalPrice" : 200.0,
-  "message" : "",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600100969290"
-}, {
-  "apartmentId" : "app1",
-  "arrivalDate" : 1600898400000,
-  "numberOfNights" : 2,
-  "totalPrice" : 200.0,
-  "message" : "",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600101619773"
-}, {
-  "apartmentId" : "app1",
-  "arrivalDate" : 1600812000000,
-  "numberOfNights" : 1,
-  "totalPrice" : 100.0,
-  "message" : "aef",
-  "guestId" : "coaPera",
-  "reservationStatus" : "CREATED",
-  "id" : "1600101822739"
-}, {
-  "apartmentId" : "app32",
   "arrivalDate" : 1600293600000,
   "numberOfNights" : 4,
-  "totalPrice" : 80.0,
+  "totalPrice" : 600.0,
   "message" : "",
-  "guestId" : "milica",
+  "guestId" : "albertina",
   "reservationStatus" : "QUIT",
-  "id" : "1600206502322"
+  "id" : "1600260682637"
+}, {
+  "apartmentId" : "app12",
+  "arrivalDate" : 1600293600000,
+  "numberOfNights" : 3,
+  "totalPrice" : 450.0,
+  "message" : "",
+  "guestId" : "albertina",
+  "reservationStatus" : "QUIT",
+  "id" : "1600261072648"
 } ]
