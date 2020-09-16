@@ -452,7 +452,20 @@ public class SparkAppMain {
 
 				return g.toJson(guestUser);
 		});
-			
+		post("/rest/updateAdmin",(req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+
+			System.out.println(payload);
+
+			UserService service = new UserService();
+
+			User adminUser = g.fromJson(payload, User.class);
+			service.updateAdmin(adminUser);
+
+			return g.toJson(adminUser);
+		});
+
 		post("/rest/comment",(req,res)->{
 			res.type("application/json");
 			String payload = req.body();

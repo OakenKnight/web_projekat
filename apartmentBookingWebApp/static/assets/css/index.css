@@ -300,3 +300,10 @@ body {
 #checkboxes label:hover{
     background-color: #1e90ff;
 }
+table {
+    border: none;
+}
+
+td {
+    border: none;
+}

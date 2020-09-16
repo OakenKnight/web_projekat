@@ -90,4 +90,16 @@ public class UserService {
 		return user;
 	}
 
+
+	public User updateAdmin(User adminUser) {
+		Admin adminForUpdate = adminRepository.getObj(adminUser.getUsername());
+		adminForUpdate.setFirstName(adminUser.getFirstName());
+		adminForUpdate.setLastName(adminUser.getLastName());
+		adminForUpdate.setGender(adminUser.getGender());
+		adminForUpdate.setPassword(adminUser.getPassword());
+
+		adminRepository.update(adminForUpdate);
+		return adminUser;
+	}
+
 }
