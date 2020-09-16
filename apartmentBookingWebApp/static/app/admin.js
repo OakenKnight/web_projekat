@@ -45,6 +45,8 @@ Vue.component("admin",{
             passwordFieldType1:"password",
             passwordFieldType2:"password",
             emptyOldPassword:"",
+            activeOrInactiveApartment: 1,
+            roomOrApartment: 1
 		}
 	},
     template:`
@@ -86,8 +88,29 @@ Vue.component("admin",{
                 <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
                         <h3>All apartments</h3>
-                        <div class="search-housekeeper"><input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch"></div>
+                        <div class="search-housekeeper">
+                            <div>
+                                <input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch">
+                            </div>
+                            <button type="button" class="btn btn-primary" v-on:click="searchApartment(apartmentForSearch)">Search</button>
+                            <button type="button" class="btn btn-primary" v-on:click="searchApartment('')">Reset</button>
+                                  
+                        </div>
                         <hr>
+                        <div class="select-apartment-type-filter">
+                            <select required v-model="activeOrInactiveApartment">
+                                <option value="1" selected>Active/inactive</option>
+                                <option value="2">Active only</option>
+                                <option value="3">Inactive only</option>
+                            </select>
+                        </div>
+                        <div class="select-apartment-type-filter">
+                            <select required v-model="roomOrApartment">
+                            <option value="1" selected>Apartment/room</option>
+                            <option value="2">Apartment only</option>
+                            <option value="3">Room only</option>
+                            </select>
+                        </div>
                         <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">
                             <div class="apartment-border-housekeeper">
                                 <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
@@ -103,7 +126,13 @@ Vue.component("admin",{
                     </section>
                     <section id="guests" v-if="mode === 'guests'">
                         <h3>All your guests</h3>
-                        <div class="search-housekeeper"><input @keyup.enter="searchGuest(guestForSearch)" type="text" name="guest" placeholder="Search guest" v-model="guestForSearch"></div>
+                        <div class="search-housekeeper">
+                             <div>                        
+                                <input @keyup.enter="searchGuest(guestForSearch)" type="text" name="guest" placeholder="Search guest" v-model="guestForSearch">
+                            </div>
+                            <button type="button" class="btn btn-primary" v-on:click="searchGuest(guestForSearch)">Search</button>
+                            <button type="button" class="btn btn-primary" v-on:click="searchGuest('')">Reset</button>
+                        </div>
                         <div class="gender-housekeeper">
                             <img class="gender-sign-all" src="assets/images/female-male-sign.png" alt="not found">
                             <label for="all">Show all</label>
@@ -151,7 +180,13 @@ Vue.component("admin",{
                     </section>
                     <section id="reservations" v-if="mode === 'reservations'">
                         <h3>All your reservations</h3>
-                        <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Search reservation by guest username" @keyup.enter="searchReservation(reservationForSearch)"  v-model="reservationForSearch"></div>
+                        <div class="search-housekeeper">
+                            <div>                        
+                                <input type="text" name="reservation" placeholder="Search guest username" @keyup.enter="searchReservation(reservationForSearch)"  v-model="reservationForSearch">
+                            </div>
+                            <button type="button" class="btn btn-primary" v-on:click="searchReservation(reservationForSearch)">Search</button>
+                            <button type="button" class="btn btn-primary" v-on:click="searchReservation('')">Reset</button>
+                        </div>
                         <div class="select-apartment-type">
                             <select required v-model="reservationTypeFilter">
                                 <option value="1" selected>Show all</option>
@@ -840,7 +875,11 @@ Vue.component("admin",{
         searchGuest: function(keyWord){
             if(keyWord === ""){
                 this.guests.splice(0,this.guests.length);
-                this.guests = [...this.guestsBackUp];  
+                this.guests = [...this.guestsBackUp]; 
+                this.guestForSearch="";
+                this.housekeepers.splice(0,this.housekeepers.length);
+                this.housekeepers = [...this.housekeepersBackUp]; 
+                this.guestForSearch="";
             }else{
                 this.guests.splice(0,this.guests.length);
                 this.guests = [...this.guestsBackUp];  
@@ -850,10 +889,19 @@ Vue.component("admin",{
                         this.guests.splice(i,1);
                     }
                 }
+                this.housekeepers.splice(0,this.housekeepers.length);
+                this.housekeepers = [...this.housekeepersBackUp];  
+                var i = this.housekeepers.length;
+                while(i--){
+                    if(this.housekeepers[i].username.toLowerCase() !== keyWord.toLowerCase()){
+                        this.housekeepers.splice(i,1);
+                    }
+                }
             }
         },
         searchApartment: function(keyWord){
             if(keyWord === ""){
+                this.apartmentForSearch="";
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];  
             }else{
@@ -861,7 +909,7 @@ Vue.component("admin",{
                 this.apartments = [...this.apartmentsBackUp];  
                 var i = this.apartments.length;
                 while(i--){
-                    if(this.apartments[i].name.toLowerCase() !== keyWord.toLowerCase() && this.apartments[i].location.address.city.toLowerCase() !== keyWord.toLowerCase()){
+                    if(!this.apartments[i].name.toLowerCase().includes(keyWord.toLowerCase()) && !this.apartments[i].location.address.city.toLowerCase().includes(keyWord.toLowerCase())){
                         this.apartments.splice(i,1);
                     }
                 }
@@ -872,6 +920,7 @@ Vue.component("admin",{
                 this.reservations.splice(0,this.reservations.length);
                 this.reservations = [...this.reservationsBackUp]; 
                 this.reservationTypeFilter = 1;
+                this.reservationForSearch = "";
             }else{
                 this.reservations.splice(0,this.reservations.length);
                 this.reservations = [...this.reservationsBackUp];  
@@ -1022,6 +1071,14 @@ Vue.component("admin",{
                     this.guests.splice(i,1);
                 }
             }
+            this.housekeepers.splice(0,this.housekeepers.length);
+            this.housekeepers = [...this.housekeepersBackUp];  
+            var i = this.housekeepers.length;
+            while(i--){
+                if(this.housekeepers[i].gender !== "FEMALE"){
+                    this.housekeepers.splice(i,1);
+                }
+            }
            }else if(newGender === "gentlemens"){
                 this.guests.splice(0,this.guests.length);
                 this.guests = [...this.guestsBackUp];  
@@ -1031,9 +1088,19 @@ Vue.component("admin",{
                         this.guests.splice(i,1);
                     }
                 }
+                this.housekeepers.splice(0,this.housekeepers.length);
+                this.housekeepers = [...this.housekeepersBackUp];  
+                var i = this.housekeepers.length;
+                while(i--){
+                    if(this.housekeepers[i].gender !== "MALE"){
+                        this.housekeepers.splice(i,1);
+                    }
+                }
            }else{
             this.guests.splice(0,this.guests.length);
             this.guests = [...this.guestsBackUp];
+            this.housekeepers.splice(0,this.housekeepers.length);
+            this.housekeepers = [...this.housekeepersBackUp];
            }
         },
         reservationTypeFilter: function(newType, oldType){
@@ -1112,6 +1179,54 @@ Vue.component("admin",{
             this.password2 = newPassword2;
             
         },
+        roomOrApartment: function(newValue, oldValue){
+            if(newValue == 2){
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+                var i = this.apartments.length;
+                while(i--){
+                    if(this.apartments[i].apartmentType !== "APARTMENT"){
+                        this.apartments.splice(i,1);
+                    }
+                }
+            }else if(newValue == 3){
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+                var i = this.apartments.length;
+                while(i--){
+                    if(this.apartments[i].apartmentType !== "ROOM"){
+                        this.apartments.splice(i,1);
+                    }
+                }
+            }else{
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+            }
+        },
+        activeOrInactiveApartment: function(newValue, oldValue){
+            if(newValue == 2){
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+                var i = this.apartments.length;
+                while(i--){
+                    if(this.apartments[i].apartmentStatus !== "ACTIVE"){
+                        this.apartments.splice(i,1);
+                    }
+                }
+            }else if(newValue == 3){
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+                var i = this.apartments.length;
+                while(i--){
+                    if(this.apartments[i].apartmentStatus !== "INACTIVE"){
+                        this.apartments.splice(i,1);
+                    }
+                }
+            }else{
+                this.apartments.splice(0,this.apartments.length);
+                this.apartments = [...this.apartmentsBackUp];  
+            }
+        }
     }
 
 });
