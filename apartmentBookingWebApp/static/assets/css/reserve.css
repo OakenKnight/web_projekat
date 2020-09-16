@@ -10,14 +10,7 @@ body {
     background-size: cover;
     height: 550px;
     z-index: -1;}
-.search-form{
-    margin-top: 60px;
-    margin-right: 250px;
-    height: 500px;
-    font-size: 18px;
-    width: 500px;
-    position: absolute;
-    text-align: center;}
+
 .search-destination{
     height: 50px;
     width: 99%;
@@ -96,16 +89,6 @@ body {
     box-sizing: border-box;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;}
-.search{
-    border: 1px solid #ddddde;
-    border-radius: 8px;
-    width: 700px;
-    height: 200px;
-    max-width: 1000px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;
-    background: #f5f4f3;
-    box-sizing: border-box;}
 
 .info{
     width: 70%;

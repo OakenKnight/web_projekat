@@ -118,7 +118,7 @@ public class SparkAppMain {
 			user.setJWTToken(jwt);
 			
 			if(guest == null){
-				res.status(500);
+				res.status(400);
 			} 
 
 			return g.toJson(user); 
@@ -166,6 +166,27 @@ public class SparkAppMain {
 				amenityRepository.remove(ids[i]);
 			}
 			//TREBA OBRISATI I IZ SVIH APARTMANA
+			ApartmentRepository apartmentRepository = new ApartmentRepository();
+			ArrayList<Apartment> apartments = (ArrayList<Apartment>)apartmentRepository.getAll();
+
+			ArrayList<Amenity> amenities = new ArrayList<Amenity>();
+			
+			for(String id : ids){
+				amenities.add(amenityRepository.getObj(id));
+			}
+
+			System.out.println(amenities.size());
+
+			for(Apartment a : apartments){
+				for(int i=0;i<ids.length;i++){
+					if(a.hasAmenity(ids[i])){
+						a.deleteAmenityById(ids[i]);
+						apartmentRepository.update(a);
+					}
+					
+				}
+			}
+
 			return "Amenities deleted successfully";
 		});
 		
@@ -183,7 +204,7 @@ public class SparkAppMain {
 		get("/rest/getHousekeeper", (req,res)->{
 			String housekeeperId = getUser(req.queryParams("Authorization"));
 			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
-			
+
 			return g.toJson(housekeeperRepository.getObj(housekeeperId));
 		});
 		
@@ -259,6 +280,7 @@ public class SparkAppMain {
 
 			return g.toJson(adminRepository.getObj(username));			
 		});
+		
 		get("/rest/housekeeperLoggedIn", (req,res)->{
 			String username = getUser(req.queryParams("Authorization"));
 			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
@@ -318,7 +340,7 @@ public class SparkAppMain {
 			if(service.resetPassword(user.getUsername(), user.getPassword())) 
 				return true;
 			else {
-				res.status(500);
+				res.status(400);
 				return false;
 			}
 		});
@@ -466,7 +488,19 @@ public class SparkAppMain {
 
 			return g.toJson(adminUser);
 		});
+		post("/rest/updateHousekeeper",(req,res)->{
+			res.type("application/json");
+			String payload = req.body();
 
+			System.out.println(payload);
+
+			UserService service = new UserService();
+
+			User user = g.fromJson(payload, User.class);
+			service.updateHousekeeper(user);
+
+			return g.toJson(user);
+		});
 		post("/rest/comment",(req,res)->{
 			res.type("application/json");
 			String payload = req.body();
@@ -485,7 +519,7 @@ public class SparkAppMain {
 			if(apartmentRepository.update(apartment)) 
 				return true;
 			else {
-				res.status(500);
+				res.status(400);
 				return false;
 			}
 		});
@@ -518,7 +552,7 @@ public class SparkAppMain {
 
 				return true;
 			}else{
-				res.status(500);
+				res.status(400);
 				return false;
 			}
 		});

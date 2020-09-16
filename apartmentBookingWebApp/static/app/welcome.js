@@ -17,6 +17,8 @@ Vue.component("welcome",{
             modal:false,
             minPrice: "",
             maxPrice:"",
+            minGuests:"",
+            maxGuests:"",
             numberOfGuests:"",
             loggedIn:null,
             apartmentSortCriteria: "1",
@@ -85,7 +87,7 @@ Vue.component("welcome",{
             <div class="container-fluid">
 
                 <div class="bk-img row justify-content-center">
-                    <div class="search-form col-md-4">
+                    <div class="search-form row">
                         <form class="search" action="!#">
                             <input class="search-destination" type="text" name="destination" placeholder="Search destination" v-model="searchedApartment.destination">
 
@@ -96,6 +98,8 @@ Vue.component("welcome",{
                                 <div class="datepicker">
                                     <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" monday-first placeholder="Depart" name="departDate" v-model="departDate"></vuejs-datepicker>
                                 </div>
+                                <!--
+
                                 <select required v-model="numberOfGuests">
                                     <option value="" disabled selected hidden>Guests</option>
                                     <option value="1">1</option>
@@ -103,6 +107,10 @@ Vue.component("welcome",{
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                 </select>
+
+                                -->
+                                <input type="text" placeholder="Min guests" name="minG" class="price" v-model="minGuests">
+                                <input type="text" placeholder="Max guests" name="maxG" class="price" v-model="maxGuests">  
 
                                 <input type="text" placeholder="Min price" name="minP" class="price" v-model="minPrice">
                                 <input type="text" placeholder="Max price" name="maxP" class="price" v-model="maxPrice">  
@@ -175,7 +183,7 @@ Vue.component("welcome",{
                 <div class="row">
                     <div class="apartment col" v-for="a in apartments">
                         <div class="apartment-border">
-                            <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
+                            <img class="apartment-pic" v-if="a.pictures.length>0" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                             <div class="apartment-info">
                                 <h5><strong>{{a.name}}</strong></h5>
                                 <h5><img class="apartment-info-icons" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
@@ -481,7 +489,7 @@ Vue.component("welcome",{
             
             if(this.verifyArriveDate()){
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:null,
-                departDate:null, numberOfGuests:searchedApartment.numberOfGuests,
+                departDate:null, minGuests:searchedApartment.minGuests,maxGuests:searchedApartment.maxGuests,
                 minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};
                 
                 axios
@@ -490,7 +498,7 @@ Vue.component("welcome",{
             }else{
                 console.log(this.arriveDate);
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:this.arriveDate,
-                departDate:this.departDate, numberOfGuests:searchedApartment.numberOfGuests,
+                departDate:this.departDate, minGuests:searchedApartment.minGuests,maxGuests:searchedApartment.maxGuests,
                 minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};     
                 axios
                 .post('rest/search',aptDTO)
@@ -718,6 +726,19 @@ Vue.component("welcome",{
 
 			if(isNaN(newPrice)){
 				this.maxPrice = newPrice.substring(0,newPrice.length -1);
+			}
+        },
+        minGuests: function(newGuests, oldGuests){
+            this.searchedApartment.minGuests = this.minGuests;
+			if(isNaN(newGuests)){
+				this.minGuests = newGuests.substring(0,newGuests.length -1);
+			}
+		},
+		maxGuests: function(newGuests, oldGuests){
+            this.searchedApartment.maxGuests = this.maxGuests;
+
+			if(isNaN(newGuests)){
+				this.maxGuests = newGuests.substring(0,newGuests.length -1);
 			}
         },
         numberOfGuests: function(newNumber, oldNumber){

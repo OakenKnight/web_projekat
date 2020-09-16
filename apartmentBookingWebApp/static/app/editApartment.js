@@ -54,7 +54,14 @@ Vue.component("editApartment",{
             myModalFail:false,
             addOrDeleteFreeDates: "none",
             freeDatesForDelete: [],
-            type:""
+            type:"",
+            imagesForBack:[],
+            images:[],
+            imageCount:0,
+            filename:"",
+            type:"",
+            flag:"",
+            disabledButton:""
 
         }
 	},
@@ -107,7 +114,6 @@ Vue.component("editApartment",{
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/hotel-icon.png" alt="not found"><strong>Hotel name</strong></label>
                             <input class="edit-apartment-input" type="text" name="hotelName" v-model="selectedApartment.name">
                             <p style="color:red">{{emptyName}}</p>
-
                         </div>
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
@@ -341,6 +347,18 @@ Vue.component("editApartment",{
                             </div>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <input type="file" id="myFile" name="filename" @change=imageAdded v-if="disabledButton===false">
+                        <div v-else>
+                            <!-- <img class="apartment-pic" v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" alt="image not found"> -->
+                            <input type="file" id="myFile" name="filename" @change=imageAdded :disabled="true">
+                            <p>{{flag}}</p>
+                        </div>
+
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary" style="margin-left:20px" :disabled="selectedApartment.deleted" v-on:click="deleteApartment()">Delete</button>
                     <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
                     <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="saveEditingApartmentChanges()">Save changes</button>
                 </div>
@@ -382,6 +400,7 @@ Vue.component("editApartment",{
                 this.selectedApartmentBackUp = response.data;
                 this.startEditingApartment();
                 this.setFreeDates();
+                
             });
 
             axios
@@ -418,8 +437,45 @@ Vue.component("editApartment",{
 
                     console.log(this.address);
                 });
+
+                
+
 	},
 	methods:{
+        checkPictures:function(){
+            if(this.selectedApartment.pictures.length>0){
+                return false;
+            }
+            return true;
+        },
+        imageAdded(e){
+            const file = e.target.files[0];
+            this.createBase64(file);
+            this.imageCount++;
+            this.images.push(URL.createObjectURL(file));
+        },
+        createBase64(file){
+            const reader = new FileReader();
+            reader.onload=(e)=>{
+                let img = e.target.result;
+                img.replace("data:image\/(png|jpg|jpeg);base64","");
+                console.log(img);
+                this.imagesForBack.push(img);
+            }
+        },
+        deleteApartment:function(){
+            this.selectedApartment.deleted=true;
+            axios
+                .post("/rest/updateApartment", this.selectedApartment)
+                .then(function(response){
+                    var jwt = window.localStorage.getItem('jwt');
+                    axios
+                    .get('rest/housekeepersApartment', {params: {
+                     Authorization: 'Bearer ' + jwt
+                    }})
+                    .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
+                });
+        },
         takeMeHome:function(){
             if(this.type==="ADMIN"){
               alert('AFISAJBF');
@@ -547,9 +603,18 @@ Vue.component("editApartment",{
             this.exitMinutes = this.selectedApartment.exitTime.split(':')[1];
             
             var addressForView = this.selectedApartment.location.address.street+' '+ this.selectedApartment.location.address.city;
-
+            console.log(addressForView);
             document.querySelector('#address').value = addressForView;
+
             this.priceForNight = this.selectedApartment.priceForNight.toString();
+            console.log(this.selectedApartment);
+            if(this.selectedApartment.pictures.length>0){
+                this.disabledButton=true;
+                this.flag = this.selectedApartment.pictures[0];
+
+            }else{
+                this.disabledButton=false;
+            }
         },
         cancleEditingApartment: function(){
             this.selectedApartment = JSON.parse(JSON.stringify(this.selectedApartmentBackUp));
@@ -581,17 +646,12 @@ Vue.component("editApartment",{
             if(this.validate()){
                 axios
                 .post("/rest/updateApartment", this.selectedApartment)
-                .then(function(response){
-                    var jwt = window.localStorage.getItem('jwt');
-                    axios
-                    .get('rest/housekeepersApartment', {params: {
-                     Authorization: 'Bearer ' + jwt
-                    }})
-                    .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
-
-                });
-
-                this.$router.push('/housekeeper');
+                
+                if(this.type=='ADMIN'){
+                    this.$router.push('/admin');
+                }else{
+                    this.$router.push('/housekeeper');
+                }
 
             }
             

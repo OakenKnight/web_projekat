@@ -127,7 +127,8 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "a" ]
+  "reservationsId" : [ "a" ],
+  "deleted" : false
 }, {
   "id" : "app12",
   "name" : "Apartment abab",
@@ -259,7 +260,8 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
-  "reservationsId" : [ "mitarMitar1", "milica1", "1600260682637", "1600261072648" ]
+  "reservationsId" : [ "mitarMitar1", "milica1", "1600260682637", "1600261072648" ],
+  "deleted" : false
 }, {
   "id" : "app22",
   "name" : "Hotel BlaBla",
@@ -371,7 +373,8 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "milica2", "nikola1" ]
+  "reservationsId" : [ "milica2", "nikola1" ],
+  "deleted" : false
 }, {
   "id" : "app32",
   "name" : "Tiski cvet",
@@ -449,11 +452,6 @@
     "description" : "",
     "amenityType" : "FAMILY_FEATURES"
   }, {
-    "id" : "1599220943160",
-    "name" : "High chair",
-    "description" : "",
-    "amenityType" : "FAMILY_FEATURES"
-  }, {
     "id" : "15992209431462",
     "name" : "Room-darkening shades",
     "description" : "",
@@ -494,7 +492,8 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "nikola2", "kristina931" ]
+  "reservationsId" : [ "nikola2", "kristina931" ],
+  "deleted" : false
 }, {
   "id" : "1599848262568",
   "name" : "Test apartman",
@@ -550,7 +549,8 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ ]
+  "reservationsId" : [ ],
+  "deleted" : false
 }, {
   "id" : "1599903300660",
   "name" : "Novolinon",
@@ -586,7 +586,8 @@
   "exitTime" : "10:00",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ ],
-  "reservationsId" : [ ]
+  "reservationsId" : [ ],
+  "deleted" : false
 }, {
   "id" : "1599903639059",
   "name" : "Novolinon2",
@@ -632,7 +633,8 @@
     "description" : "",
     "amenityType" : "BASIC"
   } ],
-  "reservationsId" : [ ]
+  "reservationsId" : [ ],
+  "deleted" : false
 }, {
   "id" : "1600189613746",
   "name" : "JOCA",
@@ -668,5 +670,6 @@
   "exitTime" : "10:00",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ ],
-  "reservationsId" : [ ]
+  "reservationsId" : [ ],
+  "deleted" : false
 } ]

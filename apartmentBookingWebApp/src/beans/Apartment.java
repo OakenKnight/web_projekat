@@ -24,6 +24,7 @@ public class Apartment {
 	private ApartmentStatus apartmentStatus;
 	private ArrayList<Amenity> amenities;
 	private ArrayList<String> reservationsId;
+	private boolean deleted;
 	
 	
 	public Apartment() {}
@@ -31,7 +32,7 @@ public class Apartment {
 	public Apartment(String id, String name ,ApartmentType apartmentType, int roomNumber, int guestNumber, Location location,
 			ArrayList<DateInterval> freeDates, Housekeeper housekeeper, ArrayList<ApartmentComment> comments,
 			ArrayList<String> pictures, double priceForNight, String arrivalTime, String exitTime,
-			ApartmentStatus apartmentStatus, ArrayList<Amenity> amenities, ArrayList<String> reservationsId) {
+			ApartmentStatus apartmentStatus, ArrayList<Amenity> amenities, ArrayList<String> reservationsId, boolean deleted) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,6 +50,7 @@ public class Apartment {
 		this.apartmentStatus = apartmentStatus;
 		this.amenities = new ArrayList<Amenity>(amenities);
 		this.reservationsId = new ArrayList<String>(reservationsId);
+		this.deleted=deleted;
 	}
 
 	
@@ -180,10 +182,30 @@ public class Apartment {
 		this.reservationsId = reservationsId;
 	}
 
+	public boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 	
-	
-	
-	
+	public boolean hasAmenity(String id){
+		for(Amenity am: amenities){
+			if(am.getId().equals(id))
+				return true;
+		}
+		return false;
+	}
+	public boolean deleteAmenityById(String id){
+		for(int i=0;i<amenities.size();i++){
+			if(amenities.get(i).getId().equals(id)){
+				amenities.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 }

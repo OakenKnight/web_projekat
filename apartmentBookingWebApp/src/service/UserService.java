@@ -102,4 +102,17 @@ public class UserService {
 		return adminUser;
 	}
 
+
+	public User updateHousekeeper(User user) {
+		Housekeeper housekeeperForUpdate = housekeeperRepository.getObj(user.getUsername());
+		housekeeperForUpdate.setFirstName(user.getFirstName());
+		housekeeperForUpdate.setLastName(user.getLastName());
+		housekeeperForUpdate.setGender(user.getGender());
+		housekeeperForUpdate.setPassword(user.getPassword());
+
+		housekeeperRepository.update(housekeeperForUpdate);
+
+		return user;
+	}
+
 }
