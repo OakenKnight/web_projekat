@@ -8,11 +8,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Zeleznicka 97 Novi Sad",
+      "street" : "Zeleznicka 97",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -139,11 +139,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4 Novi Sad   ",
+      "street" : "Maksima Gorkog 4",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -504,11 +504,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Dositeja Obradovića 7 Plandiste Municipality ",
+      "street" : "Dositeja Obradovića 11",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Nis",
+      "zipCode" : "18000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -651,11 +651,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Mise Dimitrijevica 2 Novi Sad",
+      "street" : "Mise Dimitrijevica",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ ],
@@ -725,123 +725,4 @@
   } ],
   "reservationsId" : [ ],
   "deleted" : false
-}, {
-  "id" : "1600351186988",
-  "name" : "ADDD",
-  "apartmentType" : "APARTMENT",
-  "roomNumber" : 1,
-  "guestNumber" : 8,
-  "location" : {
-    "latitude" : "",
-    "longitude" : "",
-    "address" : {
-      "street" : "DDASF",
-      "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
-    }
-  },
-  "freeDates" : [ ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovan",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 1241.0,
-  "arrivalTime" : "14:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "INACTIVE",
-  "amenities" : [ {
-    "id" : "1599220943168",
-    "name" : "Coffee maker",
-    "description" : "",
-    "amenityType" : "DINING"
-  } ],
-  "reservationsId" : [ ],
-  "deleted" : false
-}, {
-  "id" : "1600351412069",
-  "name" : "asfasgf",
-  "apartmentType" : "ROOM",
-  "roomNumber" : 2,
-  "guestNumber" : 2,
-  "location" : {
-    "latitude" : "",
-    "longitude" : "",
-    "address" : {
-      "street" : "asfdasf",
-      "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
-    }
-  },
-  "freeDates" : [ {
-    "startDate" : 1600725600000,
-    "endDate" : 1601416800000
-  } ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovan",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 123.0,
-  "arrivalTime" : "14:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "INACTIVE",
-  "amenities" : [ ],
-  "reservationsId" : [ ],
-  "deleted" : false
-}, {
-  "id" : "1600351513489",
-  "name" : "fasfa",
-  "apartmentType" : "APARTMENT",
-  "roomNumber" : 4,
-  "guestNumber" : 2,
-  "location" : {
-    "latitude" : "",
-    "longitude" : "",
-    "address" : {
-      "street" : "asfa",
-      "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
-    }
-  },
-  "freeDates" : [ ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovan",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 1231.0,
-  "arrivalTime" : "14:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "INACTIVE",
-  "amenities" : [ ],
-  "reservationsId" : [ ],
-  "deleted" : false
-} ]
+}]

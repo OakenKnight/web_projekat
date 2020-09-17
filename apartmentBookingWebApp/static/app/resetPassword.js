@@ -5,8 +5,12 @@ Vue.component("resetPassword",{
 			password: "",
 			confirmPassword: "",
 			loggedIn:null,
-			loggedInUser:{}
-			
+			loggedInUser:{},
+			emptyUsername:"",
+			emptyPassword1:"",
+			emptyPassword2:"",
+			passwordFieldType1:"password",
+			passwordFieldType2:"password"
 		}
 	},
 	template:`
@@ -48,15 +52,23 @@ Vue.component("resetPassword",{
 			<div class="form-group">
 			  <label for="username">Usename</label>
 			  <input type="text" name="username" id="username" class="form-control" placeholder="enter your username" v-model="username">
+			  <p style="color:red; margin-right:10px">{{emptyUsername}}</p>
 			</div>
 			<div class="form-group mb-4">
 			  <label for="password">New Password</label>
-			  <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword" v-model="password">
+			  <input type="password" name="password" id="password" class="form-control" :type="passwordFieldType1" placeholder="enter your new passsword" v-model="password">
+			  <td><input type="checkbox" v-on:click="togglePassword1()">Show Password</td>
+			  <p style="color:red; margin-right:10px">{{emptyPassword1}}</p>
+
 			</div>
 			<div class="form-group mb-4">
 			  <label for="password">New Password</label>
-			  <input type="password" name="password" id="password" class="form-control" placeholder="enter your new passsword again" v-model="confirmPassword">
-			</div>
+			  <input type="password" name="password" id="password" class="form-control"  :type="passwordFieldType2" placeholder="enter your new passsword again" v-model="confirmPassword">
+			  <td><input type="checkbox" v-on:click="togglePassword2()">Show Password</td>
+
+			  <p style="color:red; margin-right:10px">{{emptyPassword2}}</p>
+
+ 		    </div>
 			<input name="login" id="login" class="btn btn-block reset-btn" type="button" value="Reset" v-on:click="resetPassword(username, password)">
 		  </form>
 		  
@@ -86,28 +98,79 @@ Vue.component("resetPassword",{
 
 	watch:{
 		password: function(newPassword, oldPassword){
-			if(newPassword.length < 8){
-				// obavestenje o passwordu u toku kucanja
-			}
+			
 		}
 	},
     methods: {
+		togglePassword1: function(){
+			if(this.passwordFieldType1 === "password"){
+				this.passwordFieldType1 = "text";
+			  }else {
+				this.passwordFieldType1 = "password";
+			  }
+		  },
+		  togglePassword2: function(){
+			if(this.passwordFieldType2 === "password"){
+				this.passwordFieldType2 = "text";
+			  }else {
+				this.passwordFieldType2 = "password";
+			  }
+		  },
 		logout: function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
 		},
+		validatePassword1: function(){
+			if(this.password==="" || this.password.trim()===""){
+				this.emptyPassword1="Please enter password";
+				return false;
+			}
+			this.emptyPassword1="";
+			return true;
+		},
+		validatePassword2: function(){
+			if(this.confirmPassword==="" || this.confirmPassword.trim()===""){
+				this.emptyPassword2="Please enter password";
+				return false;
+			}
+			this.emptyPassword2="";
+			return true;
+		},
+		validateUsername: function(){
+			if(this.username==="" || this.username.trim()===""){
+				this.emptyUsername="Please enter username";
+				return false;
+			}
+			
+			this.emptyUsername="";
+			return true;
+		},
+		validate:function(){
+			let vp1 = this.validatePassword1();
+			let vp2 = this.validatePassword2();
+			let vu = this.validateUsername();
+
+			return vp1 && vp2 && vu;
+		},
+		passwordsMatch:function(){
+			if(this.password === this.confirmPassword){
+				this.emptyPassword2=""
+				return true;
+			}	
+			this.emptyPassword2="Passwords do not match!";
+			return false;
+		},
     	resetPassword : function(username, password) {
-    		if(this.password === this.confirmPassword && this.password > 8){
-    			axios
+			if(this.validate() && this.passwordsMatch()){
+				axios
     			.post("/rest/reset", {username: this.username, password: this.password})
     			.then(function(response) {
-    				window.location.href = '/login.html';
+					alert("Password reset successfull!");
+    				window.location.href = '#/login';
     			})
-    			.catch(function(error){
-    				alert("Username doesn't exists!!!");})
-    		}else{
-    			alert("The password does not match or is shorter than 8 characters");
-    		}
+    			.catch(error=>{this.emptyUsername="Username doesn't exists!"});
+			}
+    		
 		
 			
 		},

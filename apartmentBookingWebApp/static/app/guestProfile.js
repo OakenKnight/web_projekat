@@ -369,13 +369,13 @@ Vue.component("guestProfile",{
 
                                             <div class="row">
                                                 <div class="col">
-                                                    <h4>Basic</h4> 
+                                                    <h4 v-if="basicAmenities.length>0">Basic</h4> 
                                                     <div class="amenity col-md-6" v-for="a in basicAmenities">
                                                         <label><strong>{{a.name}}</strong></label>
                                                         <p>{{a.description}}</p>
                                                     </div>
                                                 
-                                                    <h4>Family features</h4> 
+                                                    <h4 v-if="familyAmenities.length>0">Family features</h4> 
                                                     <div class="amenity col-md-6" v-for="a in familyAmenities">
                                                         <label><strong>{{a.name}}</strong></label>
                                                         <p>{{a.description}}</p>
@@ -383,13 +383,13 @@ Vue.component("guestProfile",{
                                                 </div>
 
                                                 <div class="col">
-                                                    <h4>Facilities</h4> 
+                                                    <h4 v-if="facilityAmenities.length>0">Facilities</h4> 
                                                     <div class="amenity col-md-6" v-for="a in facilityAmenities">
                                                         <label><strong>{{a.name}}</strong></label>
                                                         <p>{{a.description}}</p>
                                                     </div>
                                                 
-                                                    <h4>Dining</h4> 
+                                                    <h4 v-if="diningAmenities.length>0">Dining</h4> 
                                                     <div class="amenity col-md-6" v-for="a in diningAmenities">
                                                         <label><strong>{{a.name}}</strong></label>
                                                         <p>{{a.description}}</p>

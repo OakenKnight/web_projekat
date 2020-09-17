@@ -265,13 +265,13 @@ Vue.component("welcome",{
 
                                                     <div class="row">
                                                         <div class="col">
-                                                            <h4>Basic</h4> 
+                                                            <h4 v-if="basicAmenities.length>0" >Basic</h4> 
                                                             <div class="amenity col-md-6" v-for="a in basicAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
                                                             </div>
                                                         
-                                                            <h4>Family features</h4> 
+                                                            <h4 v-if="familyAmenities.length>0">Family features</h4> 
                                                             <div class="amenity col-md-6" v-for="a in familyAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
@@ -279,13 +279,13 @@ Vue.component("welcome",{
                                                         </div>
 
                                                         <div class="col">
-                                                            <h4>Facilities</h4> 
+                                                            <h4 v-if="facilityAmenities.length>0">Facilities</h4> 
                                                             <div class="amenity col-md-6" v-for="a in facilityAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
                                                             </div>
                                                         
-                                                            <h4>Dining</h4> 
+                                                            <h4 v-if="diningAmenities.length>0">Dining</h4> 
                                                             <div class="amenity col-md-6" v-for="a in diningAmenities">
                                                                 <label><strong>{{a.name}}</strong></label>
                                                                 <p>{{a.description}}</p>
@@ -703,26 +703,26 @@ Vue.component("welcome",{
             this.searchedApartment.departDate = this.departDate;
         },
 		minPrice: function(newPrice, oldPrice){
-            this.searchedApartment.minPrice = this.minPrice;
+            this.searchedApartment.minPrice = this.minPrice.trim();
 			if(isNaN(newPrice)){
 				this.minPrice = newPrice.substring(0,newPrice.length -1);
 			}
 		},
 		maxPrice: function(newPrice, oldPrice){
-            this.searchedApartment.maxPrice = this.maxPrice;
+            this.searchedApartment.maxPrice = this.maxPrice.trim();
 
 			if(isNaN(newPrice)){
 				this.maxPrice = newPrice.substring(0,newPrice.length -1);
 			}
         },
         minRooms: function(newRooms, oldRooms){
-            this.searchedApartment.minRooms = this.minRooms;
+            this.searchedApartment.minRooms = this.minRooms.trim();
 			if(isNaN(newRooms)){
 				this.minRooms = newRooms.substring(0,newRooms.length -1);
 			}
 		},
 		maxRooms: function(newRooms, oldRooms){
-            this.searchedApartment.maxRooms = this.maxRooms;
+            this.searchedApartment.maxRooms = this.maxRooms.trim();
 
 			if(isNaN(newRooms)){
 				this.maxRooms = newRooms.substring(0,newRooms.length -1);
@@ -730,7 +730,7 @@ Vue.component("welcome",{
             
         },
         numberOfGuests: function(newGuests, oldGuests){
-            this.searchedApartment.numberOfGuests = this.numberOfGuests;
+            this.searchedApartment.numberOfGuests = this.numberOfGuests.trim();
 
 			if(isNaN(newGuests)){
 				this.numberOfGuests = newGuests.substring(0,newGuests.length -1);

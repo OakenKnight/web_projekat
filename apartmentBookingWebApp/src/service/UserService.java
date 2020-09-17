@@ -2,6 +2,8 @@ package service;
 
 import java.util.ArrayList;
 
+import javax.swing.text.DefaultStyledDocument.ElementSpec;
+
 import beans.Admin;
 import beans.Guest;
 import beans.Housekeeper;
@@ -44,10 +46,15 @@ public class UserService {
 	
 	public boolean resetPassword(String username, String password) {
 		User user = findAnyTypeOfUser(username);
-		if(user.getUserType() == UserType.ADMIN) return resetAdminsPassword(username, password);
-		else if (user.getUserType() == UserType.HOUSEKEEPER) return resetHousekeepersPassword(username, password);
-		else if (user.getUserType() == UserType.GUEST) return resetGuestsPassword(username, password);
-		else return false;
+		if(user!=null){
+			if(user.getUserType() == UserType.ADMIN) return resetAdminsPassword(username, password);
+			else if (user.getUserType() == UserType.HOUSEKEEPER) return resetHousekeepersPassword(username, password);
+			else if (user.getUserType() == UserType.GUEST) return resetGuestsPassword(username, password);
+			else return false;
+		}else{
+			return false;
+		}
+		
 	}
 	
 	private boolean resetGuestsPassword(String username, String password) {

@@ -359,19 +359,19 @@ Vue.component("housekeeper",{
                                     <td><label class="profile-info-label">Old password:</label></td>
                                     <td><input class="profile-info-p" name="password" id="oldinput" :type="passwordFieldType0" v-model="oldPassword"></td>
                                     <td><input type="checkbox" v-on:click="toggleOldPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyOldPassword}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyOldPassword}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><label class="profile-info-label">Password:</label></td>
                                     <td><input class="profile-info-p" name="password" id="firstinput" :type="passwordFieldType1" v-model="password1"></td>
                                     <td><input type="checkbox" v-on:click="toggleFirstPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyPassword1}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyPassword1}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><label class="profile-info-label">Please enter password again:</label></td>
                                     <td><input class="profile-info-p" :type="passwordFieldType2" name="password" id="secondinput" v-model="password2"></td>
                                     <td><input type="checkbox" v-on:click="toggleSecondPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyPassword2}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyPassword2}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><button class="edit-info-button" type="button" v-on:click="cancelPasswordReset()">Cancel</button></td>
@@ -384,7 +384,8 @@ Vue.component("housekeeper",{
                 </div>
             </div>
             </div>
-            <div v-if="newApartmentDialog">
+            
+                <div v-if="newApartmentDialog">
                     <div class="modal-mask">
                         <div class="modal-wrapper">
                             <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -543,6 +544,7 @@ Vue.component("housekeeper",{
                             </div>
                         </div>
                     </div>
+                    
             <div v-if="showApartment">
                             <div class="modal-mask">
                             <div class="modal-wrapper">
@@ -888,9 +890,9 @@ Vue.component("housekeeper",{
                     .post('rest/updateAdmin',this.loggedInUser)
                     .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
                 }else if(this.password1!==this.password2){
-                    alert("Passwords do not match!");
+                    this.emptyPassword2="Passwords do not match!";
                 }else if(this.oldPassword!==this.loggedInUserBackup.password){
-                    alert("Old password doesnt match!");
+                    this.emptyOldPassword="Old password doesnt match!";
                 }
             }else{
                 if(this.oldPassword ===""){
@@ -962,11 +964,9 @@ Vue.component("housekeeper",{
               }
         },
         checkFieldsForUpdate: function(){
-            if(this.validateName() && this.validateLastName()){ 
-                return true;
-            }else{
-                return false;
-            }
+            let vn = this.validateName();
+            let vln = this.validateLastName();
+            return vn && vln;
         },
         cancelPasswordReset:function(){
             this.loggedInUser=JSON.parse(JSON.stringify(this.loggedInUserBackup))
@@ -1202,19 +1202,24 @@ Vue.component("housekeeper",{
             reservation.reservationStatus = "ACCEPTED";
             axios
             .post("/rest/updateReservation", reservation)
-            .then(response=>(alert(response.data)));
+            .then(response=>(alert(response.data)))
+            .catch(error=>{alert("Oooops something went wrong!")})
         },
         finishReservation: function(reservation){
             reservation.reservationStatus = "FINISH";
             axios
             .post("/rest/updateReservation", reservation)
-            .then(response=>(alert(response.data)));
+            .then(response=>(alert(response.data)))
+            .catch(error=>{alert("Oooops something went wrong!")})
+
         },
         rejectReservation: function(reservation){
             reservation.reservationStatus = "REJECTED";
             axios
             .post("/rest/updateReservation", reservation)
-            .then(response=>(alert(response.data)));
+            .then(response=>(alert(response.data)))
+            .catch(error=>{alert("Oooops something went wrong!")})
+
         },
         createNewApartment: function(){
             var d = new Date();
