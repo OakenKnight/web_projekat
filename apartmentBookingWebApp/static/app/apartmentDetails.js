@@ -31,6 +31,7 @@ Vue.component("apartmentDetails", {
             emptyDate:"",
             listOfNights:[],
             arriveDateSelected:false,
+            pictureToShow: null
         }
     },
     template: `
@@ -67,7 +68,9 @@ Vue.component("apartmentDetails", {
             </div>
             <div class="info">
                 <div class="row justify-content-center">
-                    <img v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" v-on:click="" alt="image not found">
+                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, -1)"><p><i class="arrow left"></i></p></div>
+                    <img v-bind:src="'assets/images/apartmentsimg/' + pictureToShow"  style="width: 800px; height:600px"  v-if="selectedApartment.pictures.length > 0"  alt="image not found">
+                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, +1)"><p><i class="arrow right"></i></p></div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -270,6 +273,7 @@ Vue.component("apartmentDetails", {
                 this.selectedApartment = response.data;
                 this.setFreeDates();
                 this.mountAll();
+                this.pictureToShow = this.selectedApartment.pictures[0];
 
             });
         
@@ -278,6 +282,22 @@ Vue.component("apartmentDetails", {
         logout: function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
+        },
+        getNextPicture: function(pic, leftOrRight){
+            for(var i = 0; i < this.selectedApartment.pictures.length; i ++){
+                if(this.selectedApartment.pictures[i] === this.pictureToShow){
+                    if(i + leftOrRight >= this.selectedApartment.pictures.length){
+                        this.pictureToShow = this.selectedApartment.pictures[0];
+                        break;
+                    }else if(i + leftOrRight < 0){
+                        this.pictureToShow = this.selectedApartment.pictures[this.selectedApartment.pictures.length - 1];
+                        break;
+                    }else{
+                        this.pictureToShow = this.selectedApartment.pictures[i + leftOrRight];
+                        break;
+                    }
+                }
+            }
         },
         setFreeDates: function(){
             var today = new Date();

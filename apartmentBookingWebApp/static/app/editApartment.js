@@ -55,7 +55,7 @@ Vue.component("editApartment",{
             addOrDeleteFreeDates: "none",
             freeDatesForDelete: [],
             type:"",
-            imagesForBack:[],
+            imagesForBack: [],
             images:[],
             imageCount:0,
             filename:"",
@@ -505,6 +505,14 @@ Vue.component("editApartment",{
             });
             return n;
         },
+        deletePicturesFromList: function(pic){
+            var i = this.selectedApartment.pictures.length;
+                while(i--){
+                    if(this.selectedApartment.pictures[i] === pic){
+                        this.selectedApartment.pictures.splice(i,1);
+                    }
+                }
+        },
         reserFreeDatesForAdd: function(){
             this.addOrDeleteFreeDates = 'none';
             arriveDate = null;
@@ -646,7 +654,9 @@ Vue.component("editApartment",{
             this.location.address = this.adresaObjekat;
             console.log(this.location);
             this.selectedApartment.location = this.location;
-
+            if(this.imagesForBack.length > 0){
+                this.selectedApartment.pictures.push(this.imagesForBack[0]);
+            }
             if(this.validate()){
                 axios
                 .post("/rest/updateApartment", this.selectedApartment)
