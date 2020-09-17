@@ -354,11 +354,11 @@ Vue.component("editApartment",{
                             <p>{{p}}</p> <button type="button" class="btn btn-primary" style="margin-top: -40px" v-on:click="deletePicturesFromList(p)">Delete</button>
                         </div>
                     </div>
-
                     <div class="row justify-content-center">
                         <h3>Add picture: </h3>
                         <input type="file" id="myFile" name="filename" @change=imageAdded>
                     </div>
+
 
                     <button type="button" class="btn btn-primary" style="margin-left:20px" :disabled="selectedApartment.deleted" v-on:click="deleteApartment()">Delete</button>
                     <button type="button" class="btn btn-primary" style="margin-left:20px" v-on:click="cancleEditingApartment()">Cancel</button>
@@ -464,6 +464,8 @@ Vue.component("editApartment",{
                 console.log(img);
                 this.imagesForBack.push(img);
             }
+            reader.readAsDataURL(file);
+
         },
         deleteApartment:function(){
             this.selectedApartment.deleted=true;
@@ -502,14 +504,6 @@ Vue.component("editApartment",{
                 }
             });
             return n;
-        },
-        deletePicturesFromList: function(pic){
-            var i = this.selectedApartment.pictures.length
-            while(i--){
-                if(this.selectedApartment.pictures[i] === pic){
-                    this.selectedApartment.pictures.splice(i,1);
-                }
-            }
         },
         reserFreeDatesForAdd: function(){
             this.addOrDeleteFreeDates = 'none';

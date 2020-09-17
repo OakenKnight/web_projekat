@@ -31,14 +31,15 @@ public class SearchService {
         if (!isNullOrEmpty(searchedApartment.getDestination()))
             apartments = filterByDestination(apartments, searchedApartment.getDestination());
         
-        if(!isNullOrEmpty(searchedApartment.getMinGuests()))
-            apartments = filterByGuestsMin(apartments, searchedApartment.getMinGuests());
+        if(!isNullOrEmpty(searchedApartment.getMinRooms()))
+            apartments = filterByRoomsMin(apartments, searchedApartment.getMinRooms());
         
-        if(!isNullOrEmpty(searchedApartment.getMaxGuests())){
-            apartments = filterByGuestsMax(apartments, searchedApartment.getMaxGuests());
-
+        if(!isNullOrEmpty(searchedApartment.getMaxRooms()))
+            apartments = filterByRoomsMax(apartments, searchedApartment.getMaxRooms());
+        
+        if(!isNullOrEmpty(searchedApartment.getGuests())){
+            apartments = filterByGuests(apartments, searchedApartment.getGuests());
         }
-        
         if(!isNullOrEmpty(searchedApartment.getMinimumPrice()))
             apartments = filterByMinPrice(apartments, searchedApartment.getMinimumPrice());
 
@@ -72,22 +73,32 @@ public class SearchService {
 
     }
 
-    private ArrayList<Apartment> filterByGuestsMin(ArrayList<Apartment> apartments, String minGuests) {
-        int min = Integer.parseInt(minGuests);
+    private ArrayList<Apartment> filterByRoomsMin(ArrayList<Apartment> apartments, String minRooms) {
+        int min = Integer.parseInt(minRooms);
         System.out.println(min);
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
         for(Apartment a : apartments){
-            if(a.getGuestNumber() >= min){
+            if(a.getRoomNumber() >= min){
                 filteredApartments.add(a);
             }
         }
         return filteredApartments;    
     }
-    private ArrayList<Apartment> filterByGuestsMax(ArrayList<Apartment> apartments, String maxGuests) {
-        int max = Integer.parseInt(maxGuests);
+    private ArrayList<Apartment> filterByRoomsMax(ArrayList<Apartment> apartments, String maxRooms) {
+        int max = Integer.parseInt(maxRooms);
         ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
         for(Apartment a : apartments){
-            if(a.getGuestNumber() <= max){
+            if(a.getRoomNumber() <= max){
+                filteredApartments.add(a);
+            }
+        }
+        return filteredApartments;    
+    }
+    private ArrayList<Apartment> filterByGuests(ArrayList<Apartment> apartments, String guests) {
+        int guestsNumber = Integer.parseInt(guests);
+        ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+        for(Apartment a : apartments){
+            if(a.getGuestNumber() == guestsNumber){
                 filteredApartments.add(a);
             }
         }

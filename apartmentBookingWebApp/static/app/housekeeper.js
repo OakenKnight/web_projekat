@@ -62,7 +62,10 @@ Vue.component("housekeeper",{
             emptyOldPassword:"",
             activeOrInactiveApartment: 1,
             roomOrApartment: 1,
-            amenitiesForFilter: []
+            amenitiesForFilter: [],
+            apartmentSortCriteria:1,
+            reservationSortCriteria:1
+
 
 		}
 	},
@@ -154,17 +157,26 @@ Vue.component("housekeeper",{
                                     </li>
                                 </ul>
                             <!--   <button type="button" class="btn btn-primary" v-on:click="filterSearch()">Filter</button>-->
+                            <div class="select-apartment-type-filter">
+                                <select required v-model="apartmentSortCriteria">
+                                    <option value="1" selected >Sort</option>
+                                    <option value="2">Sort by price asc</option>
+                                    <option value="3">Sort by price desc</option>
+                                </select>
+                        </div>
                             </div>
                         </div>
                         <div class="apartment-housekeeper" v-for="a in apartments" >
                             <div class="apartment-border-housekeeper" v-on:click="showApartmentDetails(a)">
-                                <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found"> 
+                            <img class="apartment-pic-housekeeper" v-if="a.pictures.length>0" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found"> 
                                 <div class="apartment-info-housekeeper">
                                     <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
+                                    <h5><img class="apartment-info-icons-housekeeper" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
                                     <p><img class="apartment-info-icons-housekeeper" src="/assets/images/location-icon.png" alt="not found"> {{a.location.address.street}} {{a.location.address.number}}</p>
                                     <p><img class="apartment-info-icons-housekeeper" src="/assets/images/people-icon.png" alt="not found"> {{a.guestNumber}} people</p>
                                     <p><img class="apartment-info-icons-housekeeper" src="/assets/images/rooms-icon.png" alt="not found"> {{a.roomNumber}} rooms</p>
-                                    <h5><img class="apartment-info-icons-housekeeper" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>
+                                    <p><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"> {{a.priceForNight}} €</p>
+    
                                 </div>
                             </div>
                         </div>
@@ -222,6 +234,14 @@ Vue.component("housekeeper",{
                                 <option value="4">Show only created</option>
                                 <option value="5">Show only finished</option>
                                 <option value="6">Show only canceled</option>
+                            </select>
+                        </div>
+
+                        <div class="select-apartment-type-filter">
+                            <select required v-model="reservationSortCriteria">
+                                <option value="1" selected >Sort</option>
+                                <option value="2">Sort by price asc</option>
+                                <option value="3">Sort by price desc</option>
                             </select>
                         </div>
                         <hr>
@@ -953,8 +973,14 @@ Vue.component("housekeeper",{
 			var sum = 0;
 			apartment.comments.forEach(element => {
 				sum += element.reviewsMark;
-			});
-			return  (sum / apartment.comments.length);
+            });
+            
+            if(apartment.comments.length>0){
+                return  (sum / apartment.comments.length);
+            }else{
+                return "No reviews";
+            }
+
         },
         findApartmentName: function(apId){
             var n;
@@ -1225,6 +1251,7 @@ Vue.component("housekeeper",{
                 return true;
             }
         },
+
         filterSearch:function(){
             console.log(this.apartmentsBackUp);
             this.apartments = [...this.apartmentsBackUp];
@@ -1252,8 +1279,72 @@ Vue.component("housekeeper",{
                 this.apartments=[...this.apartmentsBackUp];
             }
             
-        }
+        },
 
+        comparePriceDESCApartment: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.priceForNight;
+            const priceB = b.priceForNight;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = 1;
+            } else if (priceA > priceB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        comparePriceASCApartment: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.priceForNight;
+            const priceB = b.priceForNight;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = -1;
+            } else if (priceA > priceB) {
+              comparison = 1;
+            }
+            return comparison;
+        },
+        sortApartmentsByPriceASC:function(){
+            this.apartments.sort(this.comparePriceASCApartment);
+        },
+        sortApartmentsByPriceDESC:function(){
+            this.apartments.sort(this.comparePriceDESCApartment);
+        },
+        comparePriceDESCReservation: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.totalPrice;
+            const priceB = b.totalPrice;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = 1;
+            } else if (priceA > priceB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        comparePriceASCReservation: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.totalPrice;
+            const priceB = b.totalPrice;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = -1;
+            } else if (priceA > priceB) {
+              comparison = 1;
+            }
+            return comparison;
+        },
+        sortReservationByPriceASC:function(){
+            this.reservations.sort(this.comparePriceASCReservation);
+        },
+        sortReservationByPriceDESC:function(){
+            this.reservations.sort(this.comparePriceDESCReservation);
+        },
     },
     
     filters: {
@@ -1408,6 +1499,26 @@ Vue.component("housekeeper",{
             }else{
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];  
+            }
+        },
+        apartmentSortCriteria: function(newType, oldType){
+            console.log(newType);
+            if(newType == 2){
+                this.sortApartmentsByPriceASC();
+            }else if(newType == 3){
+                this.sortApartmentsByPriceDESC();
+            }else{
+                
+            }
+        },
+        reservationSortCriteria: function(newType, oldType){
+            console.log(newType);
+            if(newType == 2){
+                this.sortReservationByPriceASC();
+            }else if(newType == 3){
+                this.sortReservationByPriceDESC();
+            }else{
+                
             }
         }
     }

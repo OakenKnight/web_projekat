@@ -34,6 +34,7 @@ Vue.component("guestProfile",{
             commentApartment:{},
             selectedApartment1:{},
             comments:[],
+            apartmentSortCriteria:"1",
             commentsToSee:[]
         }
 	},
@@ -235,6 +236,22 @@ Vue.component("guestProfile",{
 
                     <section v-if="mode==='reservations'" id="reservations">
                         <div class = "row">
+                            <div style="text-align: center; height: 30px;
+                                width: 230px;
+                                background-color:white;
+                                margin: 20px;
+                                box-sizing: border-box;
+                                border:0px;
+                                outline:0px;
+                                box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);" >
+                                <select required v-model="apartmentSortCriteria">
+                                    <option value="1" selected >Select sort method</option>
+                                    <option value="2">Sort by price ascending</option>
+                                    <option value="3">Sort by price descending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="apartment col" v-for="r in userReservations" v-on:click="rateApartmentFromReservation(r)">
                                 <div class="apartment-border">
 
@@ -472,8 +489,8 @@ Vue.component("guestProfile",{
                     this.commentsToSee.push(this.comments[i]);
                 }
             }
-            //treba dodati da se vide samo oni koji su dozvoljeni
         },
+       
         getBasicAmenities:function(){
             this.basicAmenities = this.amenities.filter(function(amenity){
                 return amenity.type === 'BASIC';
@@ -694,7 +711,39 @@ Vue.component("guestProfile",{
             }
             
 
-        }
+        },
+        comparePriceDESC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.totalPrice;
+            const priceB = b.totalPrice;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = 1;
+            } else if (priceA > priceB) {
+              comparison = -1;
+            }
+            return comparison;
+        },
+        comparePriceASC: function(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const priceA = a.totalPrice;
+            const priceB = b.totalPrice;
+          
+            let comparison = 0;
+            if (priceA < priceB) {
+              comparison = -1;
+            } else if (priceA > priceB) {
+              comparison = 1;
+            }
+            return comparison;
+        },
+        sortByPriceASC:function(){
+            this.userReservations.sort(this.comparePriceASC);
+        },
+        sortByPriceDESC:function(){
+            this.userReservations.sort(this.comparePriceDESC);
+        },
 
     },
     
@@ -736,6 +785,16 @@ Vue.component("guestProfile",{
         },
         commentText:function(newText,oldText){
             this.commentText = newText;
+        },
+        apartmentSortCriteria: function(newType, oldType){
+            console.log(newType);
+            if(newType == 2){
+                this.sortByPriceASC();
+            }else if(newType == 3){
+                this.sortByPriceDESC();
+            }else{
+                
+            }
         }
 	},
     components:{
