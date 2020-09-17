@@ -522,10 +522,10 @@ Vue.component("guestProfile",{
         oldReservation:function(r){
             var todaysDate = new Date();
             var milis = r.arrivalDate;
-            if(todaysDate.getTime()< new Date(milis - 86400000)){
-                return false;
-            }else{
+            if(new Date(todaysDate.getTime())< new Date(milis - 86400000)){
                 return true;
+            }else{
+                return false;
             }
         },
         save: function(){

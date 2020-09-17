@@ -61,7 +61,7 @@
 }, {
   "id" : "15992209431463",
   "name" : "Window guards",
-  "description" : "",
+  "description" : "Window has guards!",
   "amenityType" : "FAMILY_FEATURES"
 }, {
   "id" : "15992209431464",
@@ -113,4 +113,9 @@
   "name" : "Refrigerator",
   "description" : "",
   "amenityType" : "DINING"
+}, {
+  "id" : "1600380920868",
+  "name" : "Fireplace",
+  "description" : "",
+  "amenityType" : "FAMILY_FEATURES"
 } ]

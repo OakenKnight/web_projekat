@@ -7,4 +7,13 @@
   "userType" : "HOUSEKEEPER",
   "apartmentsId" : [ "app12", "app22", "app32" ],
   "jwttoken" : null
+}, {
+  "username" : "rale",
+  "password" : "rale",
+  "firstName" : "Radovan",
+  "lastName" : "Petrovic",
+  "gender" : "MALE",
+  "userType" : "HOUSEKEEPER",
+  "apartmentsId" : [ "app1" ],
+  "jwttoken" : null
 } ]

@@ -14,7 +14,7 @@
   "totalPrice" : 350.0,
   "message" : "aaaaaaaaaaaaaaaa",
   "guestId" : "milica",
-  "reservationStatus" : "CREATED",
+  "reservationStatus" : null,
   "id" : "milica1"
 }, {
   "apartmentId" : "app22",
