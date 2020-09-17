@@ -106,7 +106,6 @@ Vue.component("housekeeper",{
                 <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
                         <h3>All your apartments</h3><button type="button" class="btn btn-primary" onclick="location.href='#/addApartment'">Create New apartment</button>
-                        <router-link to="/housekeeper/addApartment">Aasdasd</router-link>
                         <div class="search-housekeeper">
                             <div>
                                 <input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch">
@@ -1034,9 +1033,11 @@ Vue.component("housekeeper",{
                 this.guests.splice(0,this.guests.length);
                 this.guests = [...this.guestsBackUp]; 
                 this.guestForSearch="";
+                this.gen = "all";
             }else{
                 this.guests.splice(0,this.guests.length);
-                this.guests = [...this.guestsBackUp];  
+                this.guests = [...this.guestsBackUp]; 
+                this.gen = "all";
                 var i = this.guests.length;
                 while(i--){
                     if(this.guests[i].username.toLowerCase() !== keyWord.toLowerCase()){
@@ -1048,9 +1049,15 @@ Vue.component("housekeeper",{
         searchApartment: function(keyWord){
             if(keyWord === ""){
                 this.apartmentForSearch="";
+                this.roomOrApartment = 1;
+                this.activeOrInactiveApartment = 1;
+                this.amenitiesForFilter.splice(0, this.amenitiesForFilter.length);
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
+                this.apartments = [...this.apartmentsBackUp];
             }else{
+                this.roomOrApartment = 1;
+                this.activeOrInactiveApartment = 1;
+                this.amenitiesForFilter.splice(0, this.amenitiesForFilter.length);
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];  
                 var i = this.apartments.length;
@@ -1269,21 +1276,19 @@ Vue.component("housekeeper",{
         },
 
         filterSearch:function(){
-            console.log(this.apartmentsBackUp);
-            this.apartments = [...this.apartmentsBackUp];
             var lista=[];
            
             var brojac=0;
             if(this.amenitiesForFilter.length>0){
-                for(var i=0;i<this.apartmentsBackUp.length;i++){
+                for(var i=0;i<this.apartments.length;i++){
                     for(var j=0;j<this.amenitiesForFilter.length;j++){
-                        for(var k=0;k<this.apartmentsBackUp[i].amenities.length;k++){
-                            if(this.apartmentsBackUp[i].amenities[k].id===this.amenitiesForFilter[j].id){
+                        for(var k=0;k<this.apartments[i].amenities.length;k++){
+                            if(this.apartments[i].amenities[k].id===this.amenitiesForFilter[j].id){
                                 brojac++;
                             }
                         }
                         if(brojac==this.amenitiesForFilter.length){
-                            lista.push(this.apartmentsBackUp[i]);
+                            lista.push(this.apartments[i]);
                         }
                     }
                     brojac=0;
@@ -1293,6 +1298,16 @@ Vue.component("housekeeper",{
 
             }else{
                 this.apartments=[...this.apartmentsBackUp];
+                if(this.activeOrInactiveApartment == 2){
+                    this.filterApartmentByStatus("ACTIVE");
+                } else if(this.activeOrInactiveApartment == 3){
+                    this.filterApartmentByStatus("INACTIVE");
+                }
+                if(this.roomOrApartment == 2){
+                    this.filterApartmentByType("APARTMENT");
+                }else if(this.roomOrApartment == 3){
+                    this.filterApartmentByType("ROOM");
+                } 
             }
             
         },
@@ -1361,6 +1376,22 @@ Vue.component("housekeeper",{
         sortReservationByPriceDESC:function(){
             this.reservations.sort(this.comparePriceDESCReservation);
         },
+        filterApartmentByStatus: function(status){
+            var i = this.apartments.length;
+            while(i--){
+                if(this.apartments[i].apartmentStatus !== status){
+                       this.apartments.splice(i,1);
+                }
+            }
+        },
+        filterApartmentByType: function(type){
+            var i = this.apartments.length;
+            while(i--){
+                if(this.apartments[i].apartmentType !== type){
+                    this.apartments.splice(i,1);
+                }
+            }
+        }
     },
     
     filters: {
@@ -1472,49 +1503,65 @@ Vue.component("housekeeper",{
         roomOrApartment: function(newValue, oldValue){
             if(newValue == 2){
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
-                var i = this.apartments.length;
-                while(i--){
-                    if(this.apartments[i].apartmentType !== "APARTMENT"){
-                        this.apartments.splice(i,1);
-                    }
+                this.apartments = [...this.apartmentsBackUp];
+                this.filterSearch();
+                this.filterApartmentByType("APARTMENT");
+                if(this.activeOrInactiveApartment == 2){
+                    this.filterApartmentByStatus("ACTIVE");
+                } else if(this.activeOrInactiveApartment == 3){
+                    this.filterApartmentByStatus("INACTIVE");
                 }
             }else if(newValue == 3){
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
-                var i = this.apartments.length;
-                while(i--){
-                    if(this.apartments[i].apartmentType !== "ROOM"){
-                        this.apartments.splice(i,1);
-                    }
-                }
+                this.apartments = [...this.apartmentsBackUp];
+                this.filterSearch();
+                this.filterApartmentByType("ROOM");
+                if(this.activeOrInactiveApartment == 2){
+                    this.filterApartmentByStatus("ACTIVE");
+                } else if(this.activeOrInactiveApartment == 3){
+                    this.filterApartmentByStatus("INACTIVE");
+                } 
             }else{
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
+                this.apartments = [...this.apartmentsBackUp];
+                this.filterSearch();
+                if(this.activeOrInactiveApartment == 2){
+                    this.filterApartmentByStatus("ACTIVE");
+                } else if(this.activeOrInactiveApartment == 3){
+                    this.filterApartmentByStatus("INACTIVE");
+                } 
             }
         },
         activeOrInactiveApartment: function(newValue, oldValue){
             if(newValue == 2){
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
-                var i = this.apartments.length;
-                while(i--){
-                    if(this.apartments[i].apartmentStatus !== "ACTIVE"){
-                        this.apartments.splice(i,1);
-                    }
-                }
+                this.apartments = [...this.apartmentsBackUp]; 
+                this.filterSearch();
+                this.filterApartmentByStatus("ACTIVE");
+                if(this.roomOrApartment == 2){
+                    this.filterApartmentByType("APARTMENT");
+                }else if(this.roomOrApartment == 3){
+                    this.filterApartmentByType("ROOM");
+                } 
             }else if(newValue == 3){
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
-                var i = this.apartments.length;
-                while(i--){
-                    if(this.apartments[i].apartmentStatus !== "INACTIVE"){
-                        this.apartments.splice(i,1);
-                    }
-                }
+                this.apartments = [...this.apartmentsBackUp]; 
+                this.filterSearch();
+                this.filterApartmentByStatus("INACTIVE");
+                if(this.roomOrApartment == 2){
+                    this.filterApartmentByType("APARTMENT");
+                }else if(this.roomOrApartment == 3){
+                    this.filterApartmentByType("ROOM");
+                }  
             }else{
                 this.apartments.splice(0,this.apartments.length);
-                this.apartments = [...this.apartmentsBackUp];  
+                this.apartments = [...this.apartmentsBackUp]; 
+                this.filterSearch();
+                if(this.roomOrApartment == 2){
+                    this.filterApartmentByType("APARTMENT");
+                }else if(this.roomOrApartment == 3){
+                    this.filterApartmentByType("ROOM");
+                }   
             }
         },
         apartmentSortCriteria: function(newType, oldType){

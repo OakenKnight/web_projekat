@@ -256,10 +256,28 @@ public class SparkAppMain {
 			String payload = req.body();
 			Apartment apartment = g.fromJson(payload, Apartment.class);
 			ApartmentRepository apartmentRepository = new ApartmentRepository();
+			
+			String convertedImages = "";
+			int n = apartment.getPictures().size() - 1;
+			if(apartment.getPictures().get(apartment.getPictures().size() - 1).length() > 50) {
+				String id = "" +((new Date()).getTime());
+				String path ="/assets/images/apartmentsimg/a"+id+".jpg";
+				Base64ToImage decoder = new Base64ToImage();
+				decoder.Base64DecodeAndSave(apartment.getPictures().get(apartment.getPictures().size() - 1), path);
+				path = "a"+id+".jpg";
+				convertedImages = path;	
+				
+			}
+			apartment.getPictures().remove(n);
+			if(convertedImages != "") {
+				apartment.getPictures().add(convertedImages);
+			}
+			
 			if(apartmentRepository.update(apartment)) {
-				return "Info update successfully";
+				return "Apartment created successfully";
 			}
 			return "Someting went wrong";
+			
 		});
 		
 		get("/rest/getAllAmenities", (req,res)->{
