@@ -642,14 +642,14 @@
   "roomNumber" : 3,
   "guestNumber" : 2,
   "location" : {
-    "latitude" : "45.2453",
-    "longitude" : "19.8321",
+    "latitude" : "",
+    "longitude" : "",
     "address" : {
-      "street" : "Mise Dimitrijevica 2",
+      "street" : "Mise Dimitrijevica 2 Novi Sad",
       "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21102",
-      "state" : "Serbia"
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
     }
   },
   "freeDates" : [ ],

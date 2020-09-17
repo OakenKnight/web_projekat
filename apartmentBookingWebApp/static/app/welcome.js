@@ -17,8 +17,9 @@ Vue.component("welcome",{
             modal:false,
             minPrice: "",
             maxPrice:"",
-            minGuests:"",
-            maxGuests:"",
+            minRooms:"",
+            maxRooms:"",
+            guests:"",
             numberOfGuests:"",
             loggedIn:null,
             apartmentSortCriteria: "1",
@@ -98,19 +99,13 @@ Vue.component("welcome",{
                                 <div class="datepicker">
                                     <vuejs-datepicker :disabled-dates="disabledDepartDates" format="dd.MM.yyyy" monday-first placeholder="Depart" name="departDate" v-model="departDate"></vuejs-datepicker>
                                 </div>
-                                <!--
+                                
 
-                                <select required v-model="numberOfGuests">
-                                    <option value="" disabled selected hidden>Guests</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-
-                                -->
-                                <input type="text" placeholder="Min guests" name="minG" class="price" v-model="minGuests">
-                                <input type="text" placeholder="Max guests" name="maxG" class="price" v-model="maxGuests">  
+                                
+                                <input type="text" placeholder="Min rooms" name="minR" class="price" v-model="minRooms">
+                                <input type="text" placeholder="Max rooms" name="maxR" class="price" v-model="maxRooms">  
+                                
+                                <input type="text" placeholder="Guests" name="guests" class="price" v-model="numberOfGuests">
 
                                 <input type="text" placeholder="Min price" name="minP" class="price" v-model="minPrice">
                                 <input type="text" placeholder="Max price" name="maxP" class="price" v-model="maxPrice">  
@@ -489,8 +484,8 @@ Vue.component("welcome",{
             
             if(this.verifyArriveDate()){
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:null,
-                departDate:null, minGuests:searchedApartment.minGuests,maxGuests:searchedApartment.maxGuests,
-                minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};
+                departDate:null, minRooms:searchedApartment.minRooms,maxRooms:searchedApartment.maxRooms,
+                minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice, numberOfGuests:searchedApartment.numberOfGuests};
                 
                 axios
                 .post('rest/search',aptDTO)
@@ -498,8 +493,8 @@ Vue.component("welcome",{
             }else{
                 console.log(this.arriveDate);
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:this.arriveDate,
-                departDate:this.departDate, minGuests:searchedApartment.minGuests,maxGuests:searchedApartment.maxGuests,
-                minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice};     
+                departDate:this.departDate, minRooms:searchedApartment.minRooms,maxRooms:searchedApartment.maxRooms,
+                minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice, numberOfGuests:searchedApartment.numberOfGuests};     
                 axios
                 .post('rest/search',aptDTO)
                 .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[]})           
@@ -512,16 +507,7 @@ Vue.component("welcome",{
         showMore: function(a){
             console.log(a);
             this.selectedApartment = a;
-            /*
-            if(this.verifyDates()){
-                window.location.href = "#/apartmentDetails?id=" + this.selectedApartment.id+"&arriveDate="+this.arriveDate+"&departDate="+this.departDate;
-            }else{
-                window.location.href = "#/apartmentDetails?id=" + this.selectedApartment.id;
-            }
-            //window.location.href = '#/apartmentDetails'+'?';
-            //console.log(this.selectedApartment.name);
 
-            */
             this.amenities = a.amenities;
             this.getBasicAmenities();
             this.getDiningAmenities();
@@ -728,24 +714,25 @@ Vue.component("welcome",{
 				this.maxPrice = newPrice.substring(0,newPrice.length -1);
 			}
         },
-        minGuests: function(newGuests, oldGuests){
-            this.searchedApartment.minGuests = this.minGuests;
-			if(isNaN(newGuests)){
-				this.minGuests = newGuests.substring(0,newGuests.length -1);
+        minRooms: function(newRooms, oldRooms){
+            this.searchedApartment.minRooms = this.minRooms;
+			if(isNaN(newRooms)){
+				this.minRooms = newRooms.substring(0,newRooms.length -1);
 			}
 		},
-		maxGuests: function(newGuests, oldGuests){
-            this.searchedApartment.maxGuests = this.maxGuests;
+		maxRooms: function(newRooms, oldRooms){
+            this.searchedApartment.maxRooms = this.maxRooms;
 
-			if(isNaN(newGuests)){
-				this.maxGuests = newGuests.substring(0,newGuests.length -1);
-			}
+			if(isNaN(newRooms)){
+				this.maxRooms = newRooms.substring(0,newRooms.length -1);
+            }
+            
         },
-        numberOfGuests: function(newNumber, oldNumber){
+        numberOfGuests: function(newGuests, oldGuests){
             this.searchedApartment.numberOfGuests = this.numberOfGuests;
 
-			if(isNaN(this.numberOfGuests)){
-				this.numberOfGuests = "Guests   ";
+			if(isNaN(newGuests)){
+				this.numberOfGuests = newGuests.substring(0,newGuests.length -1);
 			}
 		},
 
