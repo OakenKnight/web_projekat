@@ -177,7 +177,7 @@ Vue.component("register",{
           window.location.href = '#/';
           console.log(this.user.JWTToken);
 				})
-				.catch(function(error){alert("Username already exists!")})
+				.catch(error=>{this.emptyUsername="Username is already taken!"})
 			}
 			
 		},
@@ -203,12 +203,6 @@ Vue.component("register",{
 		password: function(newPassword, oldPassword){
       this.password = newPassword;
       this.user.password = this.password;
-      
-      /*
-			if(newPassword.length < 8){
-				// obavestenje o passwordu u toku kucanja
-      }
-      */
 		},
 	},
 });

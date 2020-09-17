@@ -68,9 +68,11 @@ Vue.component("apartmentDetails", {
             </div>
             <div class="info">
                 <div class="row justify-content-center">
+
                     <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, -1)"><p><i class="arrow left"></i></p></div>
                     <img v-bind:src="'assets/images/apartmentsimg/' + pictureToShow"  style="width: 800px; height:600px"  v-if="selectedApartment.pictures.length > 0"  alt="image not found">
                     <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, +1)"><p><i class="arrow right"></i></p></div>
+
                 </div>
                 <div class="row">
                     <div class="col">
@@ -260,7 +262,7 @@ Vue.component("apartmentDetails", {
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response =>{ if (response.data !== "GUEST")
-                window.location.href = '#/forbidden';
+                this.$router.push('/forbidden');
             });
 
         }
@@ -275,7 +277,8 @@ Vue.component("apartmentDetails", {
                 this.mountAll();
                 this.pictureToShow = this.selectedApartment.pictures[0];
 
-            });
+            })
+            .catch(error=>{this.$router.push('/bad_request')});
         
     },
     methods: {
@@ -332,7 +335,9 @@ Vue.component("apartmentDetails", {
                 axios
                 .post('rest/requestBooking',this.reservation)
                 .then(response => {
+                    alert("Booking successful!")
                     this.$router.push('/');
+                    
                 })
                 .catch(function(error){alert("Ooooops something went wrong!")});       
             }

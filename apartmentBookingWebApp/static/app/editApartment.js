@@ -403,7 +403,8 @@ Vue.component("editApartment",{
                 this.startEditingApartment();
                 this.setFreeDates();
                 
-            });
+            })
+            .catch(error=>{this.$router.push('/bad_request')});
 
             axios
             .get('rest/getAllAmenities')
@@ -469,22 +470,13 @@ Vue.component("editApartment",{
         },
         deleteApartment:function(){
             this.selectedApartment.deleted=true;
-            axios
-                .post("/rest/updateApartment", this.selectedApartment)
-                .then(function(response){
-                    var jwt = window.localStorage.getItem('jwt');
-                    axios
-                    .get('rest/housekeepersApartment', {params: {
-                     Authorization: 'Bearer ' + jwt
-                    }})
-                    .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
-                });
+            this.selectedApartment.apartmentStatus = 'INACTIVE';
         },
         takeMeHome:function(){
             if(this.type==="ADMIN"){
-              alert('AFISAJBF');
+                window.location.href="#/admin";
             }else{
-              alert('HJOIH');
+                window.location.href="#/housekeeper";
             }
           },
         setFreeDates: function(){
@@ -660,13 +652,18 @@ Vue.component("editApartment",{
             if(this.validate()){
                 axios
                 .post("/rest/updateApartment", this.selectedApartment)
+                .then(function(response)
+                {
+                    alert("Edit successfull!");
+                })
+                .catch(error=>{alert("Ooooops something went wrong :(")});
+                
                 
                 if(this.type=='ADMIN'){
                     this.$router.push('/admin');
                 }else{
                     this.$router.push('/housekeeper');
                 }
-
             }
             
         },
