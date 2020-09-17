@@ -1037,7 +1037,6 @@ Vue.component("housekeeper",{
             }else{
                 this.guests.splice(0,this.guests.length);
                 this.guests = [...this.guestsBackUp]; 
-                this.gen = "all";
                 var i = this.guests.length;
                 while(i--){
                     if(this.guests[i].username.toLowerCase() !== keyWord.toLowerCase()){
@@ -1055,8 +1054,6 @@ Vue.component("housekeeper",{
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];
             }else{
-                this.roomOrApartment = 1;
-                this.activeOrInactiveApartment = 1;
                 this.amenitiesForFilter.splice(0, this.amenitiesForFilter.length);
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];  
@@ -1072,11 +1069,11 @@ Vue.component("housekeeper",{
             if(keyWord === ""){
                 this.reservations.splice(0,this.reservations.length);
                 this.reservations = [...this.reservationsBackUp]; 
-                this.reservationTypeFilter = 1;
                 this.reservationForSearch = "";
+                this.reservationTypeFilter = 1;
             }else{
                 this.reservations.splice(0,this.reservations.length);
-                this.reservations = [...this.reservationsBackUp];  
+                this.reservations = [...this.reservationsBackUp]; 
                 var i = this.reservations.length;
                 while(i--){
                     if(this.reservations[i].guestId.toLowerCase() !== keyWord.toLowerCase()){
@@ -1085,7 +1082,6 @@ Vue.component("housekeeper",{
                 }
             }
         },
-
         showApartmentDetails: function(apartmentToShow){
             this.selectedApartment = apartmentToShow;
             this.selectedApartmentBackUp = JSON.parse(JSON.stringify(apartmentToShow)); 

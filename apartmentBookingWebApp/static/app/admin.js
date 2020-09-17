@@ -1075,7 +1075,6 @@ Vue.component("admin",{
             }else{
                 this.guests.splice(0,this.guests.length);
                 this.guests = [...this.guestsBackUp];  
-                this.gen = "all";
                 var i = this.guests.length;
                 while(i--){
                     if(this.guests[i].username.toLowerCase() !== keyWord.toLowerCase()){
@@ -1101,8 +1100,6 @@ Vue.component("admin",{
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];
             }else{
-                this.roomOrApartment = 1;
-                this.activeOrInactiveApartment = 1;
                 this.amenitiesForFilter.splice(0, this.amenitiesForFilter.length);
                 this.apartments.splice(0,this.apartments.length);
                 this.apartments = [...this.apartmentsBackUp];  
@@ -1470,7 +1467,6 @@ Vue.component("admin",{
            }
         },
         reservationTypeFilter: function(newType, oldType){
-            console.log(newType);
             if(newType == 2){
                 this.reservations.splice(0,this.reservations.length);
                 this.reservations = [...this.reservationsBackUp];  
