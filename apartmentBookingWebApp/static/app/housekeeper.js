@@ -157,15 +157,16 @@ Vue.component("housekeeper",{
                                             </ul>
                                     </li>
                                 </ul>
-                            <!--   <button type="button" class="btn btn-primary" v-on:click="filterSearch()">Filter</button>-->
+                                <button type="button" class="btn btn-primary" style="margin-right: 80px" v-on:click="filterSearch()">Filter</button>
+                            </div>
                             <div class="select-apartment-type-filter">
                                 <select required v-model="apartmentSortCriteria">
                                     <option value="1" selected >Sort</option>
                                     <option value="2">Sort by price asc</option>
                                     <option value="3">Sort by price desc</option>
                                 </select>
-                        </div>
                             </div>
+                            
                         </div>
                         <div class="apartment-housekeeper" v-for="a in apartments" >
                             <div class="apartment-border-housekeeper" v-on:click="showApartmentDetails(a)" v-if="a.deleted==false">
@@ -805,6 +806,15 @@ Vue.component("housekeeper",{
             window.location.href = '#/login';
         }else{
             
+
+            axios
+            .get('rest/getUserRole', {params: {
+                Authorization: 'Bearer ' + jwt
+            }})
+            .then(response =>{  if (response.data !== "HOUSEKEEPER")
+                window.location.href = '#/forbidden';
+            });
+
             axios
             .get('rest/housekeepersApartment', {params: {
                 Authorization: 'Bearer ' + jwt
