@@ -48,7 +48,8 @@ Vue.component("admin",{
             activeOrInactiveApartment: 1,
             roomOrApartment: 1,
             apartmentSortCriteria:1,
-            reservationSortCriteria:1
+            reservationSortCriteria:1,
+            amenitiesForFilter: []
 		}
 	},
     template:`
@@ -99,30 +100,61 @@ Vue.component("admin",{
                                   
                         </div>
                         <hr>
-                        <div class="select-apartment-type-filter">
-                            <select required v-model="activeOrInactiveApartment">
-                                <option value="1" selected>Active/inactive</option>
-                                <option value="2">Active only</option>
-                                <option value="3">Inactive only</option>
-                            </select>
-                        </div>
-                        <div class="select-apartment-type-filter">
-                            <select required v-model="roomOrApartment">
-                            <option value="1" selected>Apartment/room</option>
-                            <option value="2">Apartment only</option>
-                            <option value="3">Room only</option>
-                            </select>
-                        </div>
-                        <div class="select-apartment-type-filter">
-                                <select required v-model="apartmentSortCriteria">
-                                    <option value="1" selected >Sort</option>
-                                    <option value="2">Sort by price asc</option>
-                                    <option value="3">Sort by price desc</option>
+                        <div style="position:absolute; text-align:left">
+                            <div class="select-apartment-type-filter">
+                                <select required v-model="activeOrInactiveApartment">
+                                    <option value="1" selected>Active/inactive</option>
+                                    <option value="2">Active only</option>
+                                    <option value="3">Inactive only</option>
                                 </select>
+                            </div>
+                            <div class="select-apartment-type-filter">
+                                <select required v-model="roomOrApartment">
+                                <option value="1" selected>Apartment/room</option>
+                                <option value="2">Apartment only</option>
+                                <option value="3">Room only</option>
+                                </select>
+                            </div>
+                            <div class="select-apartment-type-filter">
+                                    <ul style="list-style-type:none">
+                                        <li class="dropdown">
+                                            <p data-toggle="dropdown" class="dropdown-toggle" 
+                                            style="text-align: center; height: 50px;
+                                                width: 150px;
+                                                background-color:white;
+                                                border-radius: 4px;
+                                                margin: 10px;
+                                                display:inline-block;
+                                                margin-left: -18%;
+                                                border-color: #dddfe2;
+                                                border: hidden;
+                                                box-sizing: border-box;
+                                                box-shadow: 0 4px 8px 0 rgba(0,0,0,.19);
+                                                "
+                                                >
+                                                Select amenities<b class="caret"></b></p>
+                                                <ul class="dropdown-menu" >
+                                                    <li v-for='a in allAmenitiesEver'>
+                                                        <div class="checkbox">
+                                                            <label style="margin-left:8px; font-weight:bold;font-size: medium;">{{a.name}}<input type="checkbox" :id='a.id' v-on:click="addAmenitiesForFilter(a)":checked="doesAmenityExistInFilter(a)"/></label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                        </li>
+                                    </ul>
+                                    <button type="button" class="btn btn-primary" style="margin-right: 80px" v-on:click="filterSearch()">Filter</button>
+                            </div>
+                            <div class="select-apartment-type-filter">
+                                    <select required v-model="apartmentSortCriteria">
+                                        <option value="1" selected >Sort</option>
+                                        <option value="2">Sort by price asc</option>
+                                        <option value="3">Sort by price desc</option>
+                                    </select>
+                            </div>
                         </div>
-                        <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">
-                            <div class="apartment-border-housekeeper">
-                                <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
+                        <div class="apartment-housekeeper" v-for="a in apartments">
+                            <div class="apartment-border-housekeeper" v-on:click="showApartmentDetails(a)">
+                                <img class="apartment-pic-housekeeper" v-if="a.pictures.length>0" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                                 <div class="apartment-info-housekeeper">
                                     <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>
                                     <h5><img class="apartment-info-icons-housekeeper" src="/assets/images/star-icon.png" alt="not found"> <strong class="">{{calculateMark(a)}} </strong></h5>  
@@ -973,6 +1005,56 @@ Vue.component("admin",{
             }else{
                 return false;
             }
+        },
+        addAmenitiesForFilter: function(amenity){
+            if(this.doesAmenityExistInFilter(amenity)){
+                for( var i = 0; i < this.amenitiesForFilter.length; i++){ 
+                    if ( this.amenitiesForFilter[i].id === amenity.id){
+                        this.amenitiesForFilter.splice(i, 1); 
+                    }  
+                }
+            }else{
+                this.amenitiesForFilter.push(amenity);
+            }
+        },
+        doesAmenityExistInFilter:function(amn){
+            var a = this.amenitiesForFilter.filter(function(amenity){
+                return amenity.id == amn.id;
+            });
+     
+            if(a[0]){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        filterSearch:function(){
+            console.log(this.apartmentsBackUp);
+            this.apartments = [...this.apartmentsBackUp];
+            var lista=[];
+           
+            var brojac=0;
+            if(this.amenitiesForFilter.length>0){
+                for(var i=0;i<this.apartmentsBackUp.length;i++){
+                    for(var j=0;j<this.amenitiesForFilter.length;j++){
+                        for(var k=0;k<this.apartmentsBackUp[i].amenities.length;k++){
+                            if(this.apartmentsBackUp[i].amenities[k].id===this.amenitiesForFilter[j].id){
+                                brojac++;
+                            }
+                        }
+                        if(brojac==this.amenitiesForFilter.length){
+                            lista.push(this.apartmentsBackUp[i]);
+                        }
+                    }
+                    brojac=0;
+                }
+    
+               this.apartments=[...lista];
+
+            }else{
+                this.apartments=[...this.apartmentsBackUp];
+            }
+            
         },
         startEditingApartment: function(){
             this.arrivalHours = this.selectedApartment.arrivalTime.split(':')[0];
