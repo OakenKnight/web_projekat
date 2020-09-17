@@ -87,7 +87,7 @@ Vue.component("admin",{
                     <ul>
                         <li class="option-housekeeper" v-on:click="mode = 'profile'"><p>Account info</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'apartments'"><p>Apartments</p></li>
-                        <li class="option-housekeeper" v-on:click="mode = 'guests'"><p>Guests</p></li>
+                        <li class="option-housekeeper" v-on:click="mode = 'guests'"><p>Guests and Hosts</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'reservations'"><p>Reservations</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'amenities'"><p>Amenities</p></li>
                     </ul>

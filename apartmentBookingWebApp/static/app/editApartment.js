@@ -455,7 +455,7 @@ Vue.component("editApartment",{
             const file = e.target.files[0];
             this.createBase64(file);
             this.imageCount++;
-            this.images.push(URL.createObjectURL(file));
+            //this.images.push(URL.createObjectURL(file));
         },
         createBase64(file){
             const reader = new FileReader();

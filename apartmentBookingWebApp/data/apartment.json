@@ -32,7 +32,7 @@
     "lastName" : "Petrovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app1" ],
+    "apartmentsId" : [ "app1"],
     "jwttoken" : null
   },
   "comments" : [ ],
@@ -84,7 +84,7 @@
   }, {
     "id" : "15992209431463",
     "name" : "Window guards",
-    "description" : "Window has guards!",
+    "description" : "",
     "amenityType" : "FAMILY_FEATURES"
   }, {
     "id" : "15992209431464",
@@ -139,11 +139,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4",
+      "street" : "Maksima Gorkog 4 Novi Sad   ",
       "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21000",
-      "state" : "Serbia"
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
     }
   },
   "freeDates" : [ {
@@ -189,8 +189,8 @@
     "disabledForGuests" : true,
     "apartmentId" : "app12"
   } ],
-  "pictures" : [ "3.jpg", "4.jpg", "a1600368680827.jpg" ],
-  "priceForNight" : 1502.0,
+  "pictures" : [ "3.jpg", "4.jpg" ],
+  "priceForNight" : 1500.0,
   "arrivalTime" : "11:30",
   "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
@@ -222,7 +222,7 @@
   }, {
     "id" : "15992209431463",
     "name" : "Window guards",
-    "description" : "Window has guards!",
+    "description" : "",
     "amenityType" : "FAMILY_FEATURES"
   }, {
     "id" : "1599220943166",
@@ -281,6 +281,9 @@
   },
   "freeDates" : [ {
     "startDate" : 1589580000000,
+    "endDate" : 1600725600000
+  }, {
+    "startDate" : 1601071200000,
     "endDate" : 1601244000000
   } ],
   "housekeeper" : {
@@ -373,7 +376,7 @@
     "description" : "",
     "amenityType" : "DINING"
   } ],
-  "reservationsId" : [ "milica2", "nikola1" ],
+  "reservationsId" : [ "milica2", "nikola1", "1600382468868" ],
   "deleted" : false
 }, {
   "id" : "app32",
@@ -382,14 +385,14 @@
   "roomNumber" : 1,
   "guestNumber" : 2,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.2511",
+    "longitude" : "19.8471",
     "address" : {
-      "street" : "Strazilovska 15 Novi Sad  ",
+      "street" : "Strazilovska 15",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Novi Sad",
+      "zipCode" : "21100",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -421,7 +424,7 @@
     "disabledForGuests" : false,
     "apartmentId" : "app32"
   } ],
-  "pictures" : [ "7.jpg" ],
+  "pictures" : [ "7.jpg", "8.jpg" ],
   "priceForNight" : 20.0,
   "arrivalTime" : "12:30",
   "exitTime" : "09:30",
@@ -459,7 +462,7 @@
   }, {
     "id" : "15992209431463",
     "name" : "Window guards",
-    "description" : "Window has guards!",
+    "description" : "",
     "amenityType" : "FAMILY_FEATURES"
   }, {
     "id" : "1599220943165",
@@ -564,14 +567,14 @@
   "roomNumber" : 1,
   "guestNumber" : 1,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.2493",
+    "longitude" : "19.8421",
     "address" : {
-      "street" : "Sremska 4 Novi Sad",
+      "street" : "Sremska 4",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Novi Sad",
+      "zipCode" : "21101",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ ],
@@ -591,17 +594,7 @@
   "arrivalTime" : "09:00",
   "exitTime" : "10:00",
   "apartmentStatus" : "ACTIVE",
-  "amenities" : [ {
-    "id" : "1599220943169",
-    "name" : "Cooking basics",
-    "description" : "Pots and pans, oil salt and pepper",
-    "amenityType" : "DINING"
-  }, {
-    "id" : "1599220943159",
-    "name" : "Crib",
-    "description" : "",
-    "amenityType" : "FAMILY_FEATURES"
-  } ],
+  "amenities" : [ ],
   "reservationsId" : [ ],
   "deleted" : false
 }, {
@@ -733,46 +726,6 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
-  "reservationsId" : [ ],
-  "deleted" : false
-}, {
-  "id" : "1600380474779",
-  "name" : "Cecili",
-  "apartmentType" : "APARTMENT",
-  "roomNumber" : 2,
-  "guestNumber" : 2,
-  "location" : {
-    "latitude" : "45.2453",
-    "longitude" : "19.8321",
-    "address" : {
-      "street" : "Mise Dimitrijevica 2",
-      "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21102",
-      "state" : "Serbia"
-    }
-  },
-  "freeDates" : [ {
-    "startDate" : 1600380000000,
-    "endDate" : 1605654000000
-  } ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovo",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 120.0,
-  "arrivalTime" : "14:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "INACTIVE",
-  "amenities" : [ ],
   "reservationsId" : [ ],
   "deleted" : false
 } ]

@@ -32,7 +32,7 @@
   "username" : "milica",
   "password" : "micamica",
   "firstName" : "Milica",
-  "lastName" : "Milincic",
+  "lastName" : "Milicic",
   "gender" : "FEMALE",
   "userType" : "GUEST",
   "apartmentsId" : [ "app12", "app22" ],

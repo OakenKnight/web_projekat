@@ -254,7 +254,7 @@ Vue.component("guestProfile",{
                             </div>
                         </div>
                         <div class="row">
-                            <div class="apartment col" v-for="r in userReservations" v-on:click="rateApartmentFromReservation(r)">
+                            <div class="apartment col" v-for="r in userReservations" >
                                 <div class="apartment-border">
 
                                     
@@ -276,7 +276,9 @@ Vue.component("guestProfile",{
 
                                     <div class="row justify-content-center">
                                         <button class="reserve-more-info-button" type="button" v-on:click="showMore(r)">Show apartment</button>
-                                        <button class="reserve-more-info-button" type="button" :disabled="oldReservation(r)" v-if="r.reservationStatus==='CREATED' | r.reservationStatus==='ACCEPTED'" v-on:click="cancel(r)" >Cancel</button>
+                                        <button class="reserve-more-info-button" type="button" v-if="r.reservationStatus==='REJECTED' | r.reservationStatus==='FINISHED'" v-on:click="rateApartmentFromReservation(r)">Comment</button>
+
+                                        <button class="reserve-more-info-button" type="button"   v-if="showCancelButton(r)" >Cancel</button>
                                     </div>
                                     
                                 </div>
@@ -398,28 +400,7 @@ Vue.component("guestProfile",{
 
                                             </div>
 
-                                            <h4 class="details-hotel-name-label" v-if="commentsToSee.length>0">Comments</h4>
-                                                        
-                                                    <div class="comments" v-for="c in comments">
-                                                        <div class="comment-wrapper">
-                                                            <div class="row">
-                                                                    <div class="col">
-                                                                        <p class="details-hotel-name-label"><strong>User: </strong</p>
-                                                                        <p class="details-hotel-name-label"><strong>Description:</strong></p>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <p class="details-hotel-name-label"><strong>{{c.guestId}}</strong</p>
-                                                                        <p class="details-hotel-name-label">{{c.text}}</p>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <p class="details-hotel-name-label"><strong>Mark:</strong></p>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <p><img class="comment-mark-icon" src="/assets/images/star-icon.png" alt="not found">{{c.reviewsMark}}</p>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            
 
                                         </div>
 
@@ -478,6 +459,12 @@ Vue.component("guestProfile",{
         }
 	},
 	methods:{
+        showCancelButton:function(reservation){
+            let past  = this.oldReservation(reservation);
+            console.log(past);
+            return past && (reservation.reservationStatus==='CREATED' | reservation.reservationStatus==='ACCEPTED');
+
+        },
         showMore:function(reservation){
             this.selectedApartment1 = this.findApartment(reservation.apartmentId);
             this.amenities = this.selectedApartment1.amenities;
@@ -521,8 +508,8 @@ Vue.component("guestProfile",{
         },
         oldReservation:function(r){
             var todaysDate = new Date();
-            var milis = r.arrivalDate;
-            if(new Date(todaysDate.getTime())< new Date(milis - 86400000)){
+            var milis = new Date(r.arrivalDate);
+            if(todaysDate.getTime() < new Date(milis.getTime() - 86400000).getTime()){
                 return true;
             }else{
                 return false;

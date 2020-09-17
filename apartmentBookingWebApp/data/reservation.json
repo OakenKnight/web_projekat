@@ -14,7 +14,7 @@
   "totalPrice" : 350.0,
   "message" : "aaaaaaaaaaaaaaaa",
   "guestId" : "milica",
-  "reservationStatus" : null,
+  "reservationStatus" : "CREATED",
   "id" : "milica1"
 }, {
   "apartmentId" : "app22",
@@ -70,4 +70,13 @@
   "guestId" : "albertina",
   "reservationStatus" : "QUIT",
   "id" : "1600261072648"
+}, {
+  "apartmentId" : "app22",
+  "arrivalDate" : 1600725600000,
+  "numberOfNights" : 4,
+  "totalPrice" : 2000.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "1600382468868"
 } ]
