@@ -5,8 +5,8 @@
   "roomNumber" : 1,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.2518",
+    "longitude" : "19.837",
     "address" : {
       "street" : "Zeleznicka 97",
       "number" : null,
@@ -32,7 +32,7 @@
     "lastName" : "Petrovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app1"],
+    "apartmentsId" : [ "app1" ],
     "jwttoken" : null
   },
   "comments" : [ ],
@@ -136,14 +136,14 @@
   "roomNumber" : 2,
   "guestNumber" : 4,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.3822",
+    "longitude" : "20.3941",
     "address" : {
-      "street" : "Maksima Gorkog 4 Novi Sad   ",
+      "street" : "Nemanjina 3",
       "number" : null,
-      "city" : "",
-      "zipCode" : "",
-      "state" : ""
+      "city" : "Zrenjanin",
+      "zipCode" : "23000",
+      "state" : "Serbia"
     }
   },
   "freeDates" : [ {
@@ -157,7 +157,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -272,7 +272,7 @@
     "latitude" : "45.2518",
     "longitude" : "19.837",
     "address" : {
-      "street" : "Jevrejska 11",
+      "street" : "Jevrejska 5",
       "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21101",
@@ -293,7 +293,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -385,13 +385,13 @@
   "roomNumber" : 1,
   "guestNumber" : 2,
   "location" : {
-    "latitude" : "45.2511",
-    "longitude" : "19.8471",
+    "latitude" : "45.2248",
+    "longitude" : "19.8402",
     "address" : {
-      "street" : "Strazilovska 15",
+      "street" : "Svetozara Markovica 4",
       "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21100",
+      "city" : "Sremska Kamenica",
+      "zipCode" : "21208",
       "state" : "Serbia"
     }
   },
@@ -406,7 +406,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ {
@@ -504,13 +504,13 @@
   "roomNumber" : 3,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.2463",
+    "longitude" : "19.8523",
     "address" : {
-      "street" : "Dositeja Obradovića 11",
+      "street" : "Trg Dositeja Obradovica",
       "number" : null,
-      "city" : "Nis",
-      "zipCode" : "18000",
+      "city" : "Novi Sad",
+      "zipCode" : "21101",
       "state" : "Serbia"
     }
   },
@@ -528,11 +528,11 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ ],
-  "pictures" : [ ],
+  "pictures" : [ "a1600384604028.jpg", "a1600384633637.jpg" ],
   "priceForNight" : 125.0,
   "arrivalTime" : "10:00",
   "exitTime" : "09:30",
@@ -561,103 +561,19 @@
   "reservationsId" : [ ],
   "deleted" : false
 }, {
-  "id" : "1599903300660",
-  "name" : "Novolinon",
-  "apartmentType" : "ROOM",
-  "roomNumber" : 1,
-  "guestNumber" : 1,
-  "location" : {
-    "latitude" : "45.2493",
-    "longitude" : "19.8421",
-    "address" : {
-      "street" : "Sremska 4",
-      "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21101",
-      "state" : "Serbia"
-    }
-  },
-  "freeDates" : [ ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovan",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 40.0,
-  "arrivalTime" : "09:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "ACTIVE",
-  "amenities" : [ ],
-  "reservationsId" : [ ],
-  "deleted" : false
-}, {
-  "id" : "1599903639059",
-  "name" : "Novolinon2",
-  "apartmentType" : "APARTMENT",
-  "roomNumber" : 2,
-  "guestNumber" : 2,
-  "location" : {
-    "latitude" : "45.2493",
-    "longitude" : "19.8421",
-    "address" : {
-      "street" : "Sremska 3",
-      "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21101",
-      "state" : "Serbia"
-    }
-  },
-  "freeDates" : [ ],
-  "housekeeper" : {
-    "username" : "joca",
-    "password" : "joca",
-    "firstName" : "Jovan",
-    "lastName" : "Jovic",
-    "gender" : "MALE",
-    "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
-    "jwttoken" : null
-  },
-  "comments" : [ ],
-  "pictures" : [ ],
-  "priceForNight" : 44.0,
-  "arrivalTime" : "14:00",
-  "exitTime" : "10:00",
-  "apartmentStatus" : "ACTIVE",
-  "amenities" : [ {
-    "id" : "1599220943149",
-    "name" : "Wifi",
-    "description" : "Continous access in the listing",
-    "amenityType" : "BASIC"
-  }, {
-    "id" : "1599220943151",
-    "name" : "Cable TV",
-    "description" : "",
-    "amenityType" : "BASIC"
-  } ],
-  "reservationsId" : [ ],
-  "deleted" : false
-}, {
   "id" : "1600189613746",
-  "name" : "JOCA",
+  "name" : "Kobe tribute apartments",
   "apartmentType" : "APARTMENT",
   "roomNumber" : 3,
   "guestNumber" : 2,
   "location" : {
-    "latitude" : "",
-    "longitude" : "",
+    "latitude" : "45.2453",
+    "longitude" : "19.8321",
     "address" : {
-      "street" : "Mise Dimitrijevica",
+      "street" : "Mise Dimitrijevica 2",
       "number" : null,
       "city" : "Novi Sad",
-      "zipCode" : "21000",
+      "zipCode" : "21102",
       "state" : "Serbia"
     }
   },
@@ -669,7 +585,7 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ ],
@@ -683,7 +599,7 @@
   "deleted" : false
 }, {
   "id" : "1600299854477",
-  "name" : "ads",
+  "name" : "YoYo apartment",
   "apartmentType" : "APARTMENT",
   "roomNumber" : 3,
   "guestNumber" : 4,
@@ -691,7 +607,7 @@
     "latitude" : "45.2496",
     "longitude" : "19.8409",
     "address" : {
-      "street" : "Zeleznicka 9",
+      "street" : "Zeleznicka 11",
       "number" : null,
       "city" : "Novi Sad",
       "zipCode" : "21000",
@@ -706,11 +622,11 @@
     "lastName" : "Jovic",
     "gender" : "MALE",
     "userType" : "HOUSEKEEPER",
-    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
     "jwttoken" : null
   },
   "comments" : [ ],
-  "pictures" : [ "a16002998544771.jpg" ],
+  "pictures" : [ "a1600386334120.jpg" ],
   "priceForNight" : 324.0,
   "arrivalTime" : "11:30",
   "exitTime" : "17:30",
@@ -726,6 +642,83 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600384309844",
+  "name" : "Casino Royale",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 2,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "45.7879",
+    "longitude" : "15.9479",
+    "address" : {
+      "street" : "Budvanska ulica 4",
+      "number" : null,
+      "city" : "Zagreb",
+      "zipCode" : "10000",
+      "state" : "Croatia"
+    }
+  },
+  "freeDates" : [ {
+    "startDate" : 1600639200000,
+    "endDate" : 1601416800000
+  } ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovo",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ "a1600386390505.jpg" ],
+  "priceForNight" : 200.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600386605838",
+  "name" : "Novosadsko nocenje",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 2,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "45.2561",
+    "longitude" : "19.8469",
+    "address" : {
+      "street" : "Zmaj Jovina 33",
+      "number" : null,
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovo",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844", "1600386605838" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 222.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ ],
   "reservationsId" : [ ],
   "deleted" : false
 } ]

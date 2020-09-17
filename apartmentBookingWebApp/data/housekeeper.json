@@ -5,16 +5,15 @@
   "lastName" : "Jovic",
   "gender" : "MALE",
   "userType" : "HOUSEKEEPER",
-  "apartmentsId" : [ "app12", "app22", "app32" ],
+  "apartmentsId" : [ "app12", "app22", "app32", "1599848262568", "1600299854477", "1600189613746", "1599903639059", "1599903300660", "1600384309844", "1600386605838" ],
   "jwttoken" : null
-},
-{
+}, {
   "username" : "rale",
   "password" : "rale",
   "firstName" : "Radovan",
   "lastName" : "Petrovic",
   "gender" : "MALE",
   "userType" : "HOUSEKEEPER",
-  "apartmentsId" : [ "app1"],
+  "apartmentsId" : [ "app1" ],
   "jwttoken" : null
 } ]

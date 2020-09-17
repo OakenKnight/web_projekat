@@ -61,7 +61,9 @@ Vue.component("editApartment",{
             filename:"",
             type:"",
             flag:"",
-            disabledButton:""
+            disabledButton:"",
+            backupLocation:{},
+            addressForView:""
 
         }
 	},
@@ -117,7 +119,7 @@ Vue.component("editApartment",{
                         </div>
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/location-icon.png" alt="not found"><strong>Hotel address</strong></label>
-
+                            <p>Current address: {{addressForView}}</p>
                             <input type="search" id="address" placeholder="Address" value=''/>
                             <p style="color:red">{{emptyAddress}}</p>
 
@@ -400,7 +402,9 @@ Vue.component("editApartment",{
             .then(response => {
                 this.selectedApartment = response.data;
                 this.selectedApartmentBackUp = response.data;
+                console.log(this.selectedApartment);
                 this.startEditingApartment();
+                
                 this.setFreeDates();
                 
             })
@@ -606,12 +610,23 @@ Vue.component("editApartment",{
             this.exitHours = this.selectedApartment.exitTime.split(':')[0];
             this.exitMinutes = this.selectedApartment.exitTime.split(':')[1];
             
-            var addressForView = this.selectedApartment.location.address.street+' '+ this.selectedApartment.location.address.city;
-            console.log(addressForView);
-            document.querySelector('#address').value = addressForView;
+            this.addressForView = this.selectedApartment.location.address.street+' '+ this.selectedApartment.location.address.city;
+            //console.log(addressForView);
+            //this.backupLocation = JSON.parse(JSON.stringify(this.selectedApartment.location));
 
+
+            //document.querySelector('#address').value = this.selectedApartment.location.address;
+            /*
+            document.querySelector('#address').value=this.selectedApartment.location.address.street;
+            document.querySelector('#stateAlg').value=this.selectedApartment.location.address.state;
+            document.querySelector('#cityAlg').value=this.selectedApartment.location.address.state;
+            document.querySelector('#long').value=this.selectedApartment.location.longitude;
+            document.querySelector('#lat').value=this.selectedApartment.location.latitude;
+            document.querySelector('#postalCode').value=this.selectedApartment.location.address.zipCode;
+*/
             this.priceForNight = this.selectedApartment.priceForNight.toString();
-            console.log(this.selectedApartment);
+            //console.log(this.selectedApartment);
+            
             if(this.selectedApartment.pictures.length>0){
                 this.disabledButton=true;
                 this.flag = this.selectedApartment.pictures[0];
@@ -619,6 +634,8 @@ Vue.component("editApartment",{
             }else{
                 this.disabledButton=false;
             }
+            
+
         },
         cancleEditingApartment: function(){
             this.selectedApartment = JSON.parse(JSON.stringify(this.selectedApartmentBackUp));
@@ -645,7 +662,7 @@ Vue.component("editApartment",{
     
             this.location.address = this.adresaObjekat;
             console.log(this.location);
-            this.selectedApartment.location = this.location;
+            this.selectedApartment.location = JSON.parse(JSON.stringify(this.location));
             if(this.imagesForBack.length > 0){
                 this.selectedApartment.pictures.push(this.imagesForBack[0]);
             }

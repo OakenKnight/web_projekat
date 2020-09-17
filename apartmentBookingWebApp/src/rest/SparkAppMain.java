@@ -157,7 +157,13 @@ public class SparkAppMain {
 
 			apartment.setPictures(convertedImages);
 			System.out.println(apartment.getPictures());
-
+			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
+			Housekeeper hk = housekeeperRepository.getObj(apartment.getHousekeeper().getUsername());
+			ArrayList<String> apartments = hk.getApartmentsId();
+			apartments.add(apartment.getId());
+			hk.setApartmentsId(apartments);
+			housekeeperRepository.update(hk);
+			apartment.setHousekeeper(hk);
 			if(apartmentRepository.create(apartment)) {
 				return "Apartment created successfully";
 			}
@@ -258,20 +264,23 @@ public class SparkAppMain {
 			ApartmentRepository apartmentRepository = new ApartmentRepository();
 			
 			String convertedImages = "";
-			int n = apartment.getPictures().size() - 1;
-			if(apartment.getPictures().get(apartment.getPictures().size() - 1).length() > 50) {
-				String id = "" +((new Date()).getTime());
-				String path ="/assets/images/apartmentsimg/a"+id+".jpg";
-				Base64ToImage decoder = new Base64ToImage();
-				decoder.Base64DecodeAndSave(apartment.getPictures().get(apartment.getPictures().size() - 1), path);
-				path = "a"+id+".jpg";
-				convertedImages = path;	
-				apartment.getPictures().remove(n);
-				
+			if(apartment.getPictures().size()>0){
+				int n = apartment.getPictures().size() - 1;
+				if(apartment.getPictures().get(apartment.getPictures().size() - 1).length() > 50) {
+					String id = "" +((new Date()).getTime());
+					String path ="/assets/images/apartmentsimg/a"+id+".jpg";
+					Base64ToImage decoder = new Base64ToImage();
+					decoder.Base64DecodeAndSave(apartment.getPictures().get(apartment.getPictures().size() - 1), path);
+					path = "a"+id+".jpg";
+					convertedImages = path;	
+					apartment.getPictures().remove(n);
+					
+				}
+				if(convertedImages != "") {
+					apartment.getPictures().add(convertedImages);
+				}
 			}
-			if(convertedImages != "") {
-				apartment.getPictures().add(convertedImages);
-			}
+			
 			
 			if(apartmentRepository.update(apartment)) {
 				return "Apartment created successfully";
