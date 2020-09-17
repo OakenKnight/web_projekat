@@ -131,7 +131,7 @@ Vue.component("login",{
               window.location.href = '#/admin';
             }
         })
-		    .catch(function(error){alert("Wrong username or password!")})
+		    .catch(function(error){alert(error)})
 
         }
     		
