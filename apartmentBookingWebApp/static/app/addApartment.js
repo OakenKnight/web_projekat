@@ -418,9 +418,9 @@ Vue.component("addApartment",{
 	methods:{
         takeMeHome:function(){
             if(this.type==="ADMIN"){
-              alert('AFISAJBF');
+                window.location.href="#/admin";
             }else{
-              alert('HJOIH');
+                window.location.href="#/housekeeper";
             }
           },
         imageAdded(e){
@@ -539,22 +539,7 @@ Vue.component("addApartment",{
             };
             this.setFreeDates();
         },
-        // imageAdded(e){
-        //     const file = e.target.files[0];
-        //     this.createBase64(file);
-        //     this.imageCount++;
-        //     this.images.push(URL.createObjectURL(file));
-        // },
-        // createBase64(file){
-        //     const reader = new FileReader();
-        //     reader.onload=(e)=>{
-        //         let img = e.target.result;
-        //         img.replace("data:image\/(png|jpg|jpeg);base64","");
-        //         console.log(img);
-        //         this.imagesForBack.push(img);
-        //     }
-        //     reader.readAsDataURL(file);
-        // },
+        
         logout: function(){
             window.localStorage.removeItem('jwt');
             this.$router.push('/login');
@@ -702,7 +687,16 @@ Vue.component("addApartment",{
             return true;
         },
         validate:function(){
-            if(this.validateArrivalTime() & this.validateDepartTime() & this.validateAddress() & this.validateGuests() & this.validateName() & this.validatePrice() & this.validateRooms() & this.validateType()){
+            let vaT = this.validateArrivalTime();
+            let vaD = this.validateDepartTime();
+            let va = this.validateAddress();
+            let vg = this.validateGuests();
+            let vn = this.validateName();
+            let vp = this.validatePrice();
+            let vt = this.validateType();
+            let vr = this.validateRooms();
+
+            if(vaT && vaD && va && vg && vn && vp && vt && vr){
                 return true;
             }
 
@@ -715,7 +709,7 @@ Vue.component("addApartment",{
             this.testApartment.amenities = this.newApartment.amenities;
             this.testApartment.comments = [];
             this.testApartment.reservationsId=[]
-            this.testApartment.freeDates=[];
+            this.testApartment.freeDates=[...this.newApartment.freeDates]
             console.log(this.images);
             console.log(this.imagesForBack)
             this.testApartment.pictures=this.imagesForBack;
@@ -734,7 +728,8 @@ Vue.component("addApartment",{
                     }})
                     .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
 
-                });
+                })
+                .catch(error=>{alert("Ooops sometnig went wrong!")})
 
                 this.newApartment= {
                     id: null,
@@ -753,9 +748,10 @@ Vue.component("addApartment",{
                     amenities: [],
                     housekeeper: null,
                     deleted:false
-                }
+                }            
+                this.$router.push('/housekeeper');
+
             }
-            this.$router.push('/housekeeper');
 
             
         },

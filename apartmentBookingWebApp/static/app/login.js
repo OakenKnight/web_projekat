@@ -107,7 +107,9 @@ Vue.component("login",{
         if(this.validate()){
           axios
           .post("/rest/login", {username: this.username, password: this.password})
-          .then(function(response) {
+          .then( function(response) {
+
+
             this.user = response.data;
             window.localStorage.setItem('jwt', user.JWTToken);
             if(this.user.userType === 'HOUSEKEEPER'){
@@ -118,12 +120,12 @@ Vue.component("login",{
               window.location.href = '#/admin';
             }
         })
-		    .catch(error => toast("asdda"));
-
-        }
+		    .catch(error => {this.emptypassword="Wrong username or password!"});
+          
+      }
     		
-			
-		},
+        
+      },
     	
     }
 });

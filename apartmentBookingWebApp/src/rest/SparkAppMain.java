@@ -49,6 +49,9 @@ import repository.ReservationRepository;
 import service.Base64ToImage;
 import service.SearchService;
 import service.UserService;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 
 public class SparkAppMain {
@@ -56,6 +59,8 @@ public class SparkAppMain {
 	private static Gson g  = new Gson();
 	
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+	
+
 
 	public static void main(String[] args) throws FileNotFoundException {
 		SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy");
@@ -74,11 +79,12 @@ public class SparkAppMain {
 		ApartmentRepository aaaaaa = new ApartmentRepository();
 		ArrayList<DateInterval> presorta = aaaaaa.getObj("app1").getFreeDates();
 		
-		for(DateInterval aaa : selectionSort(presorta)){
+		for(DateInterval aaa : selectionSort(presorta)){	
 			System.out.println(aaa.getStartDate() + ":" + aaa.getEndDate());
 		}
-
+		
 		port(5000);
+
 		try {
 			staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
@@ -205,7 +211,28 @@ public class SparkAppMain {
 			}
 			return "Someting went wrong";
 		});
-		
+		post("/rest/updateAmenity", (req,res)->{
+			res.type("application/json");
+			String payload = req.body();
+			Amenity amenity = g.fromJson(payload, Amenity.class);
+			AmenityRepository amenityRepository = new AmenityRepository();
+			ApartmentRepository apartmentRepository = new ApartmentRepository();
+
+			amenityRepository.update(amenity);
+
+			for(Apartment a:apartmentRepository.getAll()){
+				for(int i=0;i<a.getAmenities().size(); i++){
+					if(a.getAmenities().get(i).getId().equals(amenity.getId())){
+						a.getAmenities().set(i, amenity);
+						apartmentRepository.update(a);
+						break;
+					}
+				}
+			}
+			
+			return g.toJson(amenityRepository.getAll());
+
+		});
 		get("/rest/getHousekeeper", (req,res)->{
 			String housekeeperId = getUser(req.queryParams("Authorization"));
 			HousekeeperRepository housekeeperRepository = new HousekeeperRepository();
@@ -493,9 +520,13 @@ public class SparkAppMain {
 			UserService service = new UserService();
 
 			User adminUser = g.fromJson(payload, User.class);
-			service.updateAdmin(adminUser);
-
-			return g.toJson(adminUser);
+			if(service.updateAdmin(adminUser)!=null){
+				return g.toJson(adminUser);
+			}else{
+				res.status(400);
+				return false;
+			}
+			
 		});
 		post("/rest/updateHousekeeper",(req,res)->{
 			res.type("application/json");
@@ -506,9 +537,14 @@ public class SparkAppMain {
 			UserService service = new UserService();
 
 			User user = g.fromJson(payload, User.class);
-			service.updateHousekeeper(user);
+			if(service.updateHousekeeper(user)!=null){
+				return g.toJson(user);
 
-			return g.toJson(user);
+			}else{
+				res.status(400);
+				return false;
+			}
+
 		});
 		post("/rest/comment",(req,res)->{
 			res.type("application/json");

@@ -51,7 +51,8 @@ Vue.component("welcome",{
             expanded :false,
             apartmentsBackUp:[],
             apartmentsForFilter:[],
-            type:""
+            type:"",
+            guest:true
         }
 	},
     template:`
@@ -104,7 +105,7 @@ Vue.component("welcome",{
                                 
                                 <input type="text" placeholder="Min rooms" name="minR" class="price" v-model="minRooms">
                                 <input type="text" placeholder="Max rooms" name="maxR" class="price" v-model="maxRooms">  
-                                
+
                                 <input type="text" placeholder="Guests" name="guests" class="price" v-model="numberOfGuests">
 
                                 <input type="text" placeholder="Min price" name="minP" class="price" v-model="minPrice">
@@ -188,7 +189,7 @@ Vue.component("welcome",{
                                 <p><img class="apartment-info-icons" src="/assets/images/euro.png" alt="not found"> {{a.priceForNight}} €</p>
                                 <div class="row justify-content-center">
                                     <button class="reserve-more-info-button" type="button" v-on:click="showMore(a)" >More info...</button>
-                                    <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(a)">Book now!</button>
+                                    <button class="reserve-book-button" type="button" v-if="loggedIn" :disabled="guest" v-on:click="bookNow(a)">Book now!</button>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +319,7 @@ Vue.component("welcome",{
 
                                                 </div>
 
-                                                <button class="reserve-book-button" type="button" v-if="loggedIn" v-on:click="bookNow(selectedApartment)">Book now!</button>
+                                                <button class="reserve-book-button" type="button" v-if="loggedIn" :disabled="guest" v-on:click="bookNow(selectedApartment)">Book now!</button>
 
                                             </div>
                                         </div>
@@ -350,7 +351,7 @@ Vue.component("welcome",{
             .get('rest/getUserRole', {params: {
                 Authorization: 'Bearer ' + jwt
             }})
-            .then(response =>{ this.type = response.data });
+            .then(response =>{ this.type = response.data ; if(this.type==='GUEST'){ this.guest=false }});
             
         }
 
@@ -489,7 +490,7 @@ Vue.component("welcome",{
                 
                 axios
                 .post('rest/search',aptDTO)
-                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[]})
+                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[], this.apartmentSortCriteria="1"})
             }else{
                 console.log(this.arriveDate);
                 var aptDTO = {destination:searchedApartment.destination, arriveDate:this.arriveDate,
@@ -497,7 +498,7 @@ Vue.component("welcome",{
                 minPrice:searchedApartment.minPrice, maxPrice:searchedApartment.maxPrice, numberOfGuests:searchedApartment.numberOfGuests};     
                 axios
                 .post('rest/search',aptDTO)
-                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[]})           
+                .then(response => {this.apartments = response.data,this.apartmentsBackUp = response.data, this.amenitiesForFilter=[], this.apartmentSortCriteria="1"})           
             }
 
             
@@ -690,7 +691,7 @@ Vue.component("welcome",{
 			date.setDate(newDate.getDate());
             date.setMonth(newDate.getMonth());
             date.setHours(0,0,0,0);
-			this.disabledDepartDates.to = new Date(date);
+			this.disabledDepartDates.to = new Date(date.getTime() + 86400000);
             console.log("DATUM" + date);
             if(this.departDate != null && newDate > this.departDate){
 				this.departDate =  new Date(newDate.getTime()+86400000); //date.setDate(date.getDate() +1);

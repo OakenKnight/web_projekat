@@ -97,7 +97,7 @@ Vue.component("housekeeper",{
             <div class="row">
                 <div class="options-housekeeper column">
                     <ul>
-                        <li class="option-housekeeper" v-on:click="setMode('profile')"><p>Profile</p></li>
+                        <li class="option-housekeeper" v-on:click="setMode('profile')"><p>Account info</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('apartments')"><p>Apartments</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('guests')"><p>Guests</p></li>
                         <li class="option-housekeeper" v-on:click="setMode('reservations')"><p>Reservations</p></li>
@@ -106,6 +106,7 @@ Vue.component("housekeeper",{
                 <div class="sections-housekeeper column">
                     <section v-if="mode === 'apartments'" id="apartments">
                         <h3>All your apartments</h3><button type="button" class="btn btn-primary" onclick="location.href='#/addApartment'">Create New apartment</button>
+                        <router-link to="/housekeeper/addApartment">Aasdasd</router-link>
                         <div class="search-housekeeper">
                             <div>
                                 <input type="text" name="guest" placeholder="Search apartment" @keyup.enter="searchApartment(apartmentForSearch)" v-model="apartmentForSearch">
@@ -167,7 +168,7 @@ Vue.component("housekeeper",{
                             </div>
                         </div>
                         <div class="apartment-housekeeper" v-for="a in apartments" >
-                            <div class="apartment-border-housekeeper" v-on:click="showApartmentDetails(a)">
+                            <div class="apartment-border-housekeeper" v-on:click="showApartmentDetails(a)" v-if="a.deleted==false">
                             <img class="apartment-pic-housekeeper" v-if="a.pictures.length>0" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found"> 
                                 <div class="apartment-info-housekeeper">
                                     <h5><strong>{{a.name}}</strong>, {{a.location.address.city}}</h5>

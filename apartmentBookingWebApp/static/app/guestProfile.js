@@ -35,7 +35,9 @@ Vue.component("guestProfile",{
             selectedApartment1:{},
             comments:[],
             apartmentSortCriteria:"1",
-            commentsToSee:[]
+            commentsToSee:[],
+            emptyText:"",
+            emptyRating:""
         }
 	},
     template:`
@@ -286,7 +288,9 @@ Vue.component("guestProfile",{
                     <section v-if="mode==='comment'" id="comment">
                         <div>
                             <label class="profile-info-p"><strong>Enter your comment:</strong></label>
+
                             <textarea class="form-control" id="comment" rows="3" v-model="commentText"></textarea>
+                            <p style="color:red; margin-left:10px">{{emptyText}}</p>
 
                             <label class="profile-info-p"><strong>Enter your rating:</strong></label>
                             <select v-model="commentRate" required>
@@ -301,6 +305,8 @@ Vue.component("guestProfile",{
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
+                                <p style="color:red; margin-left:10px">{{emptyRating}}</p>
+
                         </div>
 
                         <button class="edit-info-button" type="button" v-on:click="setMode('reservations')">Cancel</button>
@@ -526,7 +532,8 @@ Vue.component("guestProfile",{
                 if(this.checkFieldsForUpdate()){
                     axios
                     .post('rest/update',this.loggedInUser)
-                    .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+                    .then(response=>(this.loggedInUser = response.data),alert("Profile info update successfull!"), this.setMode('profile'))
+                    .catch(error=>{alert("Ooops something went wrong!")});
                 }
                 
             
@@ -647,7 +654,8 @@ Vue.component("guestProfile",{
             
             axios
                 .post('rest/cancelReservation',reservation)
-                .then(response => {this.userReservations = response.data})
+                .then(response => {this.userReservations = response.data, alert("Reservation canceled!")})
+                .catch(error=>{alert("Ooops something went wrong!")});
         },
         reset: function(){
 
@@ -658,11 +666,12 @@ Vue.component("guestProfile",{
                 if(this.password1 === this.password2 && this.oldPassword === this.loggedInUserBackup.password){
                     axios
                     .post('rest/update',this.loggedInUser)
-                    .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+                    .then(response=>(this.loggedInUser = response.data), alert("Password reset success!"),this.setMode('profile'))
+                    .catch(error=>{alert("Ooooooooops something went wrong!")})
                 }else if(this.password1!==this.password2){
-                    alert("Passwords do not match!");
+                    this.emptyPassword2="Passwords do not match!";
                 }else if(this.oldPassword!==this.loggedInUserBackup.password){
-                    alert("Old password doesnt match!");
+                    this.emptyOldPassword="Old password doesnt match!";
                 }
             }else{
                 if(this.oldPassword ===""){
@@ -692,9 +701,44 @@ Vue.component("guestProfile",{
                 this.setMode('comment');
             }
         },
+        
+        validateComText:function(){
+            if(this.commentText==="" || this.commentText.trim()===""){
+                this.emptyText="Please enter comment";
+                return false;
+            }
+            
+            this.emptyText="";
+            return true;
+        },
+        
+        validateComRating:function(){
+            if(this.commentRate===""){
+                this.emptyRating="Please enter comment";
+                return false;
+            }
+            
+            this.emptyRating="";
+            return true;
+        },
+        validateComment:function(){
+            let vt = this.validateComText();
+            let vr = this.validateComRating();
+
+            return vt && vr;
+        },
         comment: function(){
             var comment = {id:new Date().getTime().toString(), guestId:this.loggedInUser.username,
                 text:this.commentText, reviewsMark:this.commentRate,disabledForGuests:true, apartmentId:this.commentApartment.id};
+                if(this.validateComment()){
+                    axios
+                .post('rest/comment',comment)
+                .then(response => { 
+                    this.setMode('reservations');
+                 })
+                .catch(function(error){alert("Oooops something went wrong!")});
+                }
+                /*
             if(this.commentText!=="" && this.commentRate!==""){
                 axios
                 .post('rest/comment',comment)
@@ -703,13 +747,13 @@ Vue.component("guestProfile",{
                  })
                 .catch(function(error){alert("Oooops something went wrong!")});
             }else if(this.commentText==="" && this.commentRate===""){
-                alert("Please enter text and rating!");
+                ("Please enter text and rating!");
             }else if(this.commentText!=="" && this.commentRate===""){
                 alert("Please enter rating!");
             }else if(this.commentText==="" && this.commentRate!==""){
                 alert("Please enter text!");
             }
-            
+            */
 
         },
         comparePriceDESC: function(a, b) {

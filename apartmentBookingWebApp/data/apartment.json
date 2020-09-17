@@ -1,18 +1,18 @@
 [ {
   "id" : "app1",
-  "name" : "Hotel Aaaa",
+  "name" : "Hotel Aleksandrija",
   "apartmentType" : "ROOM",
   "roomNumber" : 1,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "45.2496",
-    "longitude" : "19.8409",
+    "latitude" : "",
+    "longitude" : "",
     "address" : {
-      "street" : "Zeleznicka 97",
+      "street" : "Zeleznicka 97 Novi Sad",
       "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21000",
-      "state" : "Serbia"
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
     }
   },
   "freeDates" : [ {
@@ -139,7 +139,7 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4 Novi Sad  ",
+      "street" : "Maksima Gorkog 4 Novi Sad        ",
       "number" : null,
       "city" : "",
       "zipCode" : "",
@@ -190,7 +190,7 @@
     "apartmentId" : "app12"
   } ],
   "pictures" : [ "3.jpg", "4.jpg" ],
-  "priceForNight" : 150.0,
+  "priceForNight" : 1502.0,
   "arrivalTime" : "11:30",
   "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
@@ -496,7 +496,7 @@
   "deleted" : false
 }, {
   "id" : "1599848262568",
-  "name" : "Test apartman",
+  "name" : "Hotel Grande Torini",
   "apartmentType" : "APARTMENT",
   "roomNumber" : 3,
   "guestNumber" : 3,
@@ -504,14 +504,20 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Dositeja Obradovića 7 Plandiste Municipality",
+      "street" : "Dositeja Obradovića 7 Plandiste Municipality ",
       "number" : null,
       "city" : "",
       "zipCode" : "",
       "state" : ""
     }
   },
-  "freeDates" : [ ],
+  "freeDates" : [ {
+    "startDate" : 1600380000000,
+    "endDate" : 1604098800000
+  }, {
+    "startDate" : 1604098800000,
+    "endDate" : 1606690800000
+  } ],
   "housekeeper" : {
     "username" : "joca",
     "password" : "joca",
@@ -524,7 +530,7 @@
   },
   "comments" : [ ],
   "pictures" : [ ],
-  "priceForNight" : 120.0,
+  "priceForNight" : 125.0,
   "arrivalTime" : "10:00",
   "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
@@ -717,6 +723,125 @@
     "description" : "",
     "amenityType" : "FACILITIES"
   } ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600351186988",
+  "name" : "ADDD",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 1,
+  "guestNumber" : 8,
+  "location" : {
+    "latitude" : "",
+    "longitude" : "",
+    "address" : {
+      "street" : "DDASF",
+      "number" : null,
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 1241.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ {
+    "id" : "1599220943168",
+    "name" : "Coffee maker",
+    "description" : "",
+    "amenityType" : "DINING"
+  } ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600351412069",
+  "name" : "asfasgf",
+  "apartmentType" : "ROOM",
+  "roomNumber" : 2,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "",
+    "longitude" : "",
+    "address" : {
+      "street" : "asfdasf",
+      "number" : null,
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
+    }
+  },
+  "freeDates" : [ {
+    "startDate" : 1600725600000,
+    "endDate" : 1601416800000
+  } ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 123.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600351513489",
+  "name" : "fasfa",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 4,
+  "guestNumber" : 2,
+  "location" : {
+    "latitude" : "",
+    "longitude" : "",
+    "address" : {
+      "street" : "asfa",
+      "number" : null,
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ ],
+  "priceForNight" : 1231.0,
+  "arrivalTime" : "14:00",
+  "exitTime" : "10:00",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ ],
   "reservationsId" : [ ],
   "deleted" : false
 } ]

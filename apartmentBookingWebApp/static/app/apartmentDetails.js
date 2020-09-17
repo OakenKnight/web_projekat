@@ -67,6 +67,7 @@ Vue.component("apartmentDetails", {
             </div>
             <div class="info">
                 <div class="row justify-content-center">
+                    
                     <img v-bind:src="'assets/images/apartmentsimg/' + selectedApartment.pictures[0]" v-on:click="" alt="image not found">
                 </div>
                 <div class="row">
@@ -257,7 +258,7 @@ Vue.component("apartmentDetails", {
                 Authorization: 'Bearer ' + jwt
             }})
             .then(response =>{ if (response.data !== "GUEST")
-                window.location.href = '#/forbidden';
+                this.$router.push('/forbidden');
             });
 
         }
@@ -271,7 +272,8 @@ Vue.component("apartmentDetails", {
                 this.setFreeDates();
                 this.mountAll();
 
-            });
+            })
+            .catch(error=>{this.$router.push('/bad_request')});
         
     },
     methods: {
@@ -312,7 +314,9 @@ Vue.component("apartmentDetails", {
                 axios
                 .post('rest/requestBooking',this.reservation)
                 .then(response => {
+                    alert("Booking successful!")
                     this.$router.push('/');
+                    
                 })
                 .catch(function(error){alert("Ooooops something went wrong!")});       
             }

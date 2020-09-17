@@ -48,7 +48,11 @@ Vue.component("admin",{
             activeOrInactiveApartment: 1,
             roomOrApartment: 1,
             apartmentSortCriteria:1,
-            reservationSortCriteria:1
+            reservationSortCriteria:1,
+            modalAmenity : false,
+            amenityForEdit : {},
+            emptyAmenityType:"",
+            emptyAmenityName:""
 		}
 	},
     template:`
@@ -80,7 +84,7 @@ Vue.component("admin",{
             <div class="row">
                 <div class="options-housekeeper column">
                     <ul>
-                        <li class="option-housekeeper" v-on:click="mode = 'profile'"><p>Profile</p></li>
+                        <li class="option-housekeeper" v-on:click="mode = 'profile'"><p>Account info</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'apartments'"><p>Apartments</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'guests'"><p>Guests</p></li>
                         <li class="option-housekeeper" v-on:click="mode = 'reservations'"><p>Reservations</p></li>
@@ -120,7 +124,7 @@ Vue.component("admin",{
                                     <option value="3">Sort by price desc</option>
                                 </select>
                         </div>
-                        <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)">
+                        <div class="apartment-housekeeper" v-for="a in apartments" v-on:click="showApartmentDetails(a)" v-if="a.deleted==false">
                             <div class="apartment-border-housekeeper">
                                 <img class="apartment-pic-housekeeper" v-bind:src="'assets/images/apartmentsimg/' + a.pictures[0]" alt="image not found">
                                 <div class="apartment-info-housekeeper">
@@ -248,6 +252,7 @@ Vue.component("admin",{
                         <div class="buttons-admin">
                             <button type="button" class="btn btn-primary"  v-on:click="deleteAmenityMode = true">Delete</button>
                             <button type="button" class="btn btn-primary"  v-on:click="addNewAmenityMode = true">Add New</button>
+                            <button type="button" class="btn btn-primary" v-on:click="mode=startEdit()">Edit</button>
                         </div>
                         <hr>
                         <div class="reservation-housekeeper" >
@@ -265,7 +270,7 @@ Vue.component("admin",{
                             </div>
                             <div class="addingNewAmenity" v-if="addNewAmenityMode === true">
                                 <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Amenity name" v-model="newAmenity.name"></div>
-                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Short description" v-model="newAmenity.description"></div>
+                                <p style="color:red; margin-left:10px">{{emptyAmenityName}}</p>
                                 <div class="select-amenity-type">
                                     <select required v-model="newAmenity.type">
                                         <option value="" selected disabled>Type</option>
@@ -275,6 +280,10 @@ Vue.component("admin",{
                                         <option value="DINING">Dining</option>
                                     </select>
                                 </div >
+                                <div class="search-housekeeper"><input type="text" name="reservation" placeholder="Short description" v-model="newAmenity.description"></div>
+                                
+                                <p style="color:red;margin-left:10px">{{emptyAmenityType}}</p>
+
                                 <button type="button" class="btn btn-primary" v-on:click="addNewAmenityMode = false">Cancel</button>
                                 <button type="button" class="btn btn-primary" v-on:click="addAndConfirmNewAmenity(newAmenity)">Confim</button>
                                 <hr>
@@ -312,7 +321,94 @@ Vue.component("admin",{
                             </div>
                         </div>
                     </section>
+                    <section id="editAmenities" v-if="mode===editAmenities">
+                        <div class="buttons-admin">
+                            <button type="button" class="btn btn-primary"  v-on:click="cancelEditAmenities()">Cancel</button>
 
+                        </div>
+                        <div class="reservation-housekeeper">
+                            <div class="row">
+                                <div class="col">
+                                <h4>Basic:</h4> 
+                                <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'BASIC'">
+                                    <label class="edit-amenity" v-on:click="editAmenity(a)"><strong>{{a.name}}</strong></label>
+                                    <p>{{a.description}}</p>
+                                </div>
+                                </div>
+                                <div class="col">
+                                    <h4>Femily feature:</h4> 
+                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FAMILY_FEATURES'" >
+                                        <label class="edit-amenity" v-on:click="editAmenity(a)"><strong>{{a.name}}</strong></label>
+                                        <p>{{a.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h4>Facilities:</h4> 
+                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'FACILITIES'" >
+                                        <label class="edit-amenity" v-on:click="editAmenity(a)"><strong>{{a.name}}</strong></label>
+                                        <p>{{a.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h4>Dining:</h4> 
+                                    <div class="amenity" v-for="a in allAmenitiesEver" v-if="a.type === 'DINING'">
+                                        <label class="edit-amenity" v-on:click="editAmenity(a)"><strong>{{a.name}}</strong></label>
+                                        <p v-on:click="editAmenity(a)">{{a.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div v-if="modalAmenity">
+                            <div class="modal-mask">
+                                <div class="modal-wrapper">
+                                    <div class="modal-dialog modal-l modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edit amenity</h4>
+                                                
+                                                
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="details">
+
+                                                            <p style="margin-top:22px"><strong>Name:</strong></p>
+                                                    
+                                                            <input type="text" name="reservation" placeholder="Amenity name" v-model="amenityName">
+                                                            <p style="margin-top:22px; color:red">{{emptyAmenityName}}</p>
+                                                            <p style="margin-top:22px"><strong>Description:</strong></p>
+
+                                                            <textarea type="text" name="reservation" placeholder="Short description" v-model="amenityForEdit.description"></textarea>
+
+                                                            <p style="margin-top:22px"><strong>Type:</strong></p>
+
+                                                        
+                                                            <select required v-model="amenityForEdit.type">
+                                                                <option value="" selected disabled>Type</option>
+                                                                <option value="BASIC">Basic</option>
+                                                                <option value="FAMILY_FEATURES">Famili features</option>
+                                                                <option value="FACILITIES">Facilities</option>
+                                                                <option value="DINING">Dining</option>
+                                                            </select>
+                                                    
+                                                    
+                                                    
+                                                        
+                                                </div>
+                                                
+                                                <button type="button" class="btn btn-primary" v-on:click="cancelEditAmenitiesModal()">Cancel</button>
+                                                <button type="button" class="btn btn-primary" v-on:click="confirmEditAmenity()">Confim</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+            
+
+                    </section>
                     <section id="profile" v-if="mode === 'profile'">
 
                         <div class="column user-column" style="width:40%">
@@ -394,19 +490,19 @@ Vue.component("admin",{
                                     <td><label class="profile-info-label">Old password:</label></td>
                                     <td><input class="profile-info-p" name="password" id="oldinput" :type="passwordFieldType0" v-model="oldPassword"></td>
                                     <td><input type="checkbox" v-on:click="toggleOldPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyOldPassword}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyOldPassword}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><label class="profile-info-label">Password:</label></td>
                                     <td><input class="profile-info-p" name="password" id="firstinput" :type="passwordFieldType1" v-model="password1"></td>
                                     <td><input type="checkbox" v-on:click="toggleFirstPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyPassword1}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyPassword1}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><label class="profile-info-label">Please enter password again:</label></td>
                                     <td><input class="profile-info-p" :type="passwordFieldType2" name="password" id="secondinput" v-model="password2"></td>
                                     <td><input type="checkbox" v-on:click="toggleSecondPassword()">Show Password</td>
-                                    <td><p style="color:red">{{emptyPassword2}}</p></td>
+                                    <td><p style="color:red; margin-top:14px">{{emptyPassword2}}</p></td>
                                 </tr>
                                 <tr>
                                     <td><button class="edit-info-button" type="button" v-on:click="cancelPasswordReset()">Cancel</button></td>
@@ -722,11 +818,46 @@ Vue.component("admin",{
 
 	},
     methods: {
+        startEdit:function(){
+            this.mode='editAmenities';
+        },
+        cancelEditAmenities:function(){
+            this.allAmenitiesEver = [...this.allAmenitiesEverBackUp];
+            this.mode = 'amenities';
+        },
+        cancelEditAmenitiesModal:function(){
+            this.allAmenitiesEver = JSON.parse(JSON.stringify(this.allAmenitiesEverBackUp));
+            this.modalAmenity = false;
+        },
+        editAmenity:function(a){
+            this.amenityForEdit = JSON.parse(JSON.stringify(a));
+            this.amenityName = this.amenityForEdit.name;
+            this.modalAmenity = true;
+
+        },
+        checkEditAmenityName:function(){
+            if(this.amenityName==="" || this.amenityName.trim()===""){
+                this.emptyAmenityName="Please enter name";
+                return false;
+            }
+            this.emptyAmenityName="";
+            return true;
+        },
+
+        confirmEditAmenity:function(){
+            if(this.checkEditAmenityName()){
+                axios
+                .post('/rest/updateAmenity',this.amenityForEdit)
+                .then(response=>{this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = response.data, alert("Edit successfull"), this.modalAmenity=false})
+                .catch(error=>{alert("Oooops something went wrong!")});
+            }
+        },
         save: function(){
             if(this.checkFieldsForUpdate()){
                 axios
                 .post('rest/updateAdmin',this.loggedInUser)
-                .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+                .then(response=>(this.loggedInUser = response.data), alert("Profile info edit successfull!") ,this.setMode('profile'))
+                .catch(error=>{alert("Oooops something went wrong!")});
             }
         },
         cancelEdit:function(){
@@ -758,11 +889,12 @@ Vue.component("admin",{
                 if(this.password1 === this.password2 && this.oldPassword === this.loggedInUserBackup.password){
                     axios
                     .post('rest/updateAdmin',this.loggedInUser)
-                    .then(response=>(this.loggedInUser = response.data), this.setMode('profile'));
+                    .then(response=>(this.loggedInUser = response.data),alert("Password reset successfull!"), this.setMode('profile'))
+                    .catch(error=>{alert('Ooops something went wrong!')})
                 }else if(this.password1!==this.password2){
-                    alert("Passwords do not match!");
+                    this.emptyPassword2 = "Passwords do not match!";
                 }else if(this.oldPassword!==this.loggedInUserBackup.password){
-                    alert("Old password doesnt match!");
+                    this.emptyOldPassword = "Old password doesnt match!";
                 }
             }else{
                 if(this.oldPassword ===""){
@@ -1001,7 +1133,8 @@ Vue.component("admin",{
                 }})
                 .then(response =>(this.apartments = response.data, this.apartmentsBackUp = [...this.apartments]));
 
-            });
+            })
+            .catch(error=>{alert("Oooops something went wrong!")});
             this.showApartment = false;
         },
         addAmenity: function(amenity){
@@ -1029,22 +1162,49 @@ Vue.component("admin",{
             }
             
         },
+        validateNewAmenityName:function(){
+            if(this.newAmenity.name ==="" || this.newAmenity.name.trim()===""){
+                this.emptyAmenityName="Please enter name";
+                return false;
+            }
+            this.emptyAmenityName="";
+            return true;
+        },
+        validateNewAmenityType:function(){
+            if(this.newAmenity.type ===""){
+                this.emptyAmenityType="Please select amenity type";
+                return false;
+            }
+            this.emptyAmenityType="";
+            return true;
+        },
+        validateAmenity:function(){
+            let vn = this.validateNewAmenityName();
+            let vt = this.validateNewAmenityType();
+
+            return vn && vt;
+        },
         addAndConfirmNewAmenity: function(amenity){
             var d = new Date();
             amenity.id = d.getTime().toString();
             console.log(amenity.id);
-            this.allAmenitiesEver.push(amenity);
-            this.allAmenitiesEverBackUp.push(amenity);
-            axios
-            .post("/rest/addNewAmenity", amenity)
-            .then(function(response){
-                alert(response.data);
-                var jwt = window.localStorage.getItem('jwt');
-                axios.get('rest/getAllAmenities')
-                .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
-            });
-            this.newAmenity= {name: "", description: "", type: "", id: ""};
-            this.addNewAmenityMode = false;
+            if(this.validateAmenity()){
+                this.allAmenitiesEver.push(amenity);
+                this.allAmenitiesEverBackUp.push(amenity);
+                axios
+                .post("/rest/addNewAmenity", amenity)
+                .then(function(response){
+                    alert(response.data);
+                    var jwt = window.localStorage.getItem('jwt');
+                    axios.get('rest/getAllAmenities')
+                    .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
+                })
+                .catch(error=>{alert('Ooops something went wrong!')});
+
+                this.newAmenity= {name: "", description: "", type: "", id: ""};
+                this.addNewAmenityMode = false;
+            }
+            
         },
         deleteAndConfirmAmenity: function(amenities){
             for( var i = 0; i < amenities.length; i++){
@@ -1062,7 +1222,8 @@ Vue.component("admin",{
                 axios.get('rest/getAllAmenities')
                 .then(response => (this.allAmenitiesEver = response.data, this.allAmenitiesEverBackUp = [...this.allAmenitiesEver]));
                 
-            });
+            })
+            .catch(error=>{alert("Oooops something went wrong!")});
             this.deleteAmenityMode = false;
         },
         addAmenityToNewApartment: function(amenity){
@@ -1336,6 +1497,10 @@ Vue.component("admin",{
             }else{
                 
             }
+        },
+        amenityName:function(newName, oldName){
+            this.amenityName = newName;
+            this.amenityForEdit.name = this.amenityName;
         }
     }
 

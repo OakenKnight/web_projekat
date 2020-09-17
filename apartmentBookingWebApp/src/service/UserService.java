@@ -89,8 +89,11 @@ public class UserService {
 		guestForUpdate.setGender(user.getGender());
 		guestForUpdate.setPassword(user.getPassword());
 
-		guestRepository.update(guestForUpdate);
-		return user;
+		if(guestRepository.update(guestForUpdate)){
+			return user;
+		}else{
+			return null;
+		}
 	}
 
 
@@ -101,8 +104,12 @@ public class UserService {
 		adminForUpdate.setGender(adminUser.getGender());
 		adminForUpdate.setPassword(adminUser.getPassword());
 
-		adminRepository.update(adminForUpdate);
-		return adminUser;
+		if(adminRepository.update(adminForUpdate)){
+			return adminUser;
+		}else{
+			return null;
+		}
+	
 	}
 
 
@@ -113,9 +120,12 @@ public class UserService {
 		housekeeperForUpdate.setGender(user.getGender());
 		housekeeperForUpdate.setPassword(user.getPassword());
 
-		housekeeperRepository.update(housekeeperForUpdate);
+		if(housekeeperRepository.update(housekeeperForUpdate)){
+			return user;
+		}else{
+			return null;
+		}
 
-		return user;
 	}
 
 }

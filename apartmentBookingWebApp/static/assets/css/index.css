@@ -307,3 +307,6 @@ table {
 td {
     border: none;
 }
+.edit-amenity :hover{
+    background-color: #add8e6;
+}
