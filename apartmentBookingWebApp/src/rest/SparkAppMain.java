@@ -514,7 +514,7 @@ public class SparkAppMain {
 			ArrayList<ApartmentComment> apartmentComments = apartment.getComments();
 			apartmentComments.add(comment);
 			apartment.setComments(apartmentComments);
-
+			
 
 			if(apartmentRepository.update(apartment)) 
 				return true;

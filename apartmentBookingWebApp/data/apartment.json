@@ -139,7 +139,7 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4 Novi Sad",
+      "street" : "Maksima Gorkog 4 Novi Sad  ",
       "number" : null,
       "city" : "",
       "zipCode" : "",
@@ -501,14 +501,14 @@
   "roomNumber" : 3,
   "guestNumber" : 3,
   "location" : {
-    "latitude" : "45.2908",
-    "longitude" : "21.1736",
+    "latitude" : "",
+    "longitude" : "",
     "address" : {
-      "street" : "Dositeja Obradovića 7",
+      "street" : "Dositeja Obradovića 7 Plandiste Municipality",
       "number" : null,
-      "city" : "Plandiste Municipality",
-      "zipCode" : "26365",
-      "state" : "Serbia"
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
     }
   },
   "freeDates" : [ ],
@@ -670,6 +670,53 @@
   "exitTime" : "10:00",
   "apartmentStatus" : "ACTIVE",
   "amenities" : [ ],
+  "reservationsId" : [ ],
+  "deleted" : false
+}, {
+  "id" : "1600299854477",
+  "name" : "ads",
+  "apartmentType" : "APARTMENT",
+  "roomNumber" : 3,
+  "guestNumber" : 4,
+  "location" : {
+    "latitude" : "45.2496",
+    "longitude" : "19.8409",
+    "address" : {
+      "street" : "Zeleznicka 9",
+      "number" : null,
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
+      "state" : "Serbia"
+    }
+  },
+  "freeDates" : [ ],
+  "housekeeper" : {
+    "username" : "joca",
+    "password" : "joca",
+    "firstName" : "Jovan",
+    "lastName" : "Jovic",
+    "gender" : "MALE",
+    "userType" : "HOUSEKEEPER",
+    "apartmentsId" : [ "app12", "app22", "app32" ],
+    "jwttoken" : null
+  },
+  "comments" : [ ],
+  "pictures" : [ "a16002998544771.jpg" ],
+  "priceForNight" : 324.0,
+  "arrivalTime" : "11:30",
+  "exitTime" : "17:30",
+  "apartmentStatus" : "INACTIVE",
+  "amenities" : [ {
+    "id" : "1599220943165",
+    "name" : "Single level home",
+    "description" : "No stairs in home",
+    "amenityType" : "FACILITIES"
+  }, {
+    "id" : "1599220943173",
+    "name" : "Paid parking off premise",
+    "description" : "",
+    "amenityType" : "FACILITIES"
+  } ],
   "reservationsId" : [ ],
   "deleted" : false
 } ]
