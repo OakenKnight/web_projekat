@@ -5,7 +5,8 @@ Vue.component("login",{
 			username: "",
       password: "",
       emptypassword:"",
-      emptyusername:""
+      emptyusername:"",
+      passwordFieldType:"password"
 		}
 	},
 	template:`
@@ -49,7 +50,9 @@ Vue.component("login",{
               </div>
               <div class="form-group mb-4">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="password">
+                <input type="password" name="password" id="password" :type="passwordFieldType" class="form-control" placeholder="enter your passsword" v-model="password">
+                <td><input type="checkbox" v-on:click="togglePassword()">Show Password</td>
+
                 <p style="color:red">{{emptypassword}}</p>
               </div>
               <input name="login" id="login" class="btn btn-block login-btn" type="button" value="Login" v-on:click="tryLog(username,password)" >
@@ -81,6 +84,13 @@ Vue.component("login",{
     }
 },
     methods: {
+      togglePassword: function(){
+        if(this.passwordFieldType === "password"){
+            this.passwordFieldType = "text";
+          }else {
+            this.passwordFieldType = "password";
+          }
+      },
       validate:function(){
         if(this.validatePassword() & this.validateUsername()){
           return true;

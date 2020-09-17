@@ -13,7 +13,9 @@ Vue.component("register",{
       emptyGender:"",
       emptyPassword1:"",
       emptyPassword2:"",
-      emptyUsername:""
+      emptyUsername:"",
+      passwordFieldType1:"password",
+			passwordFieldType2:"password"
 		}
 	},
 	template:`
@@ -77,13 +79,17 @@ Vue.component("register",{
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword" v-model="password">
+                <input type="password" name="password" id="password" class="form-control" :type="passwordFieldType1" placeholder="enter your passsword" v-model="password">
+                <td><input type="checkbox" v-on:click="togglePassword1()">Show Password</td>
+
                 <p style="color:red">{{emptyPassword1}}</p>
 
               </div>
               <div class="form-group mb-4">
                 <label for="password">Enter Password Again</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword again" v-model="confirmPassword">
+                <input type="password" name="password" id="password" class="form-control" :type="passwordFieldType2" placeholder="enter your passsword again" v-model="confirmPassword">
+                <td><input type="checkbox" v-on:click="togglePassword2()">Show Password</td>
+
                 <p style="color:red">{{emptyPassword2}}</p>
 
               </div>
@@ -180,7 +186,21 @@ Vue.component("register",{
 				.catch(error=>{this.emptyUsername="Username is already taken!"})
 			}
 			
-		},
+    },
+    togglePassword1: function(){
+			if(this.passwordFieldType1 === "password"){
+				this.passwordFieldType1 = "text";
+			  }else {
+				this.passwordFieldType1 = "password";
+			  }
+		  },
+		  togglePassword2: function(){
+			if(this.passwordFieldType2 === "password"){
+				this.passwordFieldType2 = "text";
+			  }else {
+				this.passwordFieldType2 = "password";
+			  }
+		  },
     	
 	},
 	watch:{
