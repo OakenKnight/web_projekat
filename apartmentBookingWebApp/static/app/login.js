@@ -71,12 +71,6 @@ Vue.component("login",{
     if(!jwt){
         this.loggedIn=false;
     }else{
-      axios
-          .get('rest/getUserRole', {params: {
-              Authorization: 'Bearer ' + jwt
-          }})
-          .then(response =>{ this.type = response.data });
-        
         this.loggedIn=true;
         axios
         .get('rest/userLoggedIn',{params:{
@@ -87,13 +81,6 @@ Vue.component("login",{
     }
 },
     methods: {
-      takeMeHome:function(){
-        if(this.type==="ADMIN"){
-          alert('AFISAJBF');
-        }else{
-          alert('HJOIH');
-        }
-      },
       validate:function(){
         if(this.validatePassword() & this.validateUsername()){
           return true;
@@ -131,7 +118,7 @@ Vue.component("login",{
               window.location.href = '#/admin';
             }
         })
-		    .catch(function(error){alert("Wrong username or password!")})
+		    .catch(error => toast("asdda"));
 
         }
     		

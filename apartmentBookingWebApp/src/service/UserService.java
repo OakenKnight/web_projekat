@@ -25,7 +25,10 @@ public class UserService {
 	
 	public User login(String username, String password) {
 		User user = findAnyTypeOfUser(username);
-		if(user.getPassword().equals(password)) return user;
+		if(user != null) {
+			if(user.getPassword().equals(password) ) return user;
+			else return null;
+		}
 		else return null;
 	}
 	

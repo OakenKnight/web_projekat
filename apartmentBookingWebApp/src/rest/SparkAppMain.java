@@ -95,11 +95,16 @@ public class SparkAppMain {
 			String payload = req.body();
 			User user = g.fromJson(payload, User.class);
 			UserService service = new UserService();
-			user = service.login(user.getUsername().trim(), user.getPassword());
-			String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
-			user.setJWTToken(jwt);
-
-			return g.toJson(user); 
+			if((user = service.login(user.getUsername().trim(), user.getPassword())) == null) {
+				res.status(400);
+				return "Wrong username or password";
+			}else {
+				String jwt = Jwts.builder().setSubject(user.getUsername()).setExpiration(new Date(2020,12,31)).setIssuedAt(new Date()).signWith(key).compact();
+				user.setJWTToken(jwt);
+				
+				return g.toJson(user); 
+			}
+			
 		});
 		
 		
@@ -458,6 +463,10 @@ public class SparkAppMain {
 			String userId = getUser(req.queryParams("Authorization"));
 			UserService userService = new UserService();
 			User user = userService.findAnyTypeOfUser(userId);
+			if(user == null) {
+				res.status(400);
+				return "please login";
+			}
 			return user.getUserType();
 		});
 			

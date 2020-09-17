@@ -272,7 +272,7 @@ Vue.component("addApartment",{
                         </div> 
                         
                         <div class="col">
-                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/check-out-icon.png" alt="not found"><strong>Free dates</strong></label>
+                            <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/calendar.png" alt="not found"><strong>Free dates</strong></label>
                             <div v-if="addOrDeleteFreeDates === 'none'">
                                 <button type="button" class="btn btn-primary" style="margin-right:100px" v-on:click="addOrDeleteFreeDates = 'delete'">delete free dates</button>
                                 <button type="button" class="btn btn-primary" style="margin-right:10px" v-on:click="addOrDeleteFreeDates = 'add'">Add free dates</button>
