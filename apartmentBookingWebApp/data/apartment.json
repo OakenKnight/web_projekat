@@ -139,11 +139,11 @@
     "latitude" : "",
     "longitude" : "",
     "address" : {
-      "street" : "Maksima Gorkog 4",
+      "street" : "Maksima Gorkog 4 Novi Sad   ",
       "number" : null,
-      "city" : "Novi Sad",
-      "zipCode" : "21000",
-      "state" : "Serbia"
+      "city" : "",
+      "zipCode" : "",
+      "state" : ""
     }
   },
   "freeDates" : [ {
@@ -189,8 +189,8 @@
     "disabledForGuests" : true,
     "apartmentId" : "app12"
   } ],
-  "pictures" : [ "3.jpg", "4.jpg", "a1600368680827.jpg" ],
-  "priceForNight" : 1502.0,
+  "pictures" : [ "3.jpg", "4.jpg" ],
+  "priceForNight" : 1500.0,
   "arrivalTime" : "11:30",
   "exitTime" : "09:30",
   "apartmentStatus" : "ACTIVE",
@@ -725,4 +725,4 @@
   } ],
   "reservationsId" : [ ],
   "deleted" : false
-}]
+} ]
