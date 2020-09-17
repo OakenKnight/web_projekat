@@ -508,11 +508,11 @@ Vue.component("guestProfile",{
         },
         oldReservation:function(r){
             var todaysDate = new Date();
-            var milis = new Date(r.arrivalDate);
-            if(todaysDate.getTime() < new Date(milis.getTime() - 86400000).getTime()){
-                return true;
-            }else{
+            var milis = r.arrivalDate;
+            if(todaysDate.getTime() < new Date((new Date(milis)).getTime() - 86400000).getTime()){
                 return false;
+            }else{
+                return true;
             }
         },
         save: function(){

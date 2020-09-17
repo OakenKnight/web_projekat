@@ -266,9 +266,9 @@ public class SparkAppMain {
 				decoder.Base64DecodeAndSave(apartment.getPictures().get(apartment.getPictures().size() - 1), path);
 				path = "a"+id+".jpg";
 				convertedImages = path;	
+				apartment.getPictures().remove(n);
 				
 			}
-			apartment.getPictures().remove(n);
 			if(convertedImages != "") {
 				apartment.getPictures().add(convertedImages);
 			}
