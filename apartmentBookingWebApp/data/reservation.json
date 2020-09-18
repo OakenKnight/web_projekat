@@ -14,7 +14,7 @@
   "totalPrice" : 350.0,
   "message" : "aaaaaaaaaaaaaaaa",
   "guestId" : "milica",
-  "reservationStatus" : "CREATED",
+  "reservationStatus" : "QUIT",
   "id" : "milica1"
 }, {
   "apartmentId" : "app22",
@@ -77,6 +77,51 @@
   "totalPrice" : 2000.0,
   "message" : "",
   "guestId" : "milica",
-  "reservationStatus" : "CREATED",
+  "reservationStatus" : "QUIT",
   "id" : "1600382468868"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1601071200000,
+  "numberOfNights" : 1,
+  "totalPrice" : 100.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "1600417622399"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1601157600000,
+  "numberOfNights" : 1,
+  "totalPrice" : 100.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "1600417640949"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1602972000000,
+  "numberOfNights" : 6,
+  "totalPrice" : 600.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "QUIT",
+  "id" : "1600417653486"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1603490400000,
+  "numberOfNights" : 1,
+  "totalPrice" : 100.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "CREATED",
+  "id" : "1600417664712"
+}, {
+  "apartmentId" : "app1",
+  "arrivalDate" : 1600466400000,
+  "numberOfNights" : 3,
+  "totalPrice" : 300.0,
+  "message" : "",
+  "guestId" : "milica",
+  "reservationStatus" : "QUIT",
+  "id" : "1600418169843"
 } ]

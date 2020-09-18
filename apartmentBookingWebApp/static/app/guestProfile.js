@@ -278,7 +278,7 @@ Vue.component("guestProfile",{
                                         <button class="reserve-more-info-button" type="button" v-on:click="showMore(r)">Show apartment</button>
                                         <button class="reserve-more-info-button" type="button" v-if="r.reservationStatus==='REJECTED' | r.reservationStatus==='FINISHED'" v-on:click="rateApartmentFromReservation(r)">Comment</button>
 
-                                        <button class="reserve-more-info-button" type="button"   v-if="showCancelButton(r)" >Cancel</button>
+                                        <button class="reserve-more-info-button" type="button" :disabled="oldReservation(r)" v-if="showCancelButton(r)" v-on:click="cancel(r)">Cancel</button>
                                     </div>
                                     
                                 </div>
@@ -462,7 +462,7 @@ Vue.component("guestProfile",{
         showCancelButton:function(reservation){
             let past  = this.oldReservation(reservation);
             console.log(past);
-            return past && (reservation.reservationStatus==='CREATED' | reservation.reservationStatus==='ACCEPTED');
+            return (reservation.reservationStatus==='CREATED' || reservation.reservationStatus==='ACCEPTED');
 
         },
         showMore:function(reservation){
@@ -510,9 +510,9 @@ Vue.component("guestProfile",{
             var todaysDate = new Date();
             var milis = r.arrivalDate;
             if(todaysDate.getTime() < new Date((new Date(milis)).getTime() - 86400000).getTime()){
-                return false;
-            }else{
                 return true;
+            }else{
+                return false;
             }
         },
         save: function(){
