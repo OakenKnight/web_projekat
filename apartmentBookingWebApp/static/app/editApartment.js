@@ -64,7 +64,6 @@ Vue.component("editApartment",{
             disabledButton:"",
             backupLocation:{},
             addressForView:"",
-            disableAdd:true,
             emptyFreeDates:""
 
 
@@ -354,6 +353,13 @@ Vue.component("editApartment",{
                             </div>
                         </div>
                     </div>
+                    <h3>Set Apartment status:</h3>
+                    <div class="row justify-content-center">
+                        <select  required v-model="selectedApartment.apartmentStatus">
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                        </select>
+                    </div>
                     <h3>Pictures:</h3>
                     <div class="row justify-content-center">
                         <div v-for="p in selectedApartment.pictures">
@@ -409,7 +415,7 @@ Vue.component("editApartment",{
                 this.selectedApartmentBackUp = response.data;
                 console.log(this.selectedApartment);
                 this.startEditingApartment();
-                
+              
                 this.setFreeDates();
                 
             })

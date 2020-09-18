@@ -65,7 +65,14 @@ public class ApartmentRepository implements ApartmentRepositoryInterface{
 	@Override
 	public List<Apartment> getAll() {
 		try {
-			return mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Apartment>>() {});
+			List<Apartment> apartments = new ArrayList<Apartment>();
+			List<Apartment> allApartments = mapper.convertValue(mapper.readValue(file, List.class), new TypeReference<List<Apartment>>() {});
+			for(Apartment a : allApartments) {
+				if(a.getDeleted() == false) {
+					apartments.add(a);
+				}
+			}
+			return apartments;
 		} catch (IllegalArgumentException | IOException e) {
 			e.printStackTrace();
 			return null;
@@ -75,7 +82,7 @@ public class ApartmentRepository implements ApartmentRepositoryInterface{
 
 	@Override
 	public Apartment getObj(String id) {
-		return getAll().stream().filter(apartment -> apartment.getId().equals(id)).findFirst().orElse(null);
+		return getAll().stream().filter(apartment -> apartment.getId().equals(id) && apartment.getDeleted() == false).findFirst().orElse(null);
 	}
 
 	@Override

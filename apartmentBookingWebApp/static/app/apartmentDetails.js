@@ -69,9 +69,9 @@ Vue.component("apartmentDetails", {
             <div class="info">
                 <div class="row justify-content-center">
 
-                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, -1)"><p><i class="arrow left"></i></p></div>
+                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, -1)" v-if="selectedApartment.pictures.length > 0"><p><i class="arrow left"></i></p></div>
                     <img v-bind:src="'assets/images/apartmentsimg/' + pictureToShow"  style="width: 800px; height:600px"  v-if="selectedApartment.pictures.length > 0"  alt="image not found">
-                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, +1)"><p><i class="arrow right"></i></p></div>
+                    <div style="width:100px; height:100px; margin-top:20%" v-on:click="getNextPicture(pictureToShow, +1)" v-if="selectedApartment.pictures.length > 0"><p><i class="arrow right"></i></p></div>
 
                 </div>
                 <div class="row">
@@ -275,7 +275,9 @@ Vue.component("apartmentDetails", {
                 this.selectedApartment = response.data;
                 this.setFreeDates();
                 this.mountAll();
-                this.pictureToShow = this.selectedApartment.pictures[0];
+                if(this.selectedApartment.pictures.length > 0){
+                    this.pictureToShow = this.selectedApartment.pictures[0];
+                }
 
             })
             .catch(error=>{this.$router.push('/bad_request')});
@@ -305,11 +307,16 @@ Vue.component("apartmentDetails", {
         setFreeDates: function(){
             var today = new Date();
             var newYear =  new Date(2021, 0,1);
-            this.disabledArriveDates.ranges.push({from: new Date(), to: new Date(this.selectedApartment.freeDates[0].startDate)});
-            for(var i = 0; i < this.selectedApartment.freeDates.length - 1; i ++){
-                this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[i].endDate), to: new Date(this.selectedApartment.freeDates[i+1].startDate)});
+            if(this.selectedApartment.freeDates.length > 0){
+                this.disabledArriveDates.ranges.push({from: new Date(), to: new Date(this.selectedApartment.freeDates[0].startDate)});
+                for(var i = 0; i < this.selectedApartment.freeDates.length - 1; i ++){
+                    this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[i].endDate), to: new Date(this.selectedApartment.freeDates[i+1].startDate)});
+                }
+                this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[this.selectedApartment.freeDates.length - 1].endDate), to: new Date(2021, 0,1)});
+
+            }else{
+                this.disabledArriveDates.to = new Date(2025, 0,1);
             }
-            this.disabledArriveDates.ranges.push({from: new Date(this.selectedApartment.freeDates[this.selectedApartment.freeDates.length - 1].endDate), to: new Date(2021, 0,1)});
         },
         requestBooking:function(){
             if(this.validate()){
