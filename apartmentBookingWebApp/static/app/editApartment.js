@@ -63,7 +63,10 @@ Vue.component("editApartment",{
             flag:"",
             disabledButton:"",
             backupLocation:{},
-            addressForView:""
+            addressForView:"",
+            disableAdd:true,
+            emptyFreeDates:""
+
 
         }
 	},
@@ -265,8 +268,10 @@ Vue.component("editApartment",{
                             <div v-for="f in selectedApartment.freeDates" v-if="addOrDeleteFreeDates === 'delete'">
                                 <label>{{f.startDate | dateFormat('DD.MM.YYYY')}} - {{f.endDate | dateFormat('DD.MM.YYYY')}}<strong></strong><input class="have-amenity-checkbox" type="checkbox" v-on:click="deleteFreeDates(f)" value=""> </label>
                             </div>
+                            <p style="color:red">{{emptyFreeDates}}</p>
+
                             <button v-if="addOrDeleteFreeDates === 'delete'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="deleteSelectedFreeDates()">delete free dates</button>
-                            <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="addNewFreeDates()">add free date</button>
+                            <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" :disabled="checkFreeDateEnd()" v-on:click="addNewFreeDates()">add free date</button>
                             <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click=" reserFreeDatesForAdd()">Cancel</button>
                             <button v-if="addOrDeleteFreeDates === 'delete'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="resetFreeDates()">Cancel</button>
                         </div>
@@ -612,8 +617,6 @@ Vue.component("editApartment",{
             
             this.addressForView = this.selectedApartment.location.address.street+' '+ this.selectedApartment.location.address.city;
             //console.log(addressForView);
-            //this.backupLocation = JSON.parse(JSON.stringify(this.selectedApartment.location));
-
 
             //document.querySelector('#address').value = this.selectedApartment.location.address;
             /*
@@ -659,10 +662,16 @@ Vue.component("editApartment",{
             this.adresaObjekat.city = this.gradZaPretragu;
             this.adresaObjekat.zipCode = this.zipZaPretragu;
             this.adresaObjekat.state = this.drzavaZaPretragu;
-    
+            if(document.querySelector('#address').value.trim()==="" || document.querySelector('#address').value===""){
+                this.selectedApartment.location = JSON.parse(JSON.stringify(this.selectedApartmentBackUp.location));
+            }else{
+                this.selectedApartment.location = JSON.parse(JSON.stringify(this.location));
+
+            }
             this.location.address = this.adresaObjekat;
             console.log(this.location);
-            this.selectedApartment.location = JSON.parse(JSON.stringify(this.location));
+
+            if(this.ad)
             if(this.imagesForBack.length > 0){
                 this.selectedApartment.pictures.push(this.imagesForBack[0]);
             }
@@ -713,6 +722,14 @@ Vue.component("editApartment",{
                     element.disabledForGuests = !element.disabledForGuests;
                 }
             });
+        },
+        checkFreeDateEnd:function(){
+            if(this.departDate===null || this.startDate===null){
+                this.emptyFreeDates="You must select free period!";
+                return true;
+            }
+            this.emptyFreeDates="";
+            return false;
         },
         validateName:function(){
             if(this.selectedApartment.name==="" | this.selectedApartment.name.trim() ===""){
@@ -770,6 +787,15 @@ Vue.component("editApartment",{
             this.exitTimeEmpty="";
             return true;
         },
+        validateFreeDates:function(){
+            if(this.selectedApartment.freeDates.length==0){
+                this.emptyFreeDates = "You must select free dates!";
+                return false;
+            }
+            this.emptyFreeDates = "";
+            return true;
+        },
+        /*
         validateAddress:function(){
             if(this.adresaZaPretragu===""){
                 this.emptyAddress="Please enter address";
@@ -778,11 +804,18 @@ Vue.component("editApartment",{
             this.emptyAddress="";
             return true;
         },
+        */
         validate:function(){
-            if(this.validateName() & this.validateGuests() & this.validatePrice() & this.validateRooms() & this.validateType() & this.validateArrivalTime() & this.validateExitTime() & this.validateAddress()){
-                return true;
-            }
-            return false;
+            let vN = this.validateName();
+            let vG = this.validateGuests();
+            let vP =this.validatePrice();
+            let vR = this.validateRooms();
+            let vT = this.validateType();
+            let vAT = this.validateArrivalTime();
+            let vET = this.validateExitTime();
+            let vFD = this.validateFreeDates();
+
+            return vN && vG && vP && vR && vT && vFD && vAT && vET;
         },
         calculateAvaliableDepartDate: function(aD){
             var d = new Date(aD);

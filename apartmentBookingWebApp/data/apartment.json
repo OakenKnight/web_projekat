@@ -131,18 +131,18 @@
   "deleted" : false
 }, {
   "id" : "app12",
-  "name" : "Apartment abab",
+  "name" : "Apartment Baba",
   "apartmentType" : "APARTMENT",
   "roomNumber" : 2,
   "guestNumber" : 4,
   "location" : {
-    "latitude" : "45.3822",
-    "longitude" : "20.3941",
+    "latitude" : "43.8852",
+    "longitude" : "20.3503",
     "address" : {
-      "street" : "Nemanjina 3",
+      "street" : "Zeleznicka 97",
       "number" : null,
-      "city" : "Zrenjanin",
-      "zipCode" : "23000",
+      "city" : "Novi Sad",
+      "zipCode" : "21000",
       "state" : "Serbia"
     }
   },
@@ -701,7 +701,10 @@
       "state" : "Serbia"
     }
   },
-  "freeDates" : [ ],
+  "freeDates" : [ {
+    "startDate" : 1600639200000,
+    "endDate" : 1601071200000
+  } ],
   "housekeeper" : {
     "username" : "joca",
     "password" : "joca",

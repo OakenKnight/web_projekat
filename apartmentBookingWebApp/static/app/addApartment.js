@@ -80,12 +80,13 @@ Vue.component("addApartment",{
             name:"",
             price:"",
             rooms:"",
-            type:"",
+            type:"APARTMENT",
             imagesForBack:[],
             images:[],
             imageCount:0,
             filename:"",
-            type:""
+            typeOfUser:"",
+            emptyFreeDates:""
         }
 	},
     template:`
@@ -274,7 +275,7 @@ Vue.component("addApartment",{
                         <div class="col">
                             <label class="details-hotel-name-label"><img class="apartment-info-icons" src="/assets/images/calendar.png" alt="not found"><strong>Free dates</strong></label>
                             <div v-if="addOrDeleteFreeDates === 'none'">
-                                <button type="button" class="btn btn-primary" style="margin-right:100px" v-on:click="addOrDeleteFreeDates = 'delete'">delete free dates</button>
+                                <button type="button" class="btn btn-primary" style="margin-right:100px" v-on:click="addOrDeleteFreeDates = 'delete'">Delete free dates</button>
                                 <button type="button" class="btn btn-primary" style="margin-right:10px" v-on:click="addOrDeleteFreeDates = 'add'">Add free dates</button>
                             </div>
                             <div v-if="addOrDeleteFreeDates === 'add'">
@@ -289,8 +290,9 @@ Vue.component("addApartment",{
                             <div v-for="f in newApartment.freeDates" v-if="addOrDeleteFreeDates === 'delete'">
                                 <label>{{f.startDate | dateFormat('DD.MM.YYYY')}} - {{f.endDate | dateFormat('DD.MM.YYYY')}}<strong></strong><input class="have-amenity-checkbox" type="checkbox" v-on:click="deleteFreeDates(f)" value=""> </label>
                             </div>
-                            <button v-if="addOrDeleteFreeDates === 'delete'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="deleteSelectedFreeDates()">delete free dates</button>
-                            <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="addNewFreeDates()">add free date</button>
+                            <p style="color:red">{{emptyFreeDates}}</p>
+                            <button v-if="addOrDeleteFreeDates === 'delete'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="deleteSelectedFreeDates()">Delete free date</button>
+                            <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" :disabled="checkFreeDateEnd()" v-on:click="addNewFreeDates()">Add free date</button>
                             <button v-if="addOrDeleteFreeDates === 'add'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click=" reserFreeDatesForAdd()">Cancel</button>
                             <button v-if="addOrDeleteFreeDates === 'delete'" type="button" class="btn btn-primary" style="margin-right:250px" v-on:click="resetFreeDates()">Cancel</button>
                         </div>
@@ -355,7 +357,7 @@ Vue.component("addApartment",{
             .get('rest/getUserRole', {params: {
                 Authorization: 'Bearer ' + jwt
             }})
-            .then(response =>{ this.type = response.data; if (response.data === "GUEST")
+            .then(response =>{ this.typeOfUser = response.data; if (response.data === "GUEST")
                 window.location.href = '#/forbidden';
             });
 
@@ -576,7 +578,14 @@ Vue.component("addApartment",{
             });
 
         },
-
+        checkFreeDateEnd:function(){
+            if(this.departDate===null || this.startDate===null){
+                this.emptyFreeDates="You must select free period!";
+                return true;
+            }
+            this.emptyFreeDates="";
+            return false;
+        },
         validateArrivalTime: function(){
             if(this.arrivalHours==="" && this.arrivalMinutes===""){
                 this.testApartment.arrivalTime="14:00";
@@ -615,6 +624,14 @@ Vue.component("addApartment",{
                     return true;
                 }
             }
+        },
+        validateFreeDates:function(){
+            if(this.newApartment.freeDates.length==0){
+                this.emptyFreeDates = "You must select free dates!";
+                return false;
+            }
+            this.emptyFreeDates = "";
+            return true;
         },
         validateName: function(){
             if(this.name==="" | this.name.trim()===""){
@@ -695,8 +712,8 @@ Vue.component("addApartment",{
             let vp = this.validatePrice();
             let vt = this.validateType();
             let vr = this.validateRooms();
-
-            if(vaT && vaD && va && vg && vn && vp && vt && vr){
+            let vFD = this.validateFreeDates();
+            if(vaT && vaD && va && vg && vn && vp && vt && vr && vFD){
                 return true;
             }
 
